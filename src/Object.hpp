@@ -15,10 +15,10 @@ class Object
 {
 protected:
 
-	virtual void init() {}
-	
-	virtual void update(float deltaTime) {}
-	
+  virtual void init() {}
+
+  virtual void update(float deltaTime) {}
+
 friend class Game;
 };
 
@@ -29,21 +29,21 @@ class Drawable : public sf::Drawable
 {
 public:
 
-	Drawable() : sf::Drawable(), m_visible(true) {}
+  Drawable() : sf::Drawable(), m_visible(true) {}
 
-	void setVisible(bool visible)
-	{
-		m_visible = visible;
-	}
-	
-	bool isVisible() const
-	{
-		return m_visible;
-	}
-	
-protected:
+  void setVisible(bool visible)
+  {
+    m_visible = visible;
+  }
 
-	bool m_visible;
+  bool isVisible() const
+  {
+    return m_visible;
+  }
+
+private:
+
+  bool m_visible;
 };
 
 /**
@@ -54,9 +54,9 @@ class Solid
 {
 public:
 
-	Solid() : m_solid(true) {}
+  Solid() : m_solid(true) {}
 
 private:
 
-	bool m_solid;
+  bool m_solid;
 };
