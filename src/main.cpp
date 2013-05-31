@@ -13,7 +13,7 @@ class MyObject : public Object, public Drawable
 {
 public:
 
-  MyObject(const std::string& name) : Object(), m_name(name) 
+  MyObject() : Object()
   {
     m_texture.loadFromFile("data/tileset.png", sf::IntRect(0,0,32,32));
     m_sprite.setTexture(m_texture);
@@ -38,18 +38,28 @@ protected:
 
 private:
 
-  std::string m_name;
-
   sf::Texture m_texture;
   sf::Sprite m_sprite;
 };
 
+class MyObjectFactory : public ObjectFactory
+{
+public:
+
+  Object* create()
+  {
+    return new MyObject();
+  }
+};
+
 int main(int argc, char** argv)
 {			
-  MyObject obj("obj1");
+  MyObjectFactory factory;
+  Object *obj = factory.create();
 
   Game game;
-  game.addDrawable(obj);
-  game.addObject(obj);
+  game.addObjectFactory("myObject", factory);
+  std::cout << game.createObject("obj") << std::endl;
+  std::cout << game.createObject("myObject") << std::endl;
   return game.mainLoop();
 }

@@ -6,6 +6,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <set>
 #include "Game.hpp"
 
 /**
@@ -29,17 +30,11 @@ class Drawable : public sf::Drawable
 {
 public:
 
-  Drawable() : sf::Drawable(), m_visible(true) {}
+  Drawable();
 
-  void setVisible(bool visible)
-  {
-    m_visible = visible;
-  }
+  void setVisible(bool visible);
 
-  bool isVisible() const
-  {
-    return m_visible;
-  }
+  bool isVisible() const;
 
 private:
 
@@ -54,9 +49,40 @@ class Solid
 {
 public:
 
-  Solid() : m_solid(true) {}
+  Solid();
+  
+protected:
+
+  virtual void touch(const Solid& other) {}
+  
+  virtual void untouch(const Solid& other) {}
+  
+  virtual void landed() {}
+  
+  virtual void fall() {}
+  
+  virtual void hitWall() {}
+  
+  virtual void hitCeiling() {}
 
 private:
 
-  bool m_solid;
+  void _touch(const Solid& other);
+  
+  void _untouch(const Solid& other);
+  
+
+  bool              m_solid;
+  
+  std::set<Solid*>  m_touching;
+};
+
+/**
+* Object factory
+*/
+class ObjectFactory
+{
+public:
+
+  virtual Object* create() = 0;
 };

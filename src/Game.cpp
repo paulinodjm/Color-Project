@@ -7,6 +7,35 @@
 #include "Game.hpp"
 #include "Object.hpp"
 
+void Game::addObjectFactory(const std::string& name, ObjectFactory& factory)
+{
+  m_objectFactory[name] = &factory;
+}
+
+Object* Game::createObject(const std::string& name)
+{
+  std::map<std::string, ObjectFactory*>::iterator factory = m_objectFactory.find(name);
+  if (factory == m_objectFactory.end())
+    return nullptr;
+    
+  Object* obj = factory->second->create();
+  m_objects.insert(obj);
+  
+  Drawable* drawable = dynamic_cast<Drawable*>(obj);
+  if (drawable)
+  {
+    m_drawables.insert(drawable);
+  }
+  
+  Solid* solid = dynamic_cast<Solid*>(obj);
+  if (solid)
+  {
+    // < TODO add the object to the collision system
+  }
+  
+  return obj;
+}
+
 int Game::mainLoop()
 {
   m_rendow.create(sf::VideoMode(640,480), "Colour Project");

@@ -6,30 +6,23 @@
 
 #include <SFML/Graphics.hpp>
 #include <set>
+#include <map>
+#include <string>
 
 class Object;
 class Drawable;
+class ObjectFactory;
 
 class Game
 {
 public:
 
   int mainLoop();
-
-  //--------------------------------------------
-  // temporary functions; will be deleted later
-  void addObject(Object& obj)
-  {m_objects.insert(&obj);}
-  //
-  void deleteObject(Object& obj)
-  {m_objects.erase(&obj);}
-  //
-  void addDrawable(Drawable& drawable)
-  {m_drawables.insert(&drawable);}
-  //
-  void deleteDrawable(Drawable& drawable)
-  {m_drawables.insert(&drawable);}
-  //--------------------------------------------
+  
+  
+  void addObjectFactory(const std::string& name, ObjectFactory& factory);
+  
+  Object* createObject(const std::string& name);
 
 protected:
 
@@ -48,4 +41,6 @@ private:
   std::set<Object*>     m_objects;
 
   std::set<Drawable*>   m_drawables;
+  
+  std::map<std::string, ObjectFactory*> m_objectFactory;
 };
