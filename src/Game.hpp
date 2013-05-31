@@ -16,6 +16,21 @@ public:
 
 	int mainLoop();
 	
+	//--------------------------------------------
+	// temporary functions; will be deleted later
+	void addObject(Object& obj)
+	{m_objects.insert(&obj);}
+	//
+	void deleteObject(Object& obj)
+	{m_objects.erase(&obj);}
+	//
+	void addDrawable(Drawable& drawable)
+	{m_drawables.insert(&drawable);}
+	//
+	void deleteDrawable(Drawable& drawable)
+	{m_drawables.insert(&drawable);}
+	//--------------------------------------------
+	
 protected:
 
 	virtual bool loadRessources() {return true;}
