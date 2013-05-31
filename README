@@ -1,3 +1,7 @@
-Game-Project
+Color Project
 
-Test before posting the source code.
+Project of an open-source platformer game, where colours take their importances.
+
+Dependencies:
+
+- libsfml (version 2.0)
