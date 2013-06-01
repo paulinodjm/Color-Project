@@ -40,7 +40,9 @@ int Game::mainLoop()
 {
   m_rendow.create(sf::VideoMode(640,480), "Colour Project");
   m_rendow.setFramerateLimit(60);
+  m_rendow.setKeyRepeatEnabled(false);
 
+  sf::Clock gameClock;
   sf::Event event;
   while (m_rendow.isOpen())
   {
@@ -53,7 +55,7 @@ int Game::mainLoop()
     // update
     for (Object* obj : m_objects)
     {
-      obj->update(1.f); // < TODO true deltaTime
+      obj->update(gameClock.getElapsedTime().asSeconds());
     }
 
     // display
@@ -64,6 +66,7 @@ int Game::mainLoop()
         m_rendow.draw(*drawable);
     }
     m_rendow.display();
+    gameClock.restart();
   }
 
   return EXIT_SUCCESS;

@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include "Game.hpp"
-#include "Object.hpp"
+#include "GameObject.hpp"
 #include <string>
 #include <SFML/Graphics.hpp>
 
@@ -15,25 +15,24 @@ public:
 
   MyObject() : GameObject()
   {
-    m_texture.loadFromFile("data/tileset.png", sf::IntRect(0,0,32,32));
-    m_sprite.setTexture(m_texture);
+    setPosition(50, 50);
   }
 
 protected:
 
   void update(float deltaTime)
   {
+    std::cout << "dt : " << deltaTime << std::endl;
+  
     bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z);
     bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S);
     bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q);
     bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D);
-
-    m_sprite.move(right-left, down-up);
-  }
-
-  void draw(sf::RenderTarget& target, sf::RenderStates states) const
-  {
-    target.draw(m_sprite);
+    
+    sf::Vector2i position = getPosition();
+    position.x += right - left;
+    position.y += down - up;
+    setPosition(position);
   }
 
 private:
@@ -55,9 +54,14 @@ public:
 int main(int argc, char** argv)
 {			
   MyObjectFactory factory;
+  
+  sf::Texture texture;
+  texture.loadFromFile("data/tileset.png", sf::IntRect(0,0,32,32));
+  sf::Sprite sprite(texture);
 
   Game game;
   game.addObjectFactory("myObject", factory);
-  std::cout << game.createObject("myObject") << std::endl;
+  MyObject* mgo = (MyObject*)game.createObject("myObject");
+  mgo->setSprite(sprite);
   return game.mainLoop();
 }

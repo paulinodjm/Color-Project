@@ -20,25 +20,21 @@ bool Drawable::isVisible() const
 
 Solid::Solid() : m_solid(true) {}
 
+const sf::Vector2i& Solid::getPosition() const
+{
+  return m_position;
+}
+
 void Solid::setPosition(int x, int y)
-{}
+{
+  m_position = sf::Vector2i(x, y);
+}
 
 void Solid::setPosition(const sf::Vector2i& position)
-{}
+{
+  m_position = position;
+}
 
 void Solid::collideWith(const Solid& solid)
 {
-}
-
-
-GameObject::GameObject() : Drawable(), Solid() {}
-
-void GameObject::setPosition(int x, int y)
-{
-  Solid::setPosition(x, y);
-}
-
-void GameObject::setPosition(const sf::Vector2i& position)
-{
-  setPosition(position.x, position.y);
 }
