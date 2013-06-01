@@ -51,6 +51,12 @@ public:
 
   Solid();
   
+  
+  virtual void setPosition(int x, int y);
+  virtual void setPosition(const sf::Vector2i& position);
+  
+  const sf::Vector2i& getPosition() const;
+  
 protected:
 
   virtual void touch(const Solid& other) {}
@@ -67,14 +73,23 @@ protected:
 
 private:
 
-  void _touch(const Solid& other);
-  
-  void _untouch(const Solid& other);
+  void collideWith(const Solid& other);
   
 
-  bool              m_solid;
+  bool                      m_solid;
   
   std::set<Solid*>  m_touching;
+};
+
+
+class GameObject : public Object, public Drawable, public Solid
+{
+public:
+
+  GameObject();
+  
+  virtual void setPosition(int x, int y);
+  virtual void setPosition(const sf::Vector2i& position);
 };
 
 /**

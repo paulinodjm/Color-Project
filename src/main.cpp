@@ -9,11 +9,11 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
-class MyObject : public Object, public Drawable
+class MyObject : public GameObject
 {
 public:
 
-  MyObject() : Object()
+  MyObject() : GameObject()
   {
     m_texture.loadFromFile("data/tileset.png", sf::IntRect(0,0,32,32));
     m_sprite.setTexture(m_texture);
@@ -55,11 +55,9 @@ public:
 int main(int argc, char** argv)
 {			
   MyObjectFactory factory;
-  Object *obj = factory.create();
 
   Game game;
   game.addObjectFactory("myObject", factory);
-  std::cout << game.createObject("obj") << std::endl;
   std::cout << game.createObject("myObject") << std::endl;
   return game.mainLoop();
 }
