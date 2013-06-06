@@ -51,11 +51,25 @@ public:
 
   Solid();
   
+  Solid(const sf::IntRect& bounds, const sf::Vector2i& position = sf::Vector2i(0,0));
+  
+  /** set the bounds of the object, in relative coordinates */
+  void setBounds(const sf::IntRect& bounds);
+  
+  /** return the bounds of the object, relative */
+  const sf::IntRect& getBounds() const;
+  
+  /** return the bounding box of the object, in world coordinates */
+  sf::IntRect getBbox() const;
   
   virtual void setPosition(int x, int y);
   virtual void setPosition(const sf::Vector2i& position);
   
   const sf::Vector2i& getPosition() const;
+  
+  void setSolid(bool solid);
+  
+  bool isSolid() const;
   
 protected:
 
@@ -81,6 +95,10 @@ private:
   std::set<Solid*>  m_touching;
   
   sf::Vector2i      m_position;
+  
+  sf::IntRect       m_bounds;
+  
+friend class Game;
 };
 
 

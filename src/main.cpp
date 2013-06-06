@@ -22,8 +22,6 @@ protected:
 
   void update(float deltaTime)
   {
-    std::cout << "dt : " << deltaTime << std::endl;
-  
     bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z);
     bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S);
     bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q);
@@ -34,11 +32,6 @@ protected:
     position.y += down - up;
     setPosition(position);
   }
-
-private:
-
-  sf::Texture m_texture;
-  sf::Sprite m_sprite;
 };
 
 class MyObjectFactory : public ObjectFactory
@@ -51,17 +44,50 @@ public:
   }
 };
 
+class StaticObject : public GameObject
+{
+public:
+
+  StaticObject() : GameObject()
+  {
+    setBounds(sf::IntRect(0,0,32,32));
+  }
+};
+
+class StaticObjectFactory : public ObjectFactory
+{
+public:
+
+  Object* create()
+  {
+    return new StaticObject();
+  }
+};
+
+/************************************
+* main                              *
+************************************/
 int main(int argc, char** argv)
 {			
-  MyObjectFactory factory;
+  MyObjectFactory moFactory;
+  StaticObjectFactory soFactory;
   
   sf::Texture texture;
   texture.loadFromFile("data/tileset.png", sf::IntRect(0,0,32,32));
   sf::Sprite sprite(texture);
 
   Game game;
-  game.addObjectFactory("myObject", factory);
+  game.addObjectFactory("myObject", moFactory);
+  game.addObjectFactory("staticObject", soFactory);
+  
   MyObject* mgo = (MyObject*)game.createObject("myObject");
   mgo->setSprite(sprite);
+  mgo->setBounds(sf::IntRect(0,0,32,32));
+  
+  ((GameObject*)game.createObject("staticObject"))->setSprite(sprite);
+  GameObject* go = (GameObject*)game.createObject("staticObject");
+  go->setSprite(sprite);
+  go->setPosition(100,100);
+  
   return game.mainLoop();
 }

@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include "Game.hpp"
 #include "Object.hpp"
+#include <iostream>
 
 void Game::addObjectFactory(const std::string& name, ObjectFactory& factory)
 {
@@ -30,7 +31,8 @@ Object* Game::createObject(const std::string& name)
   Solid* solid = dynamic_cast<Solid*>(obj);
   if (solid)
   {
-    // < TODO add the object to the collision system
+    //m_solids.insert(solid);
+    m_solids.push_back(solid);
   }
   
   return obj;
@@ -52,11 +54,14 @@ int Game::mainLoop()
         m_rendow.close();
     }
 
-    // update
+    // update objects
     for (Object* obj : m_objects)
     {
       obj->update(gameClock.getElapsedTime().asSeconds());
     }
+
+    // collisions
+    performCollisions();
 
     // display
     m_rendow.clear(sf::Color::White);
@@ -70,4 +75,27 @@ int Game::mainLoop()
   }
 
   return EXIT_SUCCESS;
+}
+
+void Game::performCollisions()
+{
+  // do it with some iterators
+  //*
+  for (int i=0; i<m_solids.size()-1; i++)
+  {
+    if (m_solids[i]->isSolid())
+    {
+      for (int j=i+1; j<m_solids.size(); j++)
+      {
+        if (m_solids[j]->isSolid() 
+        && m_solids[i]->getBbox().intersects(m_solids[j]->getBbox()))
+        {
+          std::cout << "collision!" << std::endl;
+          m_solids[i]->collideWith(*m_solids[j]);
+          m_solids[j]->collideWith(*m_solids[i]);
+        }
+      }
+    }
+  }
+  //*/
 }

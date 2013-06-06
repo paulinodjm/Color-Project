@@ -7,10 +7,12 @@
 #include <SFML/Graphics.hpp>
 #include <set>
 #include <map>
+#include <vector>
 #include <string>
 
 class Object;
 class Drawable;
+class Solid;
 class ObjectFactory;
 
 class Game
@@ -26,6 +28,8 @@ public:
 
 protected:
 
+  /** Callback methods */
+  
   virtual bool loadRessources() {return true;}
 
   virtual void init() {}
@@ -33,6 +37,9 @@ protected:
   virtual bool update(float deltaTime) {return true;}
 
   virtual void finalize() {}
+  
+  
+  void performCollisions();
 
 private:
 
@@ -41,6 +48,8 @@ private:
   std::set<Object*>     m_objects;
 
   std::set<Drawable*>   m_drawables;
+  
+  std::vector<Solid*>      m_solids;
   
   std::map<std::string, ObjectFactory*> m_objectFactory;
 };
