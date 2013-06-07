@@ -28,9 +28,19 @@ protected:
     bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D);
     
     sf::Vector2i position = getPosition();
-    position.x += right - left;
-    position.y += down - up;
+    position.x += (right - left);
+    position.y += (down - up);
     setPosition(position);
+  }
+
+  void touch(const Solid& solid)
+  {
+    std::cout << "touche " << (&solid) << std::endl;
+  }
+  
+  void untouch(const Solid& solid)
+  {
+    std::cout << "quitte " << (&solid) << std::endl;
   }
 };
 
@@ -88,6 +98,11 @@ int main(int argc, char** argv)
   GameObject* go = (GameObject*)game.createObject("staticObject");
   go->setSprite(sprite);
   go->setPosition(100,100);
+  
+  go = (GameObject*)game.createObject("staticObject");
+  go->setSprite(sprite);
+  go->setPosition(32,0);
+  //*/
   
   return game.mainLoop();
 }

@@ -5,7 +5,7 @@
 
 #include <cstdlib>
 #include "Game.hpp"
-#include "Object.hpp"
+#include "GameObject.hpp"
 #include <iostream>
 
 void Game::addObjectFactory(const std::string& name, ObjectFactory& factory)
@@ -79,8 +79,12 @@ int Game::mainLoop()
 
 void Game::performCollisions()
 {
-  // do it with some iterators
-  //*
+  // TODO << do it with some iterators
+  
+  // security while using indexes.
+  if (m_solids.size() == 0)
+    return;
+  
   for (int i=0; i<m_solids.size()-1; i++)
   {
     if (m_solids[i]->isSolid())
@@ -90,12 +94,13 @@ void Game::performCollisions()
         if (m_solids[j]->isSolid() 
         && m_solids[i]->getBbox().intersects(m_solids[j]->getBbox()))
         {
-          std::cout << "collision!" << std::endl;
           m_solids[i]->collideWith(*m_solids[j]);
           m_solids[j]->collideWith(*m_solids[i]);
         }
       }
-    }
+    }    
+    m_solids[i]->endCollision();
   }
+  m_solids[m_solids.size()-1]->endCollision();
   //*/
 }

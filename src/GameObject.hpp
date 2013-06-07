@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Object.hpp"
+#include "Solid.hpp"
 #include <SFML/Graphics.hpp>
 
 class GameObject : public Object, public Drawable, public Solid
