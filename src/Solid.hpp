@@ -7,7 +7,7 @@
 #include <vector>
 #include <set>
 #include <SFML/Graphics.hpp>
-#include "Game.hpp"
+#include "BaseTypes.hpp"
 
 /**
 * Base class for each object that can collide with others and with
@@ -38,6 +38,8 @@ public:
   void setSolid(bool solid);
   
   bool isSolid() const;
+  
+  const std::set<Solid*>& getTouchingSolids() const;
   
 protected:
 

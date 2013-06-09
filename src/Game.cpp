@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include "Game.hpp"
 #include "GameObject.hpp"
+#include "Solid.hpp"
 #include <iostream>
 
 void Game::addObjectFactory(const std::string& name, ObjectFactory& factory)

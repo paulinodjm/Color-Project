@@ -6,6 +6,19 @@
 #include "Object.hpp"
 #include <iostream>
 
+Resources* Object::m_resources(nullptr);
+
+Resources* Object::getResources()
+{
+  return m_resources;
+}
+
+void Object::setResources(Resources& resources)
+{
+  m_resources = &resources;
+}
+
+
 Drawable::Drawable() : sf::Drawable(), m_visible(true) {}
 
 void Drawable::setVisible(bool visible)
@@ -16,4 +29,9 @@ void Drawable::setVisible(bool visible)
 bool Drawable::isVisible() const
 {
   return m_visible;
+}
+
+Resources& ObjectFactory::getResources()
+{
+  return m_resources;
 }

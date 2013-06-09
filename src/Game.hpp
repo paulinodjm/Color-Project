@@ -9,11 +9,7 @@
 #include <map>
 #include <vector>
 #include <string>
-
-class Object;
-class Drawable;
-class Solid;
-class ObjectFactory;
+#include "BaseTypes.hpp"
 
 class Game
 {

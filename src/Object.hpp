@@ -7,18 +7,29 @@
 
 #include <SFML/Graphics.hpp>
 #include <set>
-#include "Game.hpp"
+#include "BaseTypes.hpp"
+#include "Resources.hpp"
 
 /**
 * Base class for each object in the game.
 */
 class Object
 {
+public:
+
+  static Resources* getResources();
+  
+  static void setResources(Resources& resources);
+
 protected:
 
   virtual void init() {}
 
   virtual void update(float deltaTime) {}
+
+private:
+
+  static Resources* m_resources;
 
 friend class Game;
 };
@@ -49,4 +60,10 @@ class ObjectFactory
 public:
 
   virtual Object* create() = 0;
-};
+  
+  Resources&  getResources();
+  
+private:
+
+  Resources m_resources;
+};//*/

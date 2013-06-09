@@ -91,6 +91,9 @@ void Solid::invertCollisionBuffers()
   m_touching = tmp;
 }
 
-#include "Solid.hpp"
+const std::set<Solid*>& Solid::getTouchingSolids() const
+{
+  return *m_lastTouching;
+}
 
 
