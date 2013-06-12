@@ -11,4 +11,5 @@ class Object;
 class ObjectFactory;
 class Resources;
 class Solid;
-
+template <typename T> class Loader;
+class ImageLoader;

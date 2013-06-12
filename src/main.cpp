@@ -7,6 +7,7 @@
 #include "BaseTypes.hpp"
 #include "Game.hpp"
 #include "GameObject.hpp"
+#include "TextureLoader.hpp"
 #include <string>
 #include <SFML/Graphics.hpp>
 
@@ -43,30 +44,14 @@ protected:
 
   void touch(const Solid& solid)
   {
-    std::cout << "touche " << (&solid) << std::endl;
+    std::cout << "touch " << (&solid) << std::endl;
   }
   
   void untouch(const Solid& solid)
   {
-    std::cout << "quitte " << (&solid) << std::endl;
+    std::cout << "untouch " << (&solid) << std::endl;
   }
 };
-
-/*
-class MyObjectFactory : public ObjectFactory
-{
-public:
-
-  MyObjectFactory()
-  {
-    MyObject::setResources(getResources());
-  }
-
-  Object* create()
-  {
-    return new MyObject();
-  }
-};//*/
 
 class StaticObject : public GameObject
 {
@@ -78,22 +63,6 @@ public:
     setBounds(sf::IntRect(0,0,32,32));
   }
 };
-
-/*
-class StaticObjectFactory : public ObjectFactory
-{
-public:
-
-  StaticObjectFactory()
-  {
-    StaticObject::setResources(getResources());
-  }
-
-  Object* create()
-  {
-    return new StaticObject();
-  }
-};//*/
 
 template <typename T>
 class AutoFactory : public ObjectFactory
@@ -121,12 +90,12 @@ int main(int argc, char** argv)
   AutoFactory<StaticObject> soFactory;
   
   // resources loading and distribution
-  sf::Texture texture;
-  texture.loadFromFile("data/tileset.png", sf::IntRect(0,0,32,32));
-  sf::Sprite sprite(texture);
+  TextureLoader loader;
+  sf::Texture* texture = loader.get("data/tileset.png");
+  sf::Sprite sprite(*texture, sf::IntRect(0,0,32,32));
   
-  moFactory.getResources().addSprite("sprite", sf::Sprite(texture));
-  soFactory.getResources().addSprite("sprite", sf::Sprite(texture));
+  moFactory.getResources().addSprite("sprite", sprite);
+  soFactory.getResources().addSprite("sprite", sprite);
 
   // game initialisation
   Game game;
