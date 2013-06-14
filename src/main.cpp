@@ -71,8 +71,42 @@ public:
   Tilemap(Resources& resources) : GameObject(resources)
   {
     setSolid(false);
-    setSprite(*resources.getSprite("tileset"));
+    m_space = false;
+    m_iTile = 0;
   }
+  
+  void setTileset(Tileset& tileset)
+  {
+    m_iTile = 0;
+    m_tileset = &tileset;
+    setSprite(m_tileset->getTileSprite(m_iTile));
+  }
+  
+  void update(float deltaTime)
+  {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) )
+    {
+      if (!m_space)
+      {
+        m_iTile++;
+        if (m_iTile >= m_tileset->getTileCount())
+        {
+          m_iTile = 0;
+        }
+        setSprite(m_tileset->getTileSprite(m_iTile));
+        m_space = true;
+      }
+    }
+    else
+    {
+      m_space = false;
+    }
+  }
+private:
+
+  bool m_space;
+  unsigned int m_iTile;
+  Tileset* m_tileset;
 };
 
 template <typename T>
@@ -101,10 +135,12 @@ int main(int argc, char** argv)
   sf::Texture* texture = loader.get("data/tileset.png");
   sf::Sprite sprite(*texture, sf::IntRect(0,0,32,32));
   
+  Tileset tileset;
+  tileset.setTexture(*loader.get("data/tileset.png"), true);
+  
   moFactory.getResources().addSprite("sprite", sprite);
   soFactory.getResources().addSprite("sprite", sprite);
-  
-  std::cout << "Game initialisation" << std::endl;
+  tFactory.getResources().addSprite("tileset", tileset.getTileSprite(0));
   
   // game initialisation
   Game game;
@@ -112,15 +148,12 @@ int main(int argc, char** argv)
   game.addObjectFactory("staticObject", soFactory);
   game.addObjectFactory("tilemap", tFactory);
   
-  std::cout << "Objects creation" << std::endl;
-  
   // object creation
   game.createObject("myObject");
   game.createObject("staticObject");
-  /*GameObject* go = (GameObject*)game.createObject("tilemap");
-  go->setPosition(200,0);*/
-  
-  std::cout << "Main loop" << std::endl;
+  Tilemap* tmap = (Tilemap*)game.createObject("tilemap");
+  tmap->setPosition(200,10);
+  tmap->setTileset(tileset);
   
   // main loop
   return game.mainLoop();

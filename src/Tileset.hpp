@@ -13,10 +13,10 @@ public:
 
   Tileset();
 
-  virtual bool isTileSolid(unsigned int iTile) const { return false; }
-
   sf::Sprite getTileSprite(unsigned int iTile) const;
   
+  
+  const sf::Sprite& getSprite() const;
   
   void setTexture(const sf::Texture& texture, bool construct=false);
   

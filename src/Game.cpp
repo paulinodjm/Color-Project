@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////
 
 #include <cstdlib>
+#include <jsoncpp/json/json.h>
 #include "Game.hpp"
 #include "GameObject.hpp"
 #include "Solid.hpp"
@@ -12,6 +13,7 @@
 void Game::addObjectFactory(const std::string& name, ObjectFactory& factory)
 {
   m_objectFactory[name] = &factory;
+  std::cout << "Object '" << name << "' factory added." << std::endl;
 }
 
 Object* Game::createObject(const std::string& name)
@@ -44,6 +46,12 @@ int Game::mainLoop()
   m_rendow.create(sf::VideoMode(640,480), "Colour Project");
   m_rendow.setFramerateLimit(60);
   m_rendow.setKeyRepeatEnabled(false);
+  
+  if (!loadResources())
+  {
+    std::cout << "Resources loading failed. Exiting..." << std::endl;
+    m_rendow.close();
+  }
 
   sf::Clock gameClock;
   sf::Event event;
@@ -78,9 +86,15 @@ int Game::mainLoop()
   return EXIT_SUCCESS;
 }
 
+/** load resources desribed in 'data/resources.json' */
+bool Game::loadResources()
+{
+  return true; 
+}
+
 void Game::performCollisions()
 {
-  // TODO << do it with some iterators
+  // TODO << do it with some iterators (?)
   
   // security while using indexes.
   if (m_solids.size() == 0)

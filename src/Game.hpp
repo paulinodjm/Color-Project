@@ -10,6 +10,8 @@
 #include <vector>
 #include <string>
 #include "BaseTypes.hpp"
+#include "Tileset.hpp"
+#include "TextureLoader.hpp"
 
 class Game
 {
@@ -24,16 +26,14 @@ public:
 
 protected:
 
-  /** Callback methods */
-  
-  virtual bool loadRessources() {return true;}
-
   virtual void init() {}
 
   virtual bool update(float deltaTime) {return true;}
 
   virtual void finalize() {}
   
+  
+  bool loadResources();
   
   void performCollisions();
 
@@ -45,7 +45,11 @@ private:
 
   std::set<Drawable*>   m_drawables;
   
-  std::vector<Solid*>      m_solids;
+  std::vector<Solid*>   m_solids;
   
   std::map<std::string, ObjectFactory*> m_objectFactory;
+  
+  Tileset               m_tileset;
+  
+  TextureLoader         m_textureLoader;
 };
