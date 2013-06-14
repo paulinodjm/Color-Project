@@ -4,7 +4,9 @@
 //////////////////////////////////////////////////////////
 #include "GameObject.hpp"
 
-GameObject::GameObject() : Drawable(), Solid() {}
+GameObject::GameObject() : Object(), Drawable(), Solid() {}
+
+GameObject::GameObject(Resources& resources) : Object(resources), Drawable(), Solid() {}
 
 void GameObject::setPosition(int x, int y)
 {

@@ -17,9 +17,13 @@ class Object
 {
 public:
 
-  static Resources* getResources();
+  Object();
   
-  static void setResources(Resources& resources);
+  Object(Resources& resources);
+
+  Resources* getResources();
+  
+  void setResources(Resources& resources);
 
 protected:
 
@@ -29,7 +33,7 @@ protected:
 
 private:
 
-  static Resources* m_resources;
+  Resources* m_resources;
 
 friend class Game;
 };

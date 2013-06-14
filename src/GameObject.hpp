@@ -14,6 +14,8 @@ class GameObject : public Object, public Drawable, public Solid
 public:
 
   GameObject();
+
+  GameObject(Resources& resources);
   
   virtual void setPosition(int x, int y);
   virtual void setPosition(const sf::Vector2i& position);

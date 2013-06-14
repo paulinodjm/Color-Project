@@ -6,7 +6,9 @@
 #include "Object.hpp"
 #include <iostream>
 
-Resources* Object::m_resources(nullptr);
+Object::Object() : m_resources(nullptr) {}
+
+Object::Object(Resources& resources) : m_resources(&resources) {}
 
 Resources* Object::getResources()
 {

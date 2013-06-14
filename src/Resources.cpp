@@ -3,6 +3,7 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "Resources.hpp"
+#include <iostream>
 
 sf::Texture* Resources::getTexture(const std::string& name)
 {
