@@ -9,6 +9,7 @@
 #include "GameObject.hpp"
 #include "Solid.hpp"
 #include <iostream>
+#include <fstream>
 
 void Game::addObjectFactory(const std::string& name, ObjectFactory& factory)
 {
@@ -52,6 +53,11 @@ int Game::mainLoop()
     std::cout << "Resources loading failed. Exiting..." << std::endl;
     m_rendow.close();
   }
+  
+  for (Object* obj : m_objects)
+  {
+    obj->init();
+  }
 
   sf::Clock gameClock;
   sf::Event event;
@@ -89,6 +95,27 @@ int Game::mainLoop()
 /** load resources desribed in 'data/resources.json' */
 bool Game::loadResources()
 {
+  Json::Value root;
+  Json::Reader reader;
+  std::ifstream resources("data/resources.json");
+  
+  if (!resources.is_open())
+  {
+    std::cerr << "Unable to open resources file!" << std::endl;
+    return false;
+  }
+  if (!reader.parse(resources, root))
+  {
+    std::cerr << reader.getFormatedErrorMessages();
+    return false;
+  }
+
+  sf::Texture* tex = m_textureLoader.get(root["tileset"]["texture"].asString());
+  if (!tex) return false;
+  m_tileset.setTexture(*tex);
+  m_tileset.setTileSize(root["tileset"].get("tileSize", 32).asInt());
+
+  resources.close();
   return true; 
 }
 
@@ -118,4 +145,9 @@ void Game::performCollisions()
   }
   m_solids[m_solids.size()-1]->endCollision();
   //*/
+}
+
+Tileset& Game::getTileset()
+{
+  return m_tileset;
 }

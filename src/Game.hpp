@@ -23,6 +23,8 @@ public:
   void addObjectFactory(const std::string& name, ObjectFactory& factory);
   
   Object* createObject(const std::string& name);
+  
+  Tileset& getTileset();
 
 protected:
 

@@ -82,6 +82,11 @@ public:
     setSprite(m_tileset->getTileSprite(m_iTile));
   }
   
+  void init()
+  {
+    setSprite(m_tileset->getTileSprite(m_iTile));
+  }
+  
   void update(float deltaTime)
   {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) )
@@ -134,13 +139,9 @@ int main(int argc, char** argv)
   TextureLoader loader;
   sf::Texture* texture = loader.get("data/tileset.png");
   sf::Sprite sprite(*texture, sf::IntRect(0,0,32,32));
-  
-  Tileset tileset;
-  tileset.setTexture(*loader.get("data/tileset.png"), true);
-  
+ 
   moFactory.getResources().addSprite("sprite", sprite);
   soFactory.getResources().addSprite("sprite", sprite);
-  tFactory.getResources().addSprite("tileset", tileset.getTileSprite(0));
   
   // game initialisation
   Game game;
@@ -153,7 +154,7 @@ int main(int argc, char** argv)
   game.createObject("staticObject");
   Tilemap* tmap = (Tilemap*)game.createObject("tilemap");
   tmap->setPosition(200,10);
-  tmap->setTileset(tileset);
+  tmap->setTileset(game.getTileset());
   
   // main loop
   return game.mainLoop();
