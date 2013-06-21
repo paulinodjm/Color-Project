@@ -80,6 +80,7 @@ int Game::mainLoop()
 
     // display
     m_rendow.clear(sf::Color::White);
+    m_rendow.draw(m_tilemap);
     for (Drawable* drawable : m_drawables)
     { 
       if (drawable->isVisible())
@@ -114,6 +115,8 @@ bool Game::loadResources()
   if (!tex) return false;
   m_tileset.setTexture(*tex);
   m_tileset.setTileSize(root["tileset"].get("tileSize", 32).asInt());
+  
+  m_tilemap.setTileset(m_tileset);
 
   resources.close();
   return true; 
@@ -150,4 +153,9 @@ void Game::performCollisions()
 Tileset& Game::getTileset()
 {
   return m_tileset;
+}
+
+Tilemap& Game::getTilemap()
+{
+  return m_tilemap;
 }

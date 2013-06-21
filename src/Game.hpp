@@ -12,6 +12,7 @@
 #include "BaseTypes.hpp"
 #include "Tileset.hpp"
 #include "TextureLoader.hpp"
+#include "Tilemap.hpp"
 
 class Game
 {
@@ -25,6 +26,8 @@ public:
   Object* createObject(const std::string& name);
   
   Tileset& getTileset();
+  
+  Tilemap& getTilemap();
 
 protected:
 
@@ -52,6 +55,8 @@ private:
   std::map<std::string, ObjectFactory*> m_objectFactory;
   
   Tileset               m_tileset;
+  
+  Tilemap               m_tilemap;
   
   TextureLoader         m_textureLoader;
 };

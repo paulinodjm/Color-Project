@@ -65,6 +65,7 @@ public:
   }
 };
 
+/*
 class Tilemap : public GameObject
 {
 public:
@@ -112,7 +113,7 @@ private:
   bool m_space;
   unsigned int m_iTile;
   Tileset* m_tileset;
-};
+};//*/
 
 template <typename T>
 class AutoFactory : public ObjectFactory
@@ -133,7 +134,6 @@ int main(int argc, char** argv)
   // object factories declaration
   AutoFactory<MyObject>     moFactory;
   AutoFactory<StaticObject> soFactory;
-  AutoFactory<Tilemap>      tFactory;
   
   // resources loading and distribution
   TextureLoader loader;
@@ -147,14 +147,28 @@ int main(int argc, char** argv)
   Game game;
   game.addObjectFactory("myObject", moFactory);
   game.addObjectFactory("staticObject", soFactory);
-  game.addObjectFactory("tilemap", tFactory);
   
   // object creation
   game.createObject("myObject");
-  game.createObject("staticObject");
-  Tilemap* tmap = (Tilemap*)game.createObject("tilemap");
-  tmap->setPosition(200,10);
-  tmap->setTileset(game.getTileset());
+  
+  Tilemap& tilemap = game.getTilemap();
+  tilemap.setHeight(5);
+  tilemap.setWidth(10);
+  tilemap.setTile(1, 3, 24);
+  tilemap.setTile(1, 4, 38);
+  tilemap.setTile(2, 4, 39);
+  tilemap.setTile(3, 4, 39);
+  tilemap.setTile(4, 4, 40);
+  tilemap.setTile(4, 3, 24);
+  std::cout << "largeur : " << tilemap.getWidth() << ", hauteur : " << tilemap.getHeight() << std::endl;
+  for (unsigned int y=0; y<tilemap.getHeight(); y++)
+  {
+    for (unsigned int x=0; x<tilemap.getWidth(); x++)
+    {
+      std::cout << (int)tilemap.getTile(x, y);
+    }
+    std::cout << std::endl;
+  }
   
   // main loop
   return game.mainLoop();

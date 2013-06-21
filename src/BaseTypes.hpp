@@ -14,3 +14,4 @@ class Solid;
 template <typename T> class Loader;
 class ImageLoader;
 class Tileset;
+class Tilemap;
