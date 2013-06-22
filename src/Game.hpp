@@ -28,6 +28,11 @@ public:
   Tileset& getTileset();
   
   Tilemap& getTilemap();
+  
+  TextureLoader& getTextureLoader();
+  
+  
+  bool loadTilemap(const std::string& filename);
 
 protected:
 

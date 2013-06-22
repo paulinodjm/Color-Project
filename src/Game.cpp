@@ -150,6 +150,43 @@ void Game::performCollisions()
   //*/
 }
 
+bool Game::loadTilemap(const std::string& filename)
+{
+  Json::Value root;
+  Json::Reader reader;
+  std::ifstream resources(filename);
+  
+  if (!resources.is_open())
+  {
+    std::cerr << "Unable to open '" << filename << "'!" << std::endl;
+    return false;
+  }
+  if (!reader.parse(resources, root))
+  {
+    std::cerr << reader.getFormatedErrorMessages();
+    return false;
+  }
+  
+  m_tilemap.setWidth(root.get("width", 0).asUInt());
+  m_tilemap.setHeight(root.get("height", 0).asUInt());
+  
+  Json::Value tiles = root["tiles"];
+  for (unsigned int y=0; y<m_tilemap.getHeight(); y++)
+  {
+    for (unsigned int x=0; x<m_tilemap.getWidth(); x++)
+    {
+      m_tilemap.setTile(x, y, tiles[(y*m_tilemap.getWidth())+x].asUInt());
+    }
+  }
+  
+  return false;
+}
+
+TextureLoader& Game::getTextureLoader()
+{
+  return m_textureLoader;
+}
+
 Tileset& Game::getTileset()
 {
   return m_tileset;

@@ -1,7 +1,8 @@
 Color Project
 
-Project of an open-source platformer game, where colours take their importances.
+Project of an open-source platformer game, where colours take their importance.
 
 Dependencies:
 
-- libsfml (version 2.0)
+- SFML (version 2.0)
+- JsonCpp
