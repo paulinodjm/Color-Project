@@ -74,6 +74,12 @@ int Game::mainLoop()
     {
       obj->update(gameClock.getElapsedTime().asSeconds());
     }
+    
+    // move solids
+    for (Solid* solid : m_solids)
+    {
+      solid->move(m_tilemap);
+    }
 
     // collisions
     performCollisions();

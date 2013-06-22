@@ -3,20 +3,15 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "GameObject.hpp"
+#include <iostream>
 
 GameObject::GameObject() : Object(), Drawable(), Solid() {}
 
 GameObject::GameObject(Resources& resources) : Object(resources), Drawable(), Solid() {}
 
-void GameObject::setPosition(int x, int y)
+void GameObject::moved()
 {
-  Solid::setPosition(x, y);
-  m_sprite.setPosition((float)x, (float)y);
-}
-
-void GameObject::setPosition(const sf::Vector2i& position)
-{
-  setPosition(position.x, position.y);
+  m_sprite.setPosition((float)getPosition().x, (float)getPosition().y);
 }
 
 const sf::Sprite& GameObject::getSprite() const

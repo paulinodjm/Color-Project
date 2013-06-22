@@ -36,6 +36,9 @@ public:
   
   void setTileset(const Tileset& tileset);
   
+  
+  bool placeFree(const sf::IntRect& rect) const ;
+  
 protected:
 
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

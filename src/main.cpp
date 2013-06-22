@@ -37,10 +37,13 @@ protected:
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V))
       setSolid(false);
     
+    /*
     sf::Vector2i position = getPosition();
     position.x += (right - left);
     position.y += (down - up);
     setPosition(position);
+    //*/
+    setSpeed( (right-left), (down-up) );
   }
 };
 

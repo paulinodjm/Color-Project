@@ -17,14 +17,13 @@ public:
 
   GameObject(Resources& resources);
   
-  virtual void setPosition(int x, int y);
-  virtual void setPosition(const sf::Vector2i& position);
-  
   const sf::Sprite& getSprite() const;
   
   void setSprite(const sf::Sprite& sprite);
   
 protected:
+
+  void moved();
 
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;
   

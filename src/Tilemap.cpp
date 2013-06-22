@@ -3,6 +3,7 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "Tilemap.hpp"
+#include <iostream>
 
 Tilemap::Tilemap() : Drawable(),
   m_width(0),
@@ -92,4 +93,26 @@ void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
       }
     }
   }
+}
+
+bool Tilemap::placeFree(const sf::IntRect& rect) const
+{
+  if (!m_tileset) return true;
+  
+  unsigned int xstart = rect.left / m_tileset->getTileSize();
+  unsigned int xend = (rect.left + rect.width - 1) / m_tileset->getTileSize(); 
+  unsigned int ystart = rect.top / m_tileset->getTileSize();
+  unsigned int yend = (rect.top + rect.height - 1) / m_tileset->getTileSize();
+  
+  for (unsigned int x=xstart; x<=xend; x++)
+  {
+    for (unsigned int y=ystart; y<=yend; y++)
+    {
+      if (isTileSolid(x, y))
+      {
+        return false;
+      }
+    }
+  }
+  return true;
 }

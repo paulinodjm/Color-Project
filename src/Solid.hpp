@@ -8,6 +8,8 @@
 #include <set>
 #include <SFML/Graphics.hpp>
 #include "BaseTypes.hpp"
+#include "Tilemap.hpp"
+#include <iostream>
 
 /**
 * Base class for each object that can collide with others and with
@@ -30,10 +32,18 @@ public:
   /** return the bounding box of the object, in world coordinates */
   sf::IntRect getBbox() const;
   
-  virtual void setPosition(int x, int y);
-  virtual void setPosition(const sf::Vector2i& position);
+  
+  void setPosition(int x, int y);
+  void setPosition(const sf::Vector2i& position);
   
   const sf::Vector2i& getPosition() const;
+  
+  
+  void setSpeed(int x, int y);
+  void setSpeed(const sf::Vector2i& speed);
+  
+  const sf::Vector2i& getSpeed() const;
+  
   
   void setSolid(bool solid);
   
@@ -41,7 +51,12 @@ public:
   
   const std::set<Solid*>& getTouchingSolids() const;
   
+  
+  void move(const Tilemap& tilemap);
+  
 protected:
+
+  virtual void moved() {}
 
   virtual void touch(const Solid& other) {}
   
@@ -67,6 +82,8 @@ private:
   bool              m_solid;
   
   sf::Vector2i      m_position;
+  
+  sf::Vector2i      m_speed;
   
   sf::IntRect       m_bounds;
   

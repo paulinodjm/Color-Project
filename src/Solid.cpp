@@ -40,11 +40,28 @@ const sf::Vector2i& Solid::getPosition() const
 void Solid::setPosition(int x, int y)
 {
   m_position = sf::Vector2i(x, y);
+  moved();
 }
 
 void Solid::setPosition(const sf::Vector2i& position)
 {
   m_position = position;
+  moved();
+}
+
+void Solid::setSpeed(int x, int y)
+{
+  setSpeed(sf::Vector2i(x, y));
+}
+
+void Solid::setSpeed(const sf::Vector2i& speed)
+{
+  m_speed = speed;
+}
+  
+const sf::Vector2i& Solid::getSpeed() const
+{
+  return m_speed;
 }
 
 void Solid::setSolid(bool solid)
@@ -96,4 +113,80 @@ const std::set<Solid*>& Solid::getTouchingSolids() const
   return *m_lastTouching;
 }
 
-
+void Solid::move(const Tilemap& tilemap)
+{
+  if (m_solid)
+  {
+    sf::Vector2i position = getPosition();
+    sf::Vector2i move = m_speed;
+    sf::IntRect bBox = getBbox();
+    
+    // horizontal move
+    while (move.x > 0)
+    {
+      bBox.left++;
+      if (tilemap.placeFree(bBox))
+      {
+        position.x++;
+        move.x--;
+      }
+      else
+      {
+        bBox.left--;
+        move.x = 0;
+      }
+    }
+    
+    while (move.x < 0)
+    {
+      bBox.left--;
+      if (tilemap.placeFree(bBox))
+      {
+        position.x--;
+        move.x++;
+      }
+      else
+      {
+        bBox.left++;
+        move.x = 0;
+      }
+    }
+    
+    // vertical move
+    while (move.y > 0)
+    {
+      bBox.top++;
+      if (tilemap.placeFree(bBox))
+      {
+        position.y++;
+        move.y--;
+      }
+      else
+      {
+        bBox.top++;
+        move.y = 0;
+      }
+    }
+    
+    while (move.y < 0)
+    {
+      bBox.top--;
+      if (tilemap.placeFree(bBox))
+      {
+        position.y--;
+        move.y++;
+      }
+      else
+      {
+        bBox.top--;
+        move.y = 0;
+      }
+    }
+    
+    setPosition(position);
+  }
+  else
+  {
+    setPosition(m_position.x + m_speed.x, m_position.y + m_speed.y);
+  }
+}
