@@ -6,3 +6,5 @@ Dependencies:
 
 - SFML (version 2.0)
 - JsonCpp
+
+This project use premake4 for building.
