@@ -33,6 +33,10 @@ public:
   
   
   bool loadTilemap(const std::string& filename);
+  
+  bool loadObjects(const std::string& filename);
+  
+  void deleteObjects();
 
 protected:
 

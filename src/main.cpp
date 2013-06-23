@@ -20,7 +20,6 @@ public:
   {
     setSprite(*resources.getSprite("sprite"));
     setBounds(sf::IntRect(0,0,32,32));
-    setPosition(50, 50);
   }
 
 protected:
@@ -37,12 +36,6 @@ protected:
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V))
       setSolid(false);
     
-    /*
-    sf::Vector2i position = getPosition();
-    position.x += (right - left);
-    position.y += (down - up);
-    setPosition(position);
-    //*/
     setSpeed( (right-left), (down-up) );
   }
 };
@@ -90,8 +83,8 @@ int main(int argc, char** argv)
   AutoFactory<MyObject>     moFactory;
   AutoFactory<StaticObject> soFactory;
 
-  game.addObjectFactory("myObject", moFactory);
-  game.addObjectFactory("staticObject", soFactory);
+  game.addObjectFactory("MyObject", moFactory);
+  game.addObjectFactory("StaticObject", soFactory);
   
   // resources loading and distribution
   sf::Texture* texture = game.getTextureLoader().get("data/tileset.png");
@@ -102,10 +95,7 @@ int main(int argc, char** argv)
   
   // tilemap loading
   game.loadTilemap("data/tilemap.json");
-  
-  // object creation
-  game.createObject("staticObject");
-  game.createObject("myObject");
+  game.loadObjects("data/objects.json");
   
   // main loop
   return game.mainLoop();

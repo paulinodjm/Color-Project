@@ -1,0 +1,14 @@
+{
+  "MyObject":[
+    {"x":32, "y":32}
+  ],
+  
+  "StaticObject":[
+    {"x":0, "y":0},
+    {"x":0, "y":32}
+  ],
+  
+  "PainVolume":[
+    {"x":0, "y":0, "width":20, "height":30}
+  ]
+}

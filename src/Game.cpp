@@ -160,14 +160,14 @@ bool Game::loadTilemap(const std::string& filename)
 {
   Json::Value root;
   Json::Reader reader;
-  std::ifstream resources(filename);
+  std::ifstream file(filename);
   
-  if (!resources.is_open())
+  if (!file.is_open())
   {
     std::cerr << "Unable to open '" << filename << "'!" << std::endl;
     return false;
   }
-  if (!reader.parse(resources, root))
+  if (!reader.parse(file, root))
   {
     std::cerr << reader.getFormatedErrorMessages();
     return false;
@@ -185,7 +185,57 @@ bool Game::loadTilemap(const std::string& filename)
     }
   }
   
+  file.close();
   return false;
+}
+
+bool Game::loadObjects(const std::string& filename)
+{
+  Json::Value root;
+  Json::Reader reader;
+  std::ifstream file(filename);
+  
+  if (!file.is_open())
+  {
+    std::cerr << "Unable to open '" << filename << "'!" << std::endl;
+    return false;
+  }
+  if (!reader.parse(file, root))
+  {
+    std::cerr << reader.getFormatedErrorMessages();
+    return false;
+  }
+  
+  deleteObjects();
+  
+  for (auto it : m_objectFactory)
+  {
+    std::cout << "chargement des '" << it.first << "'... ";
+    Json::Value objects = root[it.first];
+    for (unsigned int i=0; i<objects.size(); i++)
+    {
+      Object* object = createObject(it.first);
+      Solid* solid = dynamic_cast<Solid*>(object);
+      if (solid)
+      { 
+        solid->setPosition(objects[i].get("x", 0).asInt(), objects[i].get("y", 0).asInt());
+      }
+    }
+  }
+  
+  file.close();
+  return true;
+}
+
+void Game::deleteObjects()
+{
+  for (Object* obj : m_objects)
+  {
+    delete obj;
+  }
+  m_objects.clear();
+  m_drawables.clear();
+  m_solids.clear();
 }
 
 TextureLoader& Game::getTextureLoader()
