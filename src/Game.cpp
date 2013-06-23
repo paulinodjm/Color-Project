@@ -44,7 +44,7 @@ Object* Game::createObject(const std::string& name)
 
 int Game::mainLoop()
 {
-  m_rendow.create(sf::VideoMode(640,480), "Colour Project");
+  m_rendow.create(sf::VideoMode(640,480), "Colour Project", sf::Style::Fullscreen);
   m_rendow.setFramerateLimit(60);
   m_rendow.setKeyRepeatEnabled(false);
   
@@ -67,6 +67,11 @@ int Game::mainLoop()
     {
       if (event.type == sf::Event::Closed)
         m_rendow.close();
+      else if (event.type == sf::Event::KeyPressed)
+      {
+        if (event.key.code == sf::Keyboard::Key::Escape)
+          m_rendow.close();
+      }
     }
 
     // update objects
@@ -83,7 +88,7 @@ int Game::mainLoop()
 
     // collisions
     performCollisions();
-
+    
     // display
     m_rendow.clear(sf::Color::White);
     m_rendow.draw(m_tilemap);
