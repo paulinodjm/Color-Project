@@ -11,7 +11,7 @@ GameObject::GameObject(Resources& resources) : Object(resources), Drawable(), So
 
 void GameObject::moved()
 {
-  m_sprite.setPosition((float)getPosition().x, (float)getPosition().y);
+  m_sprite.setPosition(getPosition().x, getPosition().y);
 }
 
 const sf::Sprite& GameObject::getSprite() const
@@ -22,7 +22,7 @@ const sf::Sprite& GameObject::getSprite() const
 void GameObject::setSprite(const sf::Sprite& sprite)
 {
   m_sprite = sprite;
-  m_sprite.setPosition((float)getPosition().x, (float)getPosition().y);
+  m_sprite.setPosition(getPosition().x, getPosition().y);
 }
 
 void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const

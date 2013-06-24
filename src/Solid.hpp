@@ -21,28 +21,28 @@ public:
 
   Solid();
   
-  Solid(const sf::IntRect& bounds, const sf::Vector2i& position = sf::Vector2i(0,0));
+  Solid(const sf::FloatRect& bounds, const sf::Vector2f& position = sf::Vector2f(0,0));
   
   /** set the bounds of the object, in relative coordinates */
-  void setBounds(const sf::IntRect& bounds);
+  void setBounds(const sf::FloatRect& bounds);
   
   /** return the bounds of the object, relative */
-  const sf::IntRect& getBounds() const;
+  const sf::FloatRect& getBounds() const;
   
   /** return the bounding box of the object, in world coordinates */
-  sf::IntRect getBbox() const;
+  sf::FloatRect getBbox() const;
   
   
-  void setPosition(int x, int y);
-  void setPosition(const sf::Vector2i& position);
+  void setPosition(float x, float y);
+  void setPosition(const sf::Vector2f& position);
   
-  const sf::Vector2i& getPosition() const;
+  const sf::Vector2f& getPosition() const;
   
   
-  void setSpeed(int x, int y);
-  void setSpeed(const sf::Vector2i& speed);
+  void setSpeed(float x, float y);
+  void setSpeed(const sf::Vector2f& speed);
   
-  const sf::Vector2i& getSpeed() const;
+  const sf::Vector2f& getSpeed() const;
   
   
   void setSolid(bool solid);
@@ -81,11 +81,11 @@ private:
 
   bool              m_solid;
   
-  sf::Vector2i      m_position;
+  sf::Vector2f      m_position;
   
-  sf::Vector2i      m_speed;
+  sf::Vector2f      m_speed;
   
-  sf::IntRect       m_bounds;
+  sf::FloatRect     m_bounds;
   
   std::set<Solid*>* m_touching;
   

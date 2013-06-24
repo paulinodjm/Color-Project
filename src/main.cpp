@@ -19,7 +19,7 @@ public:
   MyObject(Resources& resources) : GameObject(resources)
   {
     setSprite(*resources.getSprite("sprite"));
-    setBounds(sf::IntRect(0,0,32,32));
+    setBounds(sf::FloatRect(0,0,32,32));
   }
 
 protected:
@@ -62,7 +62,7 @@ public:
   StaticObject(Resources& resources) : GameObject(resources)
   {
     setSprite(*resources.getSprite("white"));
-    setBounds(sf::IntRect(0,0,32,32));
+    setBounds(sf::FloatRect(0,0,32,32));
   }
   
   void touch(const Solid& solid)

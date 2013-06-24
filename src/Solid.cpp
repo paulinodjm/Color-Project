@@ -6,9 +6,9 @@
 #include "Solid.hpp"
 #include <iostream>
 
-Solid::Solid() : Solid(sf::IntRect()) {}
+Solid::Solid() : Solid(sf::FloatRect()) {}
 
-Solid::Solid(const sf::IntRect& bounds, const sf::Vector2i& position) 
+Solid::Solid(const sf::FloatRect& bounds, const sf::Vector2f& position) 
 : 
   m_bounds(bounds), 
   m_position(position), 
@@ -18,52 +18,52 @@ Solid::Solid(const sf::IntRect& bounds, const sf::Vector2i& position)
   m_lastTouching = new std::set<Solid*>();
 }
 
-void Solid::setBounds(const sf::IntRect& bounds)
+void Solid::setBounds(const sf::FloatRect& bounds)
 {
   m_bounds = bounds;
 }
 
-const sf::IntRect& Solid::getBounds() const
+const sf::FloatRect& Solid::getBounds() const
 {
   return m_bounds;
 }
 
-sf::IntRect Solid::getBbox() const
+sf::FloatRect Solid::getBbox() const
 {
-  sf::IntRect bBox = m_bounds;
+  sf::FloatRect bBox = m_bounds;
   bBox.top += m_position.y;
   bBox.left += m_position.x;
   return bBox;
 }
 
-const sf::Vector2i& Solid::getPosition() const
+const sf::Vector2f& Solid::getPosition() const
 {
   return m_position;
 }
 
-void Solid::setPosition(int x, int y)
+void Solid::setPosition(float x, float y)
 {
-  m_position = sf::Vector2i(x, y);
+  m_position = sf::Vector2f(x, y);
   moved();
 }
 
-void Solid::setPosition(const sf::Vector2i& position)
+void Solid::setPosition(const sf::Vector2f& position)
 {
   m_position = position;
   moved();
 }
 
-void Solid::setSpeed(int x, int y)
+void Solid::setSpeed(float x, float y)
 {
-  setSpeed(sf::Vector2i(x, y));
+  setSpeed(sf::Vector2f(x, y));
 }
 
-void Solid::setSpeed(const sf::Vector2i& speed)
+void Solid::setSpeed(const sf::Vector2f& speed)
 {
   m_speed = speed;
 }
   
-const sf::Vector2i& Solid::getSpeed() const
+const sf::Vector2f& Solid::getSpeed() const
 {
   return m_speed;
 }
@@ -119,6 +119,7 @@ const std::set<Solid*>& Solid::getTouchingSolids() const
 
 void Solid::move(const Tilemap& tilemap)
 {
+	/*
   if (m_solid)
   {
     sf::Vector2i position = getPosition();
@@ -197,5 +198,8 @@ void Solid::move(const Tilemap& tilemap)
   {
     setPosition(m_position.x + m_speed.x, m_position.y + m_speed.y);
   }
+  //*/
+  
+  setPosition(m_position.x + m_speed.x, m_position.y + m_speed.y);
 }
 
