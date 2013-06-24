@@ -215,7 +215,6 @@ bool Game::loadObjects(const std::string& filename)
   
   for (auto it : m_objectFactory)
   {
-    std::cout << "chargement des '" << it.first << "'... ";
     Json::Value objects = root[it.first];
     for (unsigned int i=0; i<objects.size(); i++)
     {
