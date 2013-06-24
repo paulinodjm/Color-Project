@@ -36,7 +36,8 @@ protected:
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V))
       setSolid(false);
     
-    setSpeed( (right-left), (down-up) );
+		std::cout << deltaTime << " <=> " << m_clock.restart().asSeconds() << std::endl;
+    setSpeed( (right-left)*50, (down-up)*50 );
   }
   
   void landed() 
@@ -53,6 +54,10 @@ protected:
   {
     std::cout << "hit the ceiling!" << std::endl;
   }
+  
+private:
+
+	sf::Clock m_clock;
 };
 
 class StaticObject : public GameObject

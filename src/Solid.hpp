@@ -91,6 +91,8 @@ private:
   
   std::set<Solid*>* m_lastTouching;
   
+  sf::Clock					m_clock;
+  
 friend class Game;
 };
 

@@ -200,6 +200,8 @@ void Solid::move(const Tilemap& tilemap)
   }
   //*/
   
-  setPosition(m_position.x + m_speed.x, m_position.y + m_speed.y);
+  float deltaTime = m_clock.restart().asSeconds();
+  sf::Vector2f speed = m_speed * deltaTime;
+  setPosition(m_position.x + speed.x, m_position.y + speed.y);
 }
 

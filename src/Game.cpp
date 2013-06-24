@@ -45,7 +45,7 @@ Object* Game::createObject(const std::string& name)
 int Game::mainLoop()
 {
   m_rendow.create(sf::VideoMode(640,480), "Colour Project");
-  m_rendow.setFramerateLimit(60);
+  m_rendow.setFramerateLimit(4000);
   m_rendow.setKeyRepeatEnabled(false);
   
   if (!loadResources())
@@ -59,7 +59,6 @@ int Game::mainLoop()
     obj->init();
   }
 
-  sf::Clock gameClock;
   sf::Event event;
   while (m_rendow.isOpen())
   {
@@ -77,7 +76,7 @@ int Game::mainLoop()
     // update objects
     for (Object* obj : m_objects)
     {
-      obj->update(gameClock.getElapsedTime().asSeconds());
+      obj->update(1.f);
     }
     
     // move solids
@@ -98,7 +97,6 @@ int Game::mainLoop()
         m_rendow.draw(*drawable);
     }
     m_rendow.display();
-    gameClock.restart();
   }
 
   return EXIT_SUCCESS;
