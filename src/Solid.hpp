@@ -64,7 +64,7 @@ protected:
   
   virtual void landed() {}
   
-  virtual void fall() {}
+  virtual void fall() {} // Dont work
   
   virtual void hitWall() {}
   

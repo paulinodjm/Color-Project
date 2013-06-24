@@ -8,7 +8,11 @@
 
 Solid::Solid() : Solid(sf::IntRect()) {}
 
-Solid::Solid(const sf::IntRect& bounds, const sf::Vector2i& position) : m_bounds(bounds), m_position(position), m_solid(true) 
+Solid::Solid(const sf::IntRect& bounds, const sf::Vector2i& position) 
+: 
+  m_bounds(bounds), 
+  m_position(position), 
+  m_solid(true)
 {
   m_touching = new std::set<Solid*>();
   m_lastTouching = new std::set<Solid*>();
@@ -134,6 +138,7 @@ void Solid::move(const Tilemap& tilemap)
       {
         bBox.left--;
         move.x = 0;
+        hitWall();
       }
     }
     
@@ -149,6 +154,7 @@ void Solid::move(const Tilemap& tilemap)
       {
         bBox.left++;
         move.x = 0;
+        hitWall();
       }
     }
     
@@ -165,6 +171,7 @@ void Solid::move(const Tilemap& tilemap)
       {
         bBox.top++;
         move.y = 0;
+        landed();
       }
     }
     
@@ -180,6 +187,7 @@ void Solid::move(const Tilemap& tilemap)
       {
         bBox.top--;
         move.y = 0;
+        hitCeiling();
       }
     }
     
@@ -190,3 +198,4 @@ void Solid::move(const Tilemap& tilemap)
     setPosition(m_position.x + m_speed.x, m_position.y + m_speed.y);
   }
 }
+

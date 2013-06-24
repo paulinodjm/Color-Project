@@ -38,6 +38,21 @@ protected:
     
     setSpeed( (right-left), (down-up) );
   }
+  
+  void landed() 
+  {
+    std::cout << "on ground!" << std::endl;
+  }
+  
+  void hitWall() 
+  {
+    std::cout << "hit a wall" << std::endl;
+  }
+  
+  void hitCeiling() 
+  {
+    std::cout << "hit the ceiling!" << std::endl;
+  }
 };
 
 class StaticObject : public GameObject

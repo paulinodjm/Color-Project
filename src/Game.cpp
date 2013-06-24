@@ -44,7 +44,7 @@ Object* Game::createObject(const std::string& name)
 
 int Game::mainLoop()
 {
-  m_rendow.create(sf::VideoMode(640,480), "Colour Project", sf::Style::Fullscreen);
+  m_rendow.create(sf::VideoMode(640,480), "Colour Project");
   m_rendow.setFramerateLimit(60);
   m_rendow.setKeyRepeatEnabled(false);
   
