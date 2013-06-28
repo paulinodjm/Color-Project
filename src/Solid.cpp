@@ -153,6 +153,7 @@ void Solid::move(const Tilemap& tilemap)
         bBox.left = right - bBox.width;
       }
       m_position.x = bBox.left - m_bounds.left;
+      hitWall();
     }
   }
   
@@ -166,13 +167,17 @@ void Solid::move(const Tilemap& tilemap)
       if (speed.y < 0)
       {
         bBox.top = (int)(bBox.top)/tileSize*tileSize + tileSize;
+        m_position.y = bBox.top - m_bounds.top;
+        hitCeiling();
       }
       else
       {
         float bottom = (int)(bBox.top + bBox.height)/tileSize*tileSize;
         bBox.top = bottom - bBox.height;
+        m_position.y = bBox.top - m_bounds.top;
+        landed();
       }
-      m_position.y = bBox.top - m_bounds.top;
+      
     }
   }
   
