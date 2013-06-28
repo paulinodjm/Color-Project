@@ -134,18 +134,25 @@ void Solid::move(const Tilemap& tilemap)
 {
   sf::Vector2f speed = m_speed * m_clock.restart().asSeconds();
   unsigned int tileSize = tilemap.getTileSize();
+  sf::FloatRect bBox;
   
   // horizontal move
   if (speed.x != 0.f)
   {
     m_position.x += speed.x;
-    if ( !tilemap.placeFree(getBbox()) )
+    bBox = getBbox();
+    if ( !tilemap.placeFree(bBox) )
     {
-      m_position.x = (int)(m_position.x)/tileSize*tileSize;
       if (speed.x < 0)
       {
-        m_position.x += tileSize;
+        bBox.left = (int)(bBox.left)/tileSize*tileSize + tileSize;
       }
+      else
+      {
+        float right = (int)(bBox.left + bBox.width)/tileSize*tileSize;
+        bBox.left = right - bBox.width;
+      }
+      m_position.x = bBox.left - m_bounds.left;
     }
   }
   
@@ -153,13 +160,19 @@ void Solid::move(const Tilemap& tilemap)
   if (speed.y != 0.f)
   {
     m_position.y += speed.y;
-    if ( !tilemap.placeFree(getBbox()) )
+    bBox = getBbox();
+    if ( !tilemap.placeFree(bBox) )
     {
-      m_position.y = (int)(m_position.y)/tileSize*tileSize;
       if (speed.y < 0)
       {
-        m_position.y += tileSize;
+        bBox.top = (int)(bBox.top)/tileSize*tileSize + tileSize;
       }
+      else
+      {
+        float bottom = (int)(bBox.top + bBox.height)/tileSize*tileSize;
+        bBox.top = bottom - bBox.height;
+      }
+      m_position.y = bBox.top - m_bounds.top;
     }
   }
   
