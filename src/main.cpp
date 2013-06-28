@@ -36,8 +36,7 @@ protected:
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V))
       setSolid(false);
     
-		std::cout << deltaTime << " <=> " << m_clock.restart().asSeconds() << std::endl;
-    setSpeed( (right-left)*50, (down-up)*50 );
+    setSpeed( (right-left)*120, (down-up)*120 );
   }
   
   void landed() 
@@ -119,4 +118,5 @@ int main(int argc, char** argv)
   
   // main loop
   return game.mainLoop();
-}
+}//*/
+

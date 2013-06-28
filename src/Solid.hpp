@@ -31,6 +31,8 @@ public:
   
   /** return the bounding box of the object, in world coordinates */
   sf::FloatRect getBbox() const;
+  sf::FloatRect getBbox(float xOffset, float yOffset) const;
+  sf::FloatRect getBbox(const sf::Vector2f& offset) const;
   
   
   void setPosition(float x, float y);

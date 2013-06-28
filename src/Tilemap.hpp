@@ -37,7 +37,10 @@ public:
   void setTileset(const Tileset& tileset);
   
   
-  bool placeFree(const sf::IntRect& rect) const ;
+  bool placeFree(const sf::FloatRect& rect) const ;
+  
+  
+  unsigned int getTileSize() const;
   
 protected:
 

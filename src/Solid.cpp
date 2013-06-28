@@ -36,6 +36,19 @@ sf::FloatRect Solid::getBbox() const
   return bBox;
 }
 
+sf::FloatRect Solid::getBbox(float xOffset, float yOffset) const
+{
+  sf::FloatRect bBox = getBbox();
+  bBox.left += xOffset;
+  bBox.top += yOffset;
+  return bBox;
+}
+
+sf::FloatRect Solid::getBbox(const sf::Vector2f& offset) const
+{
+  return getBbox(offset.x, offset.y);
+}
+
 const sf::Vector2f& Solid::getPosition() const
 {
   return m_position;
@@ -119,89 +132,37 @@ const std::set<Solid*>& Solid::getTouchingSolids() const
 
 void Solid::move(const Tilemap& tilemap)
 {
-	/*
-  if (m_solid)
-  {
-    sf::Vector2i position = getPosition();
-    sf::Vector2i move = m_speed;
-    sf::IntRect bBox = getBbox();
-    
-    // horizontal move
-    while (move.x > 0)
-    {
-      bBox.left++;
-      if (tilemap.placeFree(bBox))
-      {
-        position.x++;
-        move.x--;
-      }
-      else
-      {
-        bBox.left--;
-        move.x = 0;
-        hitWall();
-      }
-    }
-    
-    while (move.x < 0)
-    {
-      bBox.left--;
-      if (tilemap.placeFree(bBox))
-      {
-        position.x--;
-        move.x++;
-      }
-      else
-      {
-        bBox.left++;
-        move.x = 0;
-        hitWall();
-      }
-    }
-    
-    // vertical move
-    while (move.y > 0)
-    {
-      bBox.top++;
-      if (tilemap.placeFree(bBox))
-      {
-        position.y++;
-        move.y--;
-      }
-      else
-      {
-        bBox.top++;
-        move.y = 0;
-        landed();
-      }
-    }
-    
-    while (move.y < 0)
-    {
-      bBox.top--;
-      if (tilemap.placeFree(bBox))
-      {
-        position.y--;
-        move.y++;
-      }
-      else
-      {
-        bBox.top--;
-        move.y = 0;
-        hitCeiling();
-      }
-    }
-    
-    setPosition(position);
-  }
-  else
-  {
-    setPosition(m_position.x + m_speed.x, m_position.y + m_speed.y);
-  }
-  //*/
+  sf::Vector2f speed = m_speed * m_clock.restart().asSeconds();
+  unsigned int tileSize = tilemap.getTileSize();
   
-  float deltaTime = m_clock.restart().asSeconds();
-  sf::Vector2f speed = m_speed * deltaTime;
-  setPosition(m_position.x + speed.x, m_position.y + speed.y);
+  // horizontal move
+  if (speed.x != 0.f)
+  {
+    m_position.x += speed.x;
+    if ( !tilemap.placeFree(getBbox()) )
+    {
+      m_position.x = (int)(m_position.x)/tileSize*tileSize;
+      if (speed.x < 0)
+      {
+        m_position.x += tileSize;
+      }
+    }
+  }
+  
+  // vertical move
+  if (speed.y != 0.f)
+  {
+    m_position.y += speed.y;
+    if ( !tilemap.placeFree(getBbox()) )
+    {
+      m_position.y = (int)(m_position.y)/tileSize*tileSize;
+      if (speed.y < 0)
+      {
+        m_position.y += tileSize;
+      }
+    }
+  }
+  
+  moved();
 }
 

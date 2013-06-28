@@ -95,14 +95,26 @@ void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
   }
 }
 
-bool Tilemap::placeFree(const sf::IntRect& rect) const
+bool Tilemap::placeFree(const sf::FloatRect& rect) const
 {
   if (!m_tileset) return true;
+ 
+  int left = static_cast<int>(rect.left);
+  int top = static_cast<int>(rect.top);
+  int right = static_cast<int>(rect.left + rect.width);
+  int bottom = static_cast<int>(rect.top + rect.height);
   
-  unsigned int xstart = rect.left / m_tileset->getTileSize();
-  unsigned int xend = (rect.left + rect.width - 1) / m_tileset->getTileSize(); 
-  unsigned int ystart = rect.top / m_tileset->getTileSize();
-  unsigned int yend = (rect.top + rect.height - 1) / m_tileset->getTileSize();
+  if (left < 0 || top < 0) return true;
+  
+  if (right < (rect.left + rect.width))
+    right++;
+  if (bottom < (rect.top + rect.height))
+    bottom++;
+  
+  unsigned int xstart = left / getTileSize();
+  unsigned int xend = (right-1) / getTileSize(); 
+  unsigned int ystart = top / getTileSize();
+  unsigned int yend = (bottom-1) / getTileSize();
   
   for (unsigned int x=xstart; x<=xend; x++)
   {
@@ -116,3 +128,11 @@ bool Tilemap::placeFree(const sf::IntRect& rect) const
   }
   return true;
 }
+
+unsigned int Tilemap::getTileSize() const
+{
+  if (!m_tileset) 
+    return 32;
+  else 
+    return m_tileset->getTileSize();
+} 
