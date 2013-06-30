@@ -24,22 +24,41 @@ Object* Game::createObject(const std::string& name)
     return nullptr;
     
   Object* obj = factory->second->create();
+  /*
   m_objects.insert(obj);
   
   Drawable* drawable = dynamic_cast<Drawable*>(obj);
   if (drawable)
   {
-    m_drawables.insert(drawable);
+    m_drawables.insert( DrawablePtr(drawable, drawable->getDepth()) );
   }
   
   Solid* solid = dynamic_cast<Solid*>(obj);
   if (solid)
   {
-    //m_solids.insert(solid);
     m_solids.push_back(solid);
   }
-  
+  //*/
   return obj;
+}
+
+void Game::addObject(Object* object)
+{
+  if (object == nullptr) return;
+  
+  m_objects.insert(object);
+  
+  Drawable* drawable = dynamic_cast<Drawable*>(object);
+  if (drawable)
+  {
+    m_drawables.insert( DrawablePtr(drawable, drawable->getDepth()) );
+  }
+  
+  Solid* solid = dynamic_cast<Solid*>(object);
+  if (solid)
+  {
+    m_solids.push_back(solid);
+  }
 }
 
 int Game::mainLoop()
@@ -91,8 +110,9 @@ int Game::mainLoop()
     // display
     m_rendow.clear(sf::Color::White);
     m_rendow.draw(m_tilemap);
-    for (Drawable* drawable : m_drawables)
+    for (const DrawablePtr& drawablePtr : m_drawables)
     { 
+      Drawable* drawable = drawablePtr.getDrawable();
       if (drawable->isVisible())
         m_rendow.draw(*drawable);
     }
@@ -217,11 +237,22 @@ bool Game::loadObjects(const std::string& filename)
     for (unsigned int i=0; i<objects.size(); i++)
     {
       Object* object = createObject(it.first);
+      
+      // solid properties
       Solid* solid = dynamic_cast<Solid*>(object);
       if (solid)
       { 
         solid->setPosition(objects[i].get("x", 0).asInt(), objects[i].get("y", 0).asInt());
       }
+      
+      // drawable properties
+      Drawable* drawable = dynamic_cast<Drawable*>(object);
+      if (drawable)
+      {
+        drawable->setDepth(objects[i].get("z", 0).asInt());
+      }
+      
+      addObject(object);
     }
   }
   

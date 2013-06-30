@@ -15,6 +15,7 @@
 #include "Tilemap.hpp"
 #include "Drawable.hpp"
 
+
 class Game
 {
 public:
@@ -25,6 +26,8 @@ public:
   void addObjectFactory(const std::string& name, ObjectFactory& factory);
   
   Object* createObject(const std::string& name);
+  
+  void addObject(Object* object);
   
   Tileset& getTileset();
   
@@ -54,19 +57,19 @@ protected:
 
 private:
 
-  sf::RenderWindow      m_rendow;
+  sf::RenderWindow            m_rendow;
+    
+  std::set<Object*>           m_objects;
 
-  std::set<Object*>     m_objects;
-
-  std::set<Drawable*>   m_drawables;
+  std::multiset<DrawablePtr>  m_drawables;
   
-  std::vector<Solid*>   m_solids;
+  std::vector<Solid*>         m_solids;
   
   std::map<std::string, ObjectFactory*> m_objectFactory;
   
-  Tileset               m_tileset;
+  Tileset                     m_tileset;
   
-  Tilemap               m_tilemap;
+  Tilemap                     m_tilemap;
   
-  TextureLoader         m_textureLoader;
+  TextureLoader               m_textureLoader;
 };
