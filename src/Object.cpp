@@ -20,19 +20,7 @@ void Object::setResources(Resources& resources)
   m_resources = &resources;
 }
 
-
-Drawable::Drawable() : sf::Drawable(), m_visible(true) {}
-
-void Drawable::setVisible(bool visible)
-{
-  m_visible = visible;
-}
-
-bool Drawable::isVisible() const
-{
-  return m_visible;
-}
-
+///////////////////////////////////////////
 Resources& ObjectFactory::getResources()
 {
   return m_resources;

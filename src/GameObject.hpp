@@ -8,6 +8,7 @@
 #include "BaseTypes.hpp"
 #include "Object.hpp"
 #include "Solid.hpp"
+#include "Drawable.hpp"
 
 class GameObject : public Object, public Drawable, public Solid
 {

@@ -13,6 +13,7 @@
 #include "Tileset.hpp"
 #include "TextureLoader.hpp"
 #include "Tilemap.hpp"
+#include "Drawable.hpp"
 
 class Game
 {
