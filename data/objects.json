@@ -1,11 +1,11 @@
 {
   "MyObject":[
-    {"x":32, "y":32, "z":1}
+    {"x":32, "y":32, "z":1, "name":"player"}
   ],
   
   "StaticObject":[
-    {"x":0, "y":0, "z":2},
-    {"x":0, "y":32}
+    {"x":0, "y":0, "name":"static"},
+    {"x":0, "y":32, "name":"static"}
   ],
   
   "PainVolume":[

@@ -6,7 +6,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <set>
+#include <string>
 #include "BaseTypes.hpp"
 #include "Resources.hpp"
 
@@ -24,6 +24,10 @@ public:
   Resources* getResources();
   
   void setResources(Resources& resources);
+  
+  const std::string& getName() const;
+  
+  void setName(const std::string& name);
 
 protected:
 
@@ -34,6 +38,8 @@ protected:
 private:
 
   Resources* m_resources;
+  
+  std::string m_name;
 
 friend class Game;
 };

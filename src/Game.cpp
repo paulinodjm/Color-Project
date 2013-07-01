@@ -23,35 +23,19 @@ Object* Game::createObject(const std::string& name)
   if (factory == m_objectFactory.end())
     return nullptr;
     
-  Object* obj = factory->second->create();
-  /*
-  m_objects.insert(obj);
-  
-  Drawable* drawable = dynamic_cast<Drawable*>(obj);
-  if (drawable)
-  {
-    m_drawables.insert( DrawablePtr(drawable, drawable->getDepth()) );
-  }
-  
-  Solid* solid = dynamic_cast<Solid*>(obj);
-  if (solid)
-  {
-    m_solids.push_back(solid);
-  }
-  //*/
-  return obj;
+  return factory->second->create();
 }
 
 void Game::addObject(Object* object)
 {
   if (object == nullptr) return;
   
-  m_objects.insert(object);
+  m_objects.insert( std::pair<std::string, Object*>(object->getName(), object) );
   
   Drawable* drawable = dynamic_cast<Drawable*>(object);
   if (drawable)
   {
-    m_drawables.insert( DrawablePtr(drawable, drawable->getDepth()) );
+    m_drawables.insert(std::pair<int, Drawable*>(drawable->getDepth(), drawable) );
   }
   
   Solid* solid = dynamic_cast<Solid*>(object);
@@ -73,10 +57,13 @@ int Game::mainLoop()
     m_rendow.close();
   }
   
-  for (Object* obj : m_objects)
+  std::cout << "[";
+  for (auto it : m_objects)
   {
-    obj->init();
+    std::cout << "'" << it.first << "'";
+    it.second->init();
   }
+  std::cout << "]" << std::endl;
 
   sf::Event event;
   while (m_rendow.isOpen())
@@ -93,9 +80,9 @@ int Game::mainLoop()
     }
 
     // update objects
-    for (Object* obj : m_objects)
+    for (auto it : m_objects)
     {
-      obj->update(1.f);
+      it.second->update(1.f);
     }
     
     // move solids
@@ -110,9 +97,9 @@ int Game::mainLoop()
     // display
     m_rendow.clear(sf::Color::White);
     m_rendow.draw(m_tilemap);
-    for (const DrawablePtr& drawablePtr : m_drawables)
+    for (auto it : m_drawables)
     { 
-      Drawable* drawable = drawablePtr.getDrawable();
+      Drawable* drawable = it.second;
       if (drawable->isVisible())
         m_rendow.draw(*drawable);
     }
@@ -237,6 +224,7 @@ bool Game::loadObjects(const std::string& filename)
     for (unsigned int i=0; i<objects.size(); i++)
     {
       Object* object = createObject(it.first);
+      object->setName( objects[i].get("name", "").asString() );
       
       // solid properties
       Solid* solid = dynamic_cast<Solid*>(object);
@@ -262,9 +250,9 @@ bool Game::loadObjects(const std::string& filename)
 
 void Game::deleteObjects()
 {
-  for (Object* obj : m_objects)
+  for (auto it : m_objects)
   {
-    delete obj;
+    delete it.second;
   }
   m_objects.clear();
   m_drawables.clear();

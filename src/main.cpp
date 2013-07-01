@@ -39,21 +39,6 @@ protected:
     setSpeed( (right-left)*120, (down-up)*120 );
   }
   
-  void landed() 
-  {
-    std::cout << "on ground!" << std::endl;
-  }
-  
-  void hitWall() 
-  {
-    std::cout << "hit a wall" << std::endl;
-  }
-  
-  void hitCeiling() 
-  {
-    std::cout << "hit the ceiling!" << std::endl;
-  }
-  
 private:
 
 	sf::Clock m_clock;
@@ -67,6 +52,11 @@ public:
   {
     setSprite(*resources.getSprite("white"));
     setBounds(sf::FloatRect(0,0,32,32));
+  }
+  
+  void update(float deltaTime)
+  {
+    //std::cout << "update!" << std::endl;
   }
   
   void touch(const Solid& solid)

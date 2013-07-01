@@ -33,28 +33,3 @@ private:
   int m_depth;
 };
 
-
-/**
-* Handles a Drawable instance in the drawable list;
-* Retains the depth of the drawable.
-*/
-class DrawablePtr
-{
-public:
-
-  DrawablePtr(Drawable* drawable, int depth);
-  
-  Drawable* getDrawable() const;
-  
-  int getDepth() const;
-  
-  bool operator<(const DrawablePtr& other) const;
-  
-private:
-
-  Drawable* m_drawable;
-  
-  int m_depth;
-};
-
-

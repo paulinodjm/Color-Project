@@ -20,6 +20,16 @@ void Object::setResources(Resources& resources)
   m_resources = &resources;
 }
 
+const std::string& Object::getName() const
+{
+  return m_name;
+}
+  
+void Object::setName(const std::string& name)
+{
+  m_name = name;
+}
+
 ///////////////////////////////////////////
 Resources& ObjectFactory::getResources()
 {

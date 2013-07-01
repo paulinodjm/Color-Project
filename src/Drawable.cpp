@@ -26,22 +26,3 @@ int Drawable::getDepth() const
   return m_depth;
 }
 
-///////////////////////////////////////////////:
-DrawablePtr::DrawablePtr(Drawable* drawable, int depth)
-: m_drawable(drawable), m_depth(depth)
-{}
-
-Drawable* DrawablePtr::getDrawable() const
-{
-  return m_drawable;
-}
-
-int DrawablePtr::getDepth() const
-{
-  return m_depth;
-}
-
-bool DrawablePtr::operator<(const DrawablePtr& other) const
-{
-  return m_depth < other.m_depth;
-}

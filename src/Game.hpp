@@ -36,6 +36,13 @@ public:
   TextureLoader& getTextureLoader();
   
   
+  /** return the first Object identified by this name */
+  Object* getObject(const std::string& name);
+  
+  /** return all the objects identified by this name */
+  std::vector<Object*> getObjects(const std::string& name);
+  
+  
   bool loadTilemap(const std::string& filename);
   
   bool loadObjects(const std::string& filename);
@@ -57,19 +64,19 @@ protected:
 
 private:
 
-  sf::RenderWindow            m_rendow;
+  sf::RenderWindow                      m_rendow;
     
-  std::set<Object*>           m_objects;
+  std::multimap<std::string, Object*>   m_objects;
 
-  std::multiset<DrawablePtr>  m_drawables;
+  std::multimap<int, Drawable*>         m_drawables;
   
-  std::vector<Solid*>         m_solids;
+  std::vector<Solid*>                   m_solids;
   
   std::map<std::string, ObjectFactory*> m_objectFactory;
   
-  Tileset                     m_tileset;
+  Tileset                               m_tileset;
   
-  Tilemap                     m_tilemap;
+  Tilemap                               m_tilemap;
   
-  TextureLoader               m_textureLoader;
+  TextureLoader                         m_textureLoader;
 };
