@@ -57,13 +57,10 @@ int Game::mainLoop()
     m_rendow.close();
   }
   
-  std::cout << "[";
   for (auto it : m_objects)
   {
-    std::cout << "'" << it.first << "'";
     it.second->init();
   }
-  std::cout << "]" << std::endl;
 
   sf::Event event;
   while (m_rendow.isOpen())
