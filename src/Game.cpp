@@ -56,7 +56,7 @@ int Game::mainLoop()
     std::cout << "Resources loading failed. Exiting..." << std::endl;
     m_rendow.close();
   }
-  
+ 
   for (auto it : m_objects)
   {
     it.second->init();
@@ -243,6 +243,33 @@ bool Game::loadObjects(const std::string& filename)
   
   file.close();
   return true;
+}
+
+Object* Game::getObject(const std::string& name)
+{
+  auto it = m_objects.find(name);
+  
+  if (it == m_objects.end())
+  {
+    return nullptr;
+  }
+  else
+  {
+    return it->second;
+  }
+}
+
+std::vector<Object*> Game::getObjects(const std::string& name)
+{
+  std::vector<Object*> objects;
+  auto range = m_objects.equal_range(name);
+  
+  for (auto it = range.first; it != range.second; it++)
+  {
+    objects.push_back(it->second);
+  }
+  
+  return objects;
 }
 
 void Game::deleteObjects()
