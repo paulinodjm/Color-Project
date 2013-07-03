@@ -114,7 +114,6 @@ bool Tilemap::placeFree(const sf::FloatRect& rect) const
   int ystart = top / getTileSize();
   int yend = (bottom-1) / getTileSize();
   
-  std::cout << xstart << "->" << xend << "; " << ystart << "->" << yend << " : ";
   
   for (int x=xstart; x<=xend; x++)
   {
@@ -122,12 +121,10 @@ bool Tilemap::placeFree(const sf::FloatRect& rect) const
     {
       if (isTileSolid(x, y))
       {
-        std::cout << "collision" << std::endl;
         return false;
       }
     }
   }
-  std::cout << "vide" << std::endl;
   return true;
 }
 
