@@ -5,9 +5,8 @@
 #include "GameObject.hpp"
 #include <iostream>
 
-GameObject::GameObject() : Object(), Drawable(), Solid() {}
-
-GameObject::GameObject(Resources& resources) : Object(resources), Drawable(), Solid() {}
+GameObject::GameObject(Resources& resources) 
+: Object(resources), Drawable(), Solid() {}
 
 void GameObject::moved()
 {

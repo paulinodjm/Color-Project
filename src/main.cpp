@@ -9,6 +9,7 @@
 #include "GameObject.hpp"
 #include "TextureLoader.hpp"
 #include "Tileset.hpp"
+#include "Tilemap.hpp"
 #include <string>
 #include <SFML/Graphics.hpp>
 
@@ -16,13 +17,18 @@ class MyObject : public GameObject
 {
 public:
 
-  MyObject(Resources& resources) : GameObject(resources)
+  MyObject(Resources& resources) : GameObject(resources), m_tilemap(nullptr)
   {
     setSprite(*resources.getSprite("sprite"));
     setBounds(sf::FloatRect(1,0,30,32));
   }
 
 protected:
+
+  void init(Level& level)
+  {
+    m_tilemap = dynamic_cast<Tilemap*>( level.getObject("tilemap") );
+  }
 
   void update(float deltaTime)
   {
@@ -37,11 +43,14 @@ protected:
       setSolid(false);
     
     setSpeed( (right-left)*120, (down-up)*120 );
+    if (m_tilemap)
+      move(*m_tilemap);
   }
   
 private:
 
 	sf::Clock m_clock;
+	Tilemap *m_tilemap;
 };
 
 class StaticObject : public GameObject

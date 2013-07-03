@@ -14,8 +14,6 @@ class GameObject : public Object, public Drawable, public Solid
 {
 public:
 
-  GameObject();
-
   GameObject(Resources& resources);
   
   const sf::Sprite& getSprite() const;

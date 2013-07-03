@@ -5,7 +5,7 @@
 #include "Tilemap.hpp"
 #include <iostream>
 
-Tilemap::Tilemap() : Drawable(),
+Tilemap::Tilemap() : Object(), Drawable(),
   m_width(0),
   m_height(0),
   m_tileset(nullptr)

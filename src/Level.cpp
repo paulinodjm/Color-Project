@@ -75,7 +75,7 @@ void Level::init()
 {
   for (auto it : m_objects)
   {
-    it.second->init();
+    it.second->init(*this);
   }
 }
 

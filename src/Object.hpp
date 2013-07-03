@@ -16,7 +16,7 @@
 class Object
 {
 public:
-
+  
   Object();
   
   Object(Resources& resources);
@@ -31,7 +31,7 @@ public:
 
 protected:
 
-  virtual void init() {}
+  virtual void init(Level& level) {}
 
   virtual void update(float deltaTime) {}
 
@@ -40,7 +40,7 @@ private:
   Resources* m_resources;
   
   std::string m_name;
-
+  
 friend class Game;
 friend class Level;
 };

@@ -8,8 +8,11 @@
 #include "Tileset.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Drawable.hpp"
+#include "Object.hpp"
+#include "Resources.hpp"
 
-class Tilemap : public sf::Drawable
+class Tilemap : public Drawable, public Object
 {
 public:
 

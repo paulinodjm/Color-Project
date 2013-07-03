@@ -44,10 +44,16 @@ int Game::mainLoop()
   else
   {
     /// for tests only
+    m_level = new Level();
     loadTilemap("data/tilemap.json");
     loadObjects("data/objects.json");
+    
+    m_tilemap.setName("tilemap");
+    m_level->addObject(&m_tilemap);
     ///
   }
+
+  m_level->init();
 
   sf::Event event;
   while (m_rendow.isOpen())
@@ -66,19 +72,11 @@ int Game::mainLoop()
     // update objects
     m_level->update();
     
-    /*
-    // move solids
-    for (Solid* solid : m_solids)
-    {
-      solid->move(m_tilemap);
-    }*/
-
     // collisions
     m_level->performCollisions();
     
     // display
     m_rendow.clear(sf::Color::White);
-    m_rendow.draw(m_tilemap);
     m_rendow.draw(*m_level);
     m_rendow.display();
   }
@@ -200,6 +198,12 @@ bool Game::loadTilemap(const std::string& filename)
 
 bool Game::loadObjects(const std::string& filename)
 {
+  if (!m_level)
+  {
+    std::cout << "Object loading failed : no level exists" << std::endl;
+    return false;
+  }
+
   Json::Value root;
   Json::Reader reader;
   std::ifstream file(filename);
@@ -215,15 +219,7 @@ bool Game::loadObjects(const std::string& filename)
     return false;
   }
   
-  /// For tests only
-  if (m_level)
-  {
-    m_level->deleteObjects();
-  }
-  else
-  {
-    m_level = new Level();
-  }
+  m_level->deleteObjects();
   
   for (auto it : m_objectFactory)
   {
