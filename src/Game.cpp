@@ -143,11 +143,8 @@ bool Game::loadResources()
   Json::Value objects = root["objects"];
   for (auto it : m_objectFactory)
   {
-    std::cout << "chargement des sprites de '" << it.first << "'... ";
-  
     // sprites loading
     Json::Value sprites = objects[it.first]["sprites"];
-    std::cout << "(" << sprites.size() << " sprites)" << std::endl;
     for (int i=0; i<sprites.size(); i++)
     {
       sf::Sprite* sprite = new sf::Sprite();
@@ -172,7 +169,6 @@ bool Game::loadResources()
         sprite->setOrigin( sf::Vector2f(origin.get("x", 0).asDouble(), origin.get("y", 0).asDouble()) );
       }
       
-      std::cout << "ajout du sprite '" << sprites[i]["name"].asString() << "'" << std::endl;
       it.second->getResources().addSprite(sprites[i]["name"].asString(), *sprite);
     }
   }
