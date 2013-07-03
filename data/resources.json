@@ -8,7 +8,12 @@
   "objects":
   {
     "MyObject":
-    {
+    { 
+      "textures":
+      [
+        "data/strip.png"
+      ],
+      
       "sprites":
       [
         {

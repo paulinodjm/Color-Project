@@ -143,6 +143,21 @@ bool Game::loadResources()
   Json::Value objects = root["objects"];
   for (auto it : m_objectFactory)
   {
+    // texture loading
+    Json::Value textures = objects[it.first]["textures"];
+    for (int i=0; i<textures.size(); i++)
+    {
+      tex = m_textureLoader.get(textures[i].asString());
+      if (tex)
+      {
+        it.second->getResources().addTexture(textures[i].asString(), tex);
+      }
+      else
+      {
+        return false;
+      }
+    }
+  
     // sprites loading
     Json::Value sprites = objects[it.first]["sprites"];
     for (int i=0; i<sprites.size(); i++)
