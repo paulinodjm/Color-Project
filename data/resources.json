@@ -1,44 +1,35 @@
-{
-  "tileset":
-  {
-    "texture":"data/tileset.png",
-    "tileSize":32
+{ 
+  "MyObject":
+  { 
+    "textures":
+    [
+      "data/strip.png"
+    ],
+    
+    "sprites":
+    [
+      {
+        "name":"sprite", 
+        "texture":"data/tileset.png",
+        "rect":{"left":0, "top":128, "width":32, "height":32}
+      }
+    ]
   },
   
-  "objects":
+  "StaticObject":
   {
-    "MyObject":
-    { 
-      "textures":
-      [
-        "data/strip.png"
-      ],
-      
-      "sprites":
-      [
-        {
-          "name":"sprite", 
-          "texture":"data/tileset.png",
-          "rect":{"left":0, "top":128, "width":32, "height":32}
-        }
-      ]
-    },
-    
-    "StaticObject":
-    {
-      "sprites":
-      [
-        {
-          "name":"white",
-          "texture":"data/tileset.png",
-          "rect":{"left":64, "top":0, "width":32, "height":32}
-        },
-        {
-          "name":"red",
-          "texture":"data/tileset.png",
-          "rect":{"left":32, "top":0, "width":32, "height":32}
-        }
-      ]
-    }
+    "sprites":
+    [
+      {
+        "name":"white",
+        "texture":"data/tileset.png",
+        "rect":{"left":64, "top":0, "width":32, "height":32}
+      },
+      {
+        "name":"red",
+        "texture":"data/tileset.png",
+        "rect":{"left":32, "top":0, "width":32, "height":32}
+      }
+    ]
   }
 }

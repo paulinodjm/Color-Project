@@ -109,11 +109,10 @@ bool Game::loadResources()
   m_tilemap.setTileset(m_tileset);//*/
   
   // object ressources loading
-  Json::Value objects = root["objects"];
   for (auto it : m_objectFactory)
   {
     // texture loading
-    Json::Value textures = objects[it.first]["textures"];
+    Json::Value textures = root[it.first]["textures"];
     for (int i=0; i<textures.size(); i++)
     {
       tex = m_textureLoader.get(textures[i].asString());
@@ -128,7 +127,7 @@ bool Game::loadResources()
     }
   
     // sprites loading
-    Json::Value sprites = objects[it.first]["sprites"];
+    Json::Value sprites = root[it.first]["sprites"];
     for (int i=0; i<sprites.size(); i++)
     {
       sf::Sprite* sprite = new sf::Sprite();
