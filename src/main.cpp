@@ -95,17 +95,6 @@ int main(int argc, char** argv)
   game.addObjectFactory("MyObject", moFactory);
   game.addObjectFactory("StaticObject", soFactory);
   
-  // resources loading and distribution
-  sf::Texture* texture = game.getTextureLoader().get("data/tileset.png");
- 
-  moFactory.getResources().addSprite("sprite", sf::Sprite(*texture, sf::IntRect(0, 128, 32, 32)));
-  soFactory.getResources().addSprite("white", sf::Sprite(*texture, sf::IntRect(64, 0, 32, 32)));
-  soFactory.getResources().addSprite("red", sf::Sprite(*texture, sf::IntRect(32, 0, 32, 32)));
-  
-  // tilemap loading
-  game.loadTilemap("data/tilemap.json");
-  game.loadObjects("data/objects.json");
-  
   // main loop
   return game.mainLoop();
 }//*/

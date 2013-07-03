@@ -56,6 +56,13 @@ int Game::mainLoop()
     std::cout << "Resources loading failed. Exiting..." << std::endl;
     m_rendow.close();
   }
+  else
+  {
+    /// for tests only
+    loadTilemap("data/tilemap.json");
+    loadObjects("data/objects.json");
+    ///
+  }
  
   for (auto it : m_objects)
   {
@@ -124,12 +131,51 @@ bool Game::loadResources()
     return false;
   }
 
+  // tileset loading
   sf::Texture* tex = m_textureLoader.get(root["tileset"]["texture"].asString());
   if (!tex) return false;
   m_tileset.setTexture(*tex);
   m_tileset.setTileSize(root["tileset"].get("tileSize", 32).asInt());
   
   m_tilemap.setTileset(m_tileset);
+  
+  // object ressources loading
+  Json::Value objects = root["objects"];
+  for (auto it : m_objectFactory)
+  {
+    std::cout << "chargement des sprites de '" << it.first << "'... ";
+  
+    // sprites loading
+    Json::Value sprites = objects[it.first]["sprites"];
+    std::cout << "(" << sprites.size() << " sprites)" << std::endl;
+    for (int i=0; i<sprites.size(); i++)
+    {
+      sf::Sprite* sprite = new sf::Sprite();
+      tex = m_textureLoader.get(sprites[i]["texture"].asString());
+      if (!tex) return false;
+      sprite->setTexture(*tex, true);
+      Json::Value rect = sprites[i]["rect"];
+      if (!rect.isNull())
+      {
+        sprite->setTextureRect(
+          sf::IntRect(
+            rect.get("left", 0).asInt(),
+            rect.get("top", 0).asInt(),
+            rect.get("width", 0).asInt(),
+            rect.get("height", 0).asInt()
+          )
+        );
+      }
+      Json::Value origin = sprites[i]["origin"];
+      if (!origin.isNull())
+      {
+        sprite->setOrigin( sf::Vector2f(origin.get("x", 0).asDouble(), origin.get("y", 0).asDouble()) );
+      }
+      
+      std::cout << "ajout du sprite '" << sprites[i]["name"].asString() << "'" << std::endl;
+      it.second->getResources().addSprite(sprites[i]["name"].asString(), *sprite);
+    }
+  }
 
   resources.close();
   return true; 
