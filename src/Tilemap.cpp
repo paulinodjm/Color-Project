@@ -11,21 +11,21 @@ Tilemap::Tilemap() : Drawable(),
   m_tileset(nullptr)
 {}
 
-bool Tilemap::isTileSolid(unsigned int x, unsigned int y) const
+bool Tilemap::isTileSolid(int x, int y) const
 {
   return getTile(x, y) > 0;
 }
 
 
-void Tilemap::setTile(unsigned int x, unsigned int y, unsigned int tile)
+void Tilemap::setTile(int x, int y, unsigned int tile)
 {
-  if (x < m_width && y < m_height)
+  if (x >= 0 && y >= 0 && x < m_width && y < m_height)
     m_tiles[x][y] = tile;
 }
 
-unsigned int Tilemap::getTile(unsigned int x, unsigned int y) const
+unsigned int Tilemap::getTile(int x, int y) const
 {
-  if (x < m_width && y < m_height)
+  if (x >= 0 && y >= 0 && x < m_width && y < m_height)
   {
     return m_tiles[x][y];
   }
@@ -104,32 +104,34 @@ bool Tilemap::placeFree(const sf::FloatRect& rect) const
   int right = static_cast<int>(rect.left + rect.width);
   int bottom = static_cast<int>(rect.top + rect.height);
   
-  if (left < 0 || top < 0) return true;
-  
   if (right < (rect.left + rect.width))
     right++;
   if (bottom < (rect.top + rect.height))
     bottom++;
   
-  unsigned int xstart = left / getTileSize();
-  unsigned int xend = (right-1) / getTileSize(); 
-  unsigned int ystart = top / getTileSize();
-  unsigned int yend = (bottom-1) / getTileSize();
+  int xstart = left / getTileSize();
+  int xend = (right-1) / getTileSize(); 
+  int ystart = top / getTileSize();
+  int yend = (bottom-1) / getTileSize();
   
-  for (unsigned int x=xstart; x<=xend; x++)
+  std::cout << xstart << "->" << xend << "; " << ystart << "->" << yend << " : ";
+  
+  for (int x=xstart; x<=xend; x++)
   {
-    for (unsigned int y=ystart; y<=yend; y++)
+    for (int y=ystart; y<=yend; y++)
     {
       if (isTileSolid(x, y))
       {
+        std::cout << "collision" << std::endl;
         return false;
       }
     }
   }
+  std::cout << "vide" << std::endl;
   return true;
 }
 
-unsigned int Tilemap::getTileSize() const
+int Tilemap::getTileSize() const
 {
   if (!m_tileset) 
     return 32;

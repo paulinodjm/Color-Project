@@ -15,12 +15,12 @@ public:
 
   Tilemap();
 
-  virtual bool isTileSolid(unsigned int x, unsigned int y) const;
+  virtual bool isTileSolid(int x, int y) const;
 
 
-  void setTile(unsigned int x, unsigned int y, unsigned int tile);
+  void setTile(int x, int y, unsigned int tile);
   
-  unsigned int getTile(unsigned int x, unsigned int y) const;
+  unsigned int getTile(int x, int y) const;
   
   
   unsigned int getWidth() const;
@@ -40,7 +40,7 @@ public:
   bool placeFree(const sf::FloatRect& rect) const ;
   
   
-  unsigned int getTileSize() const;
+  int getTileSize() const;
   
 protected:
 

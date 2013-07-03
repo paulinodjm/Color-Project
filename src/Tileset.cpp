@@ -39,15 +39,17 @@ const sf::Texture* Tileset::getTexture() const
   return m_sprite.getTexture();
 }
 
-void Tileset::setTileSize(unsigned int tileSize, bool construct)
+void Tileset::setTileSize(int tileSize, bool construct)
 {
+  if (tileSize <= 0) return;
+
   m_tileSize = tileSize;
   
   if (construct)
     constructTileset();
 }
 
-unsigned int Tileset::getTileSize() const
+int Tileset::getTileSize() const
 {
   return m_tileSize;
 }

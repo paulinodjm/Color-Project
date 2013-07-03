@@ -22,9 +22,9 @@ public:
   
   const sf::Texture* getTexture() const;
   
-  void setTileSize(unsigned int tileSize, bool construct=true);
+  void setTileSize(int tileSize, bool construct=true);
   
-  unsigned int getTileSize() const;
+  int getTileSize() const;
   
   unsigned int getTileCount() const;
   
