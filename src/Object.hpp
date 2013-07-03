@@ -42,6 +42,7 @@ private:
   std::string m_name;
 
 friend class Game;
+friend class Level;
 };
 
 /**

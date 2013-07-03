@@ -95,6 +95,6 @@ private:
   
   sf::Clock					m_clock;
   
-friend class Game;
+friend class Level;
 };
 

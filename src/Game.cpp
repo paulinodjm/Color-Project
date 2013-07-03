@@ -11,6 +11,9 @@
 #include <iostream>
 #include <fstream>
 
+Game::Game() : m_level(nullptr)
+{}
+
 void Game::addObjectFactory(const std::string& name, ObjectFactory& factory)
 {
   m_objectFactory[name] = &factory;
@@ -26,24 +29,6 @@ Object* Game::createObject(const std::string& name)
   return factory->second->create();
 }
 
-void Game::addObject(Object* object)
-{
-  if (object == nullptr) return;
-  
-  m_objects.insert( std::pair<std::string, Object*>(object->getName(), object) );
-  
-  Drawable* drawable = dynamic_cast<Drawable*>(object);
-  if (drawable)
-  {
-    m_drawables.insert(std::pair<int, Drawable*>(drawable->getDepth(), drawable) );
-  }
-  
-  Solid* solid = dynamic_cast<Solid*>(object);
-  if (solid)
-  {
-    m_solids.push_back(solid);
-  }
-}
 
 int Game::mainLoop()
 {
@@ -63,11 +48,6 @@ int Game::mainLoop()
     loadObjects("data/objects.json");
     ///
   }
- 
-  for (auto it : m_objects)
-  {
-    it.second->init();
-  }
 
   sf::Event event;
   while (m_rendow.isOpen())
@@ -84,29 +64,22 @@ int Game::mainLoop()
     }
 
     // update objects
-    for (auto it : m_objects)
-    {
-      it.second->update(1.f);
-    }
+    m_level->update();
     
+    /*
     // move solids
     for (Solid* solid : m_solids)
     {
       solid->move(m_tilemap);
-    }
+    }*/
 
     // collisions
-    performCollisions();
+    m_level->performCollisions();
     
     // display
     m_rendow.clear(sf::Color::White);
     m_rendow.draw(m_tilemap);
-    for (auto it : m_drawables)
-    { 
-      Drawable* drawable = it.second;
-      if (drawable->isVisible())
-        m_rendow.draw(*drawable);
-    }
+    m_rendow.draw(*m_level);
     m_rendow.display();
   }
 
@@ -192,34 +165,6 @@ bool Game::loadResources()
   return true; 
 }
 
-void Game::performCollisions()
-{
-  // TODO << do it with some iterators (?)
-  
-  // security while using indexes.
-  if (m_solids.size() == 0)
-    return;
-  
-  for (int i=0; i<m_solids.size()-1; i++)
-  {
-    if (m_solids[i]->isSolid())
-    {
-      for (int j=i+1; j<m_solids.size(); j++)
-      {
-        if (m_solids[j]->isSolid() 
-        && m_solids[i]->getBbox().intersects(m_solids[j]->getBbox()))
-        {
-          m_solids[i]->collideWith(*m_solids[j]);
-          m_solids[j]->collideWith(*m_solids[i]);
-        }
-      }
-    }    
-    m_solids[i]->endCollision();
-  }
-  m_solids[m_solids.size()-1]->endCollision();
-  //*/
-}
-
 bool Game::loadTilemap(const std::string& filename)
 {
   Json::Value root;
@@ -270,7 +215,15 @@ bool Game::loadObjects(const std::string& filename)
     return false;
   }
   
-  deleteObjects();
+  /// For tests only
+  if (m_level)
+  {
+    m_level->deleteObjects();
+  }
+  else
+  {
+    m_level = new Level();
+  }
   
   for (auto it : m_objectFactory)
   {
@@ -294,50 +247,12 @@ bool Game::loadObjects(const std::string& filename)
         drawable->setDepth(objects[i].get("z", 0).asInt());
       }
       
-      addObject(object);
+      m_level->addObject(object);
     }
   }
   
   file.close();
   return true;
-}
-
-Object* Game::getObject(const std::string& name)
-{
-  auto it = m_objects.find(name);
-  
-  if (it == m_objects.end())
-  {
-    return nullptr;
-  }
-  else
-  {
-    return it->second;
-  }
-}
-
-std::vector<Object*> Game::getObjects(const std::string& name)
-{
-  std::vector<Object*> objects;
-  auto range = m_objects.equal_range(name);
-  
-  for (auto it = range.first; it != range.second; it++)
-  {
-    objects.push_back(it->second);
-  }
-  
-  return objects;
-}
-
-void Game::deleteObjects()
-{
-  for (auto it : m_objects)
-  {
-    delete it.second;
-  }
-  m_objects.clear();
-  m_drawables.clear();
-  m_solids.clear();
 }
 
 TextureLoader& Game::getTextureLoader()
@@ -353,4 +268,9 @@ Tileset& Game::getTileset()
 Tilemap& Game::getTilemap()
 {
   return m_tilemap;
+}
+
+Level* Game::getLevel()
+{
+  return m_level;
 }

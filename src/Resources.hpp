@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "BaseTypes.hpp"
+#include "Animation.hpp"
 
 class Resources
 {

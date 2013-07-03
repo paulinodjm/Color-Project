@@ -14,11 +14,15 @@
 #include "TextureLoader.hpp"
 #include "Tilemap.hpp"
 #include "Drawable.hpp"
+#include "Level.hpp"
 
 
 class Game
 {
 public:
+
+  Game();
+  
 
   int mainLoop();
   
@@ -27,8 +31,6 @@ public:
   
   Object* createObject(const std::string& name);
   
-  void addObject(Object* object);
-  
   Tileset& getTileset();
   
   Tilemap& getTilemap();
@@ -36,18 +38,12 @@ public:
   TextureLoader& getTextureLoader();
   
   
-  /** return the first Object identified by this name */
-  Object* getObject(const std::string& name);
-  
-  /** return all the objects identified by this name */
-  std::vector<Object*> getObjects(const std::string& name);
-  
-  
   bool loadTilemap(const std::string& filename);
   
   bool loadObjects(const std::string& filename);
   
-  void deleteObjects();
+  
+  Level* getLevel();
 
 protected:
 
@@ -59,18 +55,10 @@ protected:
   
   
   bool loadResources();
-  
-  void performCollisions();
 
 private:
 
   sf::RenderWindow                      m_rendow;
-    
-  std::multimap<std::string, Object*>   m_objects;
-
-  std::multimap<int, Drawable*>         m_drawables;
-  
-  std::vector<Solid*>                   m_solids;
   
   std::map<std::string, ObjectFactory*> m_objectFactory;
   
@@ -79,4 +67,7 @@ private:
   Tilemap                               m_tilemap;
   
   TextureLoader                         m_textureLoader;
+  
+  Level*                                m_level;
 };
+

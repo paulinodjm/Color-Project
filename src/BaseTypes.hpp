@@ -15,3 +15,8 @@ template <typename T> class Loader;
 class ImageLoader;
 class Tileset;
 class Tilemap;
+class Level;
+
+// ?
+class Animation;
+class AnimatedSprite;
