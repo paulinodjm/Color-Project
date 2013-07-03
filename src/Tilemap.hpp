@@ -16,7 +16,7 @@ class Tilemap : public Drawable, public Object
 {
 public:
 
-  Tilemap();
+  Tilemap(Resources& resources);
 
   virtual bool isTileSolid(int x, int y) const;
 

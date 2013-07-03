@@ -8,6 +8,10 @@
     {"x":0, "y":32, "name":"static"}
   ],
   
+  "Tilemap":[
+    {"name":"tilemap", "src":"data/tilemap.json"}
+  ],
+  
   "PainVolume":[
     {"x":0, "y":0, "width":20, "height":30}
   ]

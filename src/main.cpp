@@ -65,7 +65,6 @@ public:
   
   void update(float deltaTime)
   {
-    //std::cout << "update!" << std::endl;
   }
   
   void touch(const Solid& solid)
@@ -100,9 +99,11 @@ int main(int argc, char** argv)
   // object factories declaration
   AutoFactory<MyObject>     moFactory;
   AutoFactory<StaticObject> soFactory;
+  AutoFactory<Tilemap>      tmFactory;
 
   game.addObjectFactory("MyObject", moFactory);
   game.addObjectFactory("StaticObject", soFactory);
+  game.addObjectFactory("Tilemap", tmFactory);
   
   // main loop
   return game.mainLoop();

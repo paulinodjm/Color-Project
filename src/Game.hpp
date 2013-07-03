@@ -32,13 +32,11 @@ public:
   Object* createObject(const std::string& name);
   
   Tileset& getTileset();
-  
-  Tilemap& getTilemap();
-  
+    
   TextureLoader& getTextureLoader();
   
   
-  bool loadTilemap(const std::string& filename);
+  bool loadTilemap(const std::string& filename, Tilemap& tilemap);
   
   bool loadObjects(const std::string& filename);
   
@@ -63,8 +61,6 @@ private:
   std::map<std::string, ObjectFactory*> m_objectFactory;
   
   Tileset                               m_tileset;
-  
-  Tilemap                               m_tilemap;
   
   TextureLoader                         m_textureLoader;
   

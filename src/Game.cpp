@@ -45,11 +45,7 @@ int Game::mainLoop()
   {
     /// for tests only
     m_level = new Level();
-    loadTilemap("data/tilemap.json");
     loadObjects("data/objects.json");
-    
-    m_tilemap.setName("tilemap");
-    m_level->addObject(&m_tilemap);
     ///
   }
 
@@ -90,6 +86,7 @@ bool Game::loadResources()
   Json::Value root;
   Json::Reader reader;
   std::ifstream resources("data/resources.json");
+  sf::Texture* tex;
   
   if (!resources.is_open())
   {
@@ -102,13 +99,14 @@ bool Game::loadResources()
     return false;
   }
 
+  /*
   // tileset loading
   sf::Texture* tex = m_textureLoader.get(root["tileset"]["texture"].asString());
   if (!tex) return false;
   m_tileset.setTexture(*tex);
   m_tileset.setTileSize(root["tileset"].get("tileSize", 32).asInt());
   
-  m_tilemap.setTileset(m_tileset);
+  m_tilemap.setTileset(m_tileset);//*/
   
   // object ressources loading
   Json::Value objects = root["objects"];
@@ -163,7 +161,7 @@ bool Game::loadResources()
   return true; 
 }
 
-bool Game::loadTilemap(const std::string& filename)
+bool Game::loadTilemap(const std::string& filename, Tilemap& tilemap)
 {
   Json::Value root;
   Json::Reader reader;
@@ -180,20 +178,21 @@ bool Game::loadTilemap(const std::string& filename)
     return false;
   }
   
-  m_tilemap.setWidth(root.get("width", 0).asUInt());
-  m_tilemap.setHeight(root.get("height", 0).asUInt());
+  tilemap.setWidth(root.get("width", 0).asUInt());
+  tilemap.setHeight(root.get("height", 0).asUInt());
   
   Json::Value tiles = root["tiles"];
-  for (unsigned int y=0; y<m_tilemap.getHeight(); y++)
+  for (unsigned int y=0; y<tilemap.getHeight(); y++)
   {
-    for (unsigned int x=0; x<m_tilemap.getWidth(); x++)
+    for (unsigned int x=0; x<tilemap.getWidth(); x++)
     {
-      m_tilemap.setTile(x, y, tiles[(y*m_tilemap.getWidth())+x].asUInt());
+      tilemap.setTile(x, y, tiles[(y*tilemap.getWidth())+x].asUInt());
     }
   }
   
   file.close();
-  return false;
+  std::cout << "Tilemap '" << filename << "' loaded" << std::endl;
+  return true;
 }
 
 bool Game::loadObjects(const std::string& filename)
@@ -243,6 +242,18 @@ bool Game::loadObjects(const std::string& filename)
         drawable->setDepth(objects[i].get("z", 0).asInt());
       }
       
+      // tilemap properties
+      Tilemap* tilemap = dynamic_cast<Tilemap*>(object);
+      if (tilemap)
+      {
+        Json::Value src = objects[i]["src"];
+        if (!src.isNull())
+        {
+          if (!loadTilemap(src.asString(), *tilemap))
+            return false;
+        }
+      }
+      
       m_level->addObject(object);
     }
   }
@@ -259,11 +270,6 @@ TextureLoader& Game::getTextureLoader()
 Tileset& Game::getTileset()
 {
   return m_tileset;
-}
-
-Tilemap& Game::getTilemap()
-{
-  return m_tilemap;
 }
 
 Level* Game::getLevel()
