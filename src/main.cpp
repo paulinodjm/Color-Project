@@ -100,6 +100,11 @@ int main(int argc, char** argv)
   AutoFactory<MyObject>     moFactory;
   AutoFactory<StaticObject> soFactory;
   AutoFactory<Tilemap>      tmFactory;
+  
+  Tileset tileset;
+  tileset.setTexture(*game.getTextureLoader().get("data/tileset.png"));
+  tileset.setTileSize(32);
+  tmFactory.getResources().addTileset("tileset", &tileset);
 
   game.addObjectFactory("MyObject", moFactory);
   game.addObjectFactory("StaticObject", soFactory);

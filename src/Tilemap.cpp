@@ -12,7 +12,7 @@ Tilemap::Tilemap(Resources& resources) : Object(resources), Drawable(),
 {
   if (getResources() != nullptr)
   {
-    
+    m_tileset = getResources()->getTileset("tileset");
   }
 }
 

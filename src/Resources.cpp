@@ -31,6 +31,19 @@ sf::Sprite* Resources::getSprite(const std::string& name)
   }
 }
 
+Tileset* Resources::getTileset(const std::string& name)
+{
+  auto it = m_tileset.find(name);
+  if (it != m_tileset.end())
+  {
+    return it->second;
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+
 bool Resources::addTexture(const std::string& name, sf::Texture* texture)
 {
   auto it = m_textures.find(name);
@@ -58,3 +71,18 @@ bool Resources::addSprite(const std::string& name, const sf::Sprite& sprite)
     return false;
   }
 }
+
+bool Resources::addTileset(const std::string& name, Tileset* tileset)
+{
+  auto it = m_tileset.find(name);
+  if (it == m_tileset.end())
+  {
+    m_tileset[name] = tileset;
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
