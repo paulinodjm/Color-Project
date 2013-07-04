@@ -154,6 +154,19 @@ bool Game::loadResources()
       
       it.second->getResources().addSprite(sprites[i]["name"].asString(), *sprite);
     }
+    
+    // tilesets loading
+    Json::Value tilesets = root[it.first]["tilesets"];
+    for (int i=0; i<tilesets.size(); i++)
+    {
+      Tileset* tileset = new Tileset();
+      tex = m_textureLoader.get(tilesets[i]["texture"].asString());
+      if (tex)
+        tileset->setTexture(*tex);
+      tileset->setTileSize(tilesets[i].get("tileSize", 32).asInt());
+      
+      it.second->getResources().addTileset( tilesets[i]["name"].asString(), tileset);
+    }
   }
 
   resources.close();

@@ -1,4 +1,16 @@
 { 
+  "Tilemap":
+  {
+    "tilesets":
+    [
+      {
+        "name":"tileset",
+        "texture":"data/tileset.png",
+        "tileSize":32
+      }
+    ]
+  },
+
   "MyObject":
   { 
     "textures":
