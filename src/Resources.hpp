@@ -8,6 +8,7 @@
 #include <string>
 #include "BaseTypes.hpp"
 #include "Tileset.hpp"
+#include "Animation.hpp"
 
 class Resources
 {
@@ -19,6 +20,8 @@ public:
   
   Tileset* getTileset(const std::string& name);
   
+  Animation* getAnimation(const std::string& name);
+  
 //protected:
   
   bool addTexture(const std::string& name, sf::Texture* texture);
@@ -27,6 +30,8 @@ public:
   
   bool addTileset(const std::string& name, Tileset* tileset);
   
+  bool addAnimation(const std::string& name, Animation* animation);
+  
 private:
 
   std::map<std::string, sf::Texture*> m_textures;
@@ -34,6 +39,8 @@ private:
   std::map<std::string, sf::Sprite>   m_sprites;
   
   std::map<std::string, Tileset*>     m_tileset;
+  
+  std::map<std::string, Animation*>   m_animations;
   
 friend class Game; /* Allows game to use addTexture and addSprite; */
 };
