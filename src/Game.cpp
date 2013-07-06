@@ -98,15 +98,6 @@ bool Game::loadResources()
     std::cerr << reader.getFormatedErrorMessages();
     return false;
   }
-
-  /*
-  // tileset loading
-  sf::Texture* tex = m_textureLoader.get(root["tileset"]["texture"].asString());
-  if (!tex) return false;
-  m_tileset.setTexture(*tex);
-  m_tileset.setTileSize(root["tileset"].get("tileSize", 32).asInt());
-  
-  m_tilemap.setTileset(m_tileset);//*/
   
   // object ressources loading
   for (auto it : m_objectFactory)
