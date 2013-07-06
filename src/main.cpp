@@ -48,7 +48,16 @@ protected:
     setSpeed( (right-left)*120, (down-up)*120 );
     if (m_tilemap)
       move(*m_tilemap);
-      
+    
+    /*  
+    if (getSpeed().x != 0.f)
+    {
+      m_sprite.setAnimation(*getResources()->getAnimation("walk"));
+    }
+    else
+    {
+      m_sprite.setAnimation(*getResources()->getAnimation("idle"));
+    }//*/
     m_sprite.update(m_clock.restart());
   }
   
@@ -116,14 +125,6 @@ int main(int argc, char** argv)
   AutoFactory<MyObject>     moFactory;
   AutoFactory<StaticObject> soFactory;
   AutoFactory<Tilemap>      tmFactory;
-  
-  Animation* anim = new Animation();
-  anim->setSpriteSheet(*game.getTextureLoader().get("data/strip.png"));
-  anim->addFrame(sf::IntRect(0,0,32,32));
-  anim->addFrame(sf::IntRect(32,0,32,32));
-  anim->addFrame(sf::IntRect(64,0,32,32));
-  anim->addFrame(sf::IntRect(96,0,32,32));
-  moFactory.getResources().addAnimation("walk", anim);
 
   game.addObjectFactory("MyObject", moFactory);
   game.addObjectFactory("StaticObject", soFactory);

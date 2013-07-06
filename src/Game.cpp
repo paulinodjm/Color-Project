@@ -155,6 +155,24 @@ bool Game::loadResources()
       it.second->getResources().addSprite(sprites[i]["name"].asString(), *sprite);
     }
     
+    // animations loading
+    Json::Value animations = root[it.first]["animations"];
+    for (int i=0; i<animations.size(); i++)
+    {
+      Animation* animation = new Animation();
+      tex = m_textureLoader.get(animations[i]["texture"].asString());
+      if (tex)
+        animation->setSpriteSheet(*tex);
+      sf::IntRect rect(0,0, animations[i].get("width", 0).asInt(), animations[i].get("height", 0).asInt());
+      for (int j=0; j<animations[i].get("length", 1).asInt(); j++)
+      {
+        rect.left = rect.width * j;
+        animation->addFrame(rect);
+      }
+      
+      it.second->getResources().addAnimation(animations[i]["name"].asString(), animation);
+    }
+    
     // tilesets loading
     Json::Value tilesets = root[it.first]["tilesets"];
     for (int i=0; i<tilesets.size(); i++)

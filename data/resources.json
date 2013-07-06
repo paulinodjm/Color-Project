@@ -13,17 +13,21 @@
 
   "MyObject":
   { 
-    "textures":
-    [
-      "data/strip.png"
-    ],
-    
-    "sprites":
+    "animations":
     [
       {
-        "name":"sprite", 
-        "texture":"data/tileset.png",
-        "rect":{"left":0, "top":128, "width":32, "height":32}
+        "name":"idle", 
+        "texture":"data/strip.png",
+        "width":32,
+        "height":32,
+        "length":1
+      },
+      {
+        "name":"walk",
+        "texture":"data/strip.png",
+        "width":32,
+        "height":32,
+        "length":4
       }
     ]
   },
