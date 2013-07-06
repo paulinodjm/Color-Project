@@ -20,10 +20,12 @@ class MyObject : public Object, public Solid, public Drawable
 public:
 
   MyObject(Resources& resources) : Object(resources), Solid(), Drawable(),
-    m_tilemap(nullptr)
+    m_tilemap(nullptr), m_move(false)
   {
-    m_sprite.setAnimation(*getResources()->getAnimation("walk"));
-    setBounds(sf::FloatRect(6,0,20,32));
+    m_sprite.setAnimation(*getResources()->getAnimation("idle"));
+    m_sprite.setFrameTime(sf::seconds(0.15f));
+    m_sprite.setOrigin(16,0);
+    setBounds(sf::FloatRect(2,0,28,32));
   }
 
 protected:
@@ -46,18 +48,36 @@ protected:
       setSolid(false);
     
     setSpeed( (right-left)*120, (down-up)*120 );
+    sf::Vector2f oldPos = getPosition();
     if (m_tilemap)
       move(*m_tilemap);
     
-    /*  
-    if (getSpeed().x != 0.f)
+    if (oldPos != getPosition())
     {
-      m_sprite.setAnimation(*getResources()->getAnimation("walk"));
+      if (!m_move)
+      {
+        m_sprite.setAnimation(*getResources()->getAnimation("walk"));
+        m_move = true;
+      }
+      
+      if (getPosition().x < oldPos.x)
+      {
+        m_sprite.setScale(-1, 1);
+      }
+      else if (getPosition().x > oldPos.x)
+      {
+        m_sprite.setScale(1, 1);
+      }
     }
     else
     {
-      m_sprite.setAnimation(*getResources()->getAnimation("idle"));
-    }//*/
+      if (m_move)
+      {
+        m_sprite.setAnimation(*getResources()->getAnimation("idle"));
+        m_move = false;
+      }
+    }
+    
     m_sprite.update(m_clock.restart());
   }
   
@@ -68,11 +88,12 @@ protected:
   
   void moved()
   {
-    m_sprite.setPosition(getPosition());
+    m_sprite.setPosition(getPosition().x + 16, getPosition().y);
   }
   
 private:
 
+  bool m_move;
   AnimatedSprite m_sprite;
 	sf::Clock m_clock;
 	Tilemap *m_tilemap;
