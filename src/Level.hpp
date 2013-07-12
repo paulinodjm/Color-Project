@@ -12,6 +12,7 @@
 #include "Solid.hpp"
 #include "Drawable.hpp"
 #include "Object.hpp"
+#include "Camera.hpp"
 
 class Level : public Drawable
 {
@@ -47,6 +48,11 @@ public:
   bool isPaused() const;
   
   
+  Camera* getCamera() const;
+  
+  void setCamera(Camera* camera);
+  
+  
 private:
 
   bool m_paused;
@@ -56,4 +62,6 @@ private:
   std::multimap<int, Drawable*>         m_drawables;
   
   std::vector<Solid*>                   m_solids;
+
+  Camera*                               m_camera;
 };

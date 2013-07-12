@@ -5,7 +5,8 @@
 #include "Level.hpp"
 
 Level::Level() : Drawable(),
-  m_paused(false)
+  m_paused(false),
+  m_camera(nullptr)
 {}
 
 Level::~Level()
@@ -114,12 +115,19 @@ void Level::performCollisions()
 
 void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+  if (m_camera)
+  {
+    sf::View view = target.getView();
+    m_camera->calcView(view);
+    target.setView(view);
+  }
+    
   for (auto it : m_drawables)
   { 
     Drawable* drawable = it.second;
     if (drawable->isVisible())
       target.draw(*drawable);
-  } 
+  }
 }
 
 
@@ -131,4 +139,15 @@ void Level::setPaused(bool paused)
 bool Level::isPaused() const
 {
   return m_paused;
+}
+
+
+Camera* Level::getCamera() const
+{
+  return m_camera;
+}
+  
+void Level::setCamera(Camera* camera)
+{
+  m_camera = camera;
 }

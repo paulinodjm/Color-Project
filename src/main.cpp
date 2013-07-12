@@ -14,8 +14,9 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.hpp"
 #include "AnimatedSprite.hpp"
+#include "Camera.hpp"
 
-class MyObject : public Object, public Solid, public Drawable
+class MyObject : public Object, public Solid, public Drawable, public Camera
 {
 public:
 
@@ -27,12 +28,18 @@ public:
     m_sprite.setOrigin(16,0);
     setBounds(sf::FloatRect(2,0,28,32));
   }
+  
+  void calcView(sf::View& view) const
+  {
+    view.setCenter(getPosition());
+  }
 
 protected:
 
   void init(Level& level)
   {
     m_tilemap = dynamic_cast<Tilemap*>( level.getObject("tilemap") );
+    level.setCamera(this);
   }
 
   void update(float deltaTime)

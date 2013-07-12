@@ -16,7 +16,6 @@ class ImageLoader;
 class Tileset;
 class Tilemap;
 class Level;
-
-// ?
+class Camera;
 class Animation;
 class AnimatedSprite;

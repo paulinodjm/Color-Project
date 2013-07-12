@@ -65,5 +65,7 @@ private:
   TextureLoader                         m_textureLoader;
   
   Level*                                m_level;
+  
+  Camera*                               m_camera;
 };
 
