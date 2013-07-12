@@ -54,7 +54,7 @@ protected:
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V))
       setSolid(false);
     
-    setSpeed( (right-left)*120, (down-up)*120 );
+    setSpeed( (right-left)*200, (down-up)*200 );
     sf::Vector2f oldPos = getPosition();
     if (m_tilemap)
       move(*m_tilemap);
