@@ -115,6 +115,7 @@ public:
   {
     setSprite(*resources.getSprite("white"));
     setBounds(sf::FloatRect(0,0,32,32));
+    m_sound.setBuffer(*getResources()->getSoundBuffer("sound"));
   }
   
   void update(float deltaTime)
@@ -124,13 +125,19 @@ public:
   void touch(const Solid& solid)
   {
     setSprite(*(getResources()->getSprite("red")));
+    m_sound.play();
   }
   
   void untouch(const Solid& solid)
   {
     setSprite(*(getResources()->getSprite("white")));
   }
+  
+private:
+
+  static sf::Sound m_sound;
 };
+sf::Sound StaticObject::m_sound;
 
 template <typename T>
 class AutoFactory : public ObjectFactory
@@ -160,9 +167,7 @@ int main(int argc, char** argv)
   game.addObjectFactory("Tilemap", tmFactory);
   
   // sound test
-  sf::SoundBuffer& soundBuffer = *game.getSoundLoader().get("data/sound.wav");
-  sf::Sound sound(soundBuffer);
-  sound.play();
+  soFactory.getResources().addSoundBuffer("sound", game.getSoundLoader().get("data/sound.wav"));
   
   // main loop
   return game.mainLoop();

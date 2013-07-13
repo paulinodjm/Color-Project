@@ -57,6 +57,19 @@ Animation* Resources::getAnimation(const std::string& name)
   }
 }
 
+sf::SoundBuffer* Resources::getSoundBuffer(const std::string& name)
+{
+  auto it = m_soundBuffers.find(name);
+  if (it != m_soundBuffers.end())
+  {
+    return it->second;
+  }
+  else
+  {
+    return nullptr;
+  }
+}
+
 bool Resources::addTexture(const std::string& name, sf::Texture* texture)
 {
   auto it = m_textures.find(name);
@@ -113,3 +126,16 @@ bool Resources::addAnimation(const std::string& name, Animation* animation)
   }
 }
 
+bool Resources::addSoundBuffer(const std::string& name, sf::SoundBuffer* soundBuffer)
+{
+  auto it = m_soundBuffers.find(name);
+  if (it == m_soundBuffers.end())
+  {
+    m_soundBuffers[name] = soundBuffer;
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
