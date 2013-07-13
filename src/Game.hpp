@@ -12,6 +12,7 @@
 #include "BaseTypes.hpp"
 #include "Tileset.hpp"
 #include "TextureLoader.hpp"
+#include "SoundLoader.hpp"
 #include "Tilemap.hpp"
 #include "Drawable.hpp"
 #include "Level.hpp"
@@ -34,6 +35,8 @@ public:
   Tileset& getTileset();
     
   TextureLoader& getTextureLoader();
+  
+  SoundLoader& getSoundLoader();
   
   
   bool loadTilemap(const std::string& filename, Tilemap& tilemap);
@@ -63,6 +66,8 @@ private:
   Tileset                               m_tileset;
   
   TextureLoader                         m_textureLoader;
+  
+  SoundLoader                           m_soundLoader;
   
   Level*                                m_level;
   

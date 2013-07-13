@@ -12,6 +12,7 @@
 #include "Tilemap.hpp"
 #include <string>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Animation.hpp"
 #include "AnimatedSprite.hpp"
 #include "Camera.hpp"
@@ -157,6 +158,11 @@ int main(int argc, char** argv)
   game.addObjectFactory("MyObject", moFactory);
   game.addObjectFactory("StaticObject", soFactory);
   game.addObjectFactory("Tilemap", tmFactory);
+  
+  // sound test
+  sf::SoundBuffer& soundBuffer = *game.getSoundLoader().get("data/sound.wav");
+  sf::Sound sound(soundBuffer);
+  sound.play();
   
   // main loop
   return game.mainLoop();

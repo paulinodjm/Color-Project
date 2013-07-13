@@ -12,4 +12,4 @@ solution "Color-Project"
       configuration "Release"
          flags { "Optimize" }
          buildoptions "-std=c++11"  
-         links { "sfml-graphics", "sfml-window", "sfml-system", "jsoncpp" }
+         links { "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio", "jsoncpp" }

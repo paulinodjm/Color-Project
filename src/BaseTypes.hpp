@@ -13,6 +13,7 @@ class Resources;
 class Solid;
 template <typename T> class Loader;
 class ImageLoader;
+class SoundLoader;
 class Tileset;
 class Tilemap;
 class Level;

@@ -288,6 +288,11 @@ TextureLoader& Game::getTextureLoader()
   return m_textureLoader;
 }
 
+SoundLoader& Game::getSoundLoader()
+{
+  return m_soundLoader;
+}
+
 Tileset& Game::getTileset()
 {
   return m_tileset;
