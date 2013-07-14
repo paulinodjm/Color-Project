@@ -102,7 +102,7 @@ bool Game::loadResources()
   // object ressources loading
   for (auto it : m_objectFactory)
   {
-    // texture loading
+    // textures loading
     Json::Value textures = root[it.first]["textures"];
     for (int i=0; i<textures.size(); i++)
     {
@@ -114,6 +114,17 @@ bool Game::loadResources()
       else
       {
         return false;
+      }
+    }
+    
+    // sounds loading
+    Json::Value sounds = root[it.first]["sounds"];
+    for (int i=0; i<sounds.size(); i++)
+    {
+      sf::SoundBuffer* soundBuffer = m_soundLoader.get(sounds[i]["src"].asString());
+      if (soundBuffer)
+      {
+        it.second->getResources().addSoundBuffer(sounds[i]["name"].asString(), soundBuffer);
       }
     }
   

@@ -166,9 +166,6 @@ int main(int argc, char** argv)
   game.addObjectFactory("StaticObject", soFactory);
   game.addObjectFactory("Tilemap", tmFactory);
   
-  // sound test
-  soFactory.getResources().addSoundBuffer("sound", game.getSoundLoader().get("data/sound.wav"));
-  
   // main loop
   return game.mainLoop();
 }//*/
