@@ -106,10 +106,10 @@ bool Game::loadResources()
     Json::Value textures = root[it.first]["textures"];
     for (int i=0; i<textures.size(); i++)
     {
-      tex = m_textureLoader.get(textures[i].asString());
+      tex = m_textureLoader.get(textures[i]["src"].asString());
       if (tex)
       {
-        it.second->getResources().addTexture(textures[i].asString(), tex);
+        it.second->getResources().addTexture(textures[i]["name"].asString(), tex);
       }
       else
       {
