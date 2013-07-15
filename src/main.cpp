@@ -51,9 +51,15 @@ protected:
     bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D);
     
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C))
+    {
       setSolid(true);
+      m_sprite.setColor(sf::Color::White);
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V))
+    {
       setSolid(false);
+      m_sprite.setColor(sf::Color(175,175,175,175));
+    }
     
     setSpeed( (right-left)*200, (down-up)*200 );
     sf::Vector2f oldPos = getPosition();

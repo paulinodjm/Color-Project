@@ -133,52 +133,58 @@ const std::set<Solid*>& Solid::getTouchingSolids() const
 void Solid::move(const Tilemap& tilemap)
 {
   sf::Vector2f speed = m_speed * m_clock.restart().asSeconds();
-  unsigned int tileSize = tilemap.getTileSize();
+  int tileSize = tilemap.getTileSize();
   sf::FloatRect bBox;
   
-  // horizontal move
-  if (speed.x != 0.f)
+  if (m_solid)
   {
-    m_position.x += speed.x;
-    bBox = getBbox();
-    if ( !tilemap.placeFree(bBox) )
+    // horizontal move
+    if (speed.x != 0.f)
     {
-      if (speed.x < 0)
+      m_position.x += speed.x;
+      bBox = getBbox();
+      if ( !tilemap.placeFree(bBox) )
       {
-        bBox.left = (int)(bBox.left)/tileSize*tileSize + tileSize;
+        if (speed.x < 0)
+        {
+          bBox.left = (int)(bBox.left)/tileSize*tileSize + tileSize;
+        }
+        else
+        {
+          float right = (int)(bBox.left + bBox.width)/tileSize*tileSize;
+          bBox.left = right - bBox.width;
+        }
+        m_position.x = bBox.left - m_bounds.left;
+        hitWall();
       }
-      else
+    }
+    
+    // vertical move
+    if (speed.y != 0.f)
+    {
+      m_position.y += speed.y;
+      bBox = getBbox();
+      if ( !tilemap.placeFree(bBox) )
       {
-        float right = (int)(bBox.left + bBox.width)/tileSize*tileSize;
-        bBox.left = right - bBox.width;
+        if (speed.y < 0)
+        {
+          bBox.top = (int)(bBox.top)/tileSize*tileSize + tileSize;
+          m_position.y = bBox.top - m_bounds.top;
+          hitCeiling();
+        }
+        else
+        {
+          float bottom = (int)(bBox.top + bBox.height)/tileSize*tileSize;
+          bBox.top = bottom - bBox.height;
+          m_position.y = bBox.top - m_bounds.top;
+          landed();
+        }
       }
-      m_position.x = bBox.left - m_bounds.left;
-      hitWall();
     }
   }
-  
-  // vertical move
-  if (speed.y != 0.f)
+  else
   {
-    m_position.y += speed.y;
-    bBox = getBbox();
-    if ( !tilemap.placeFree(bBox) )
-    {
-      if (speed.y < 0)
-      {
-        bBox.top = (int)(bBox.top)/tileSize*tileSize + tileSize;
-        m_position.y = bBox.top - m_bounds.top;
-        hitCeiling();
-      }
-      else
-      {
-        float bottom = (int)(bBox.top + bBox.height)/tileSize*tileSize;
-        bBox.top = bottom - bBox.height;
-        m_position.y = bBox.top - m_bounds.top;
-        landed();
-      }
-      
-    }
+    m_position += speed;
   }
   
   moved();

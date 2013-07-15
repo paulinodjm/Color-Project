@@ -103,6 +103,9 @@ void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 bool Tilemap::placeFree(const sf::FloatRect& rect) const
 {
   if (!m_tileset) return true;
+  
+  if ( (rect.left+rect.width <= 0.f) || (rect.top+rect.height <= 0.f) )
+    return true;
  
   int left = static_cast<int>(rect.left);
   int top = static_cast<int>(rect.top);
@@ -118,7 +121,6 @@ bool Tilemap::placeFree(const sf::FloatRect& rect) const
   int xend = (right-1) / getTileSize(); 
   int ystart = top / getTileSize();
   int yend = (bottom-1) / getTileSize();
-  
   
   for (int x=xstart; x<=xend; x++)
   {
