@@ -1,15 +1,41 @@
--- this premake file is quite bad, because I just start with premake.
+-- this premake file is quite bad, because I just start with premake and lua.
 
 solution "Color-Project"
+  configurations {"Release"}
 
-   configurations {"Release"}
- 
-   project "game"
-      kind "WindowedApp"
-      language "C++"
-      files {"src/**.h", "src/**.cpp"}
- 
-      configuration "Release"
-         flags { "Optimize" }
-         buildoptions "-std=c++11"  
-         links { "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio", "jsoncpp" }
+  -- engine --
+  project "engine"
+    kind "StaticLib"
+    language "c++"
+    files {"src/Engine/**.hpp", "src/Engine/**.cpp"}
+
+    configuration "Release"
+      flags { "Optimize" }
+      buildoptions "-std=c++11"  
+
+  -- game --
+  project "game"
+    kind "WindowedApp"
+    language "c++"
+    files {"src/Game/**.hpp", "src/Game/**.cpp"}
+
+    configuration "Release"
+      flags { "Optimize" }
+      buildoptions "-std=c++11"  
+      links { "engine", "jsoncpp" }
+      if os.get == "windows" then
+        links { "sfml-graphics-s", "sfml-window-s", "sfml-system-s", "sfml-audio-s" }
+        defines { "SFML_STATIC" }
+      else
+        links { "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio" }
+      end
+      
+  -- editor --
+  project "editor"
+    kind "WindowedApp"
+    language "c++"
+    files {"src/Editor/**.hpp", "src/Editor/**.cpp"}
+    
+    configuration "Release"
+      flags { "Optimize" }
+      buildoptions "-std=c++11"

@@ -1,5 +1,7 @@
 *.d
 *.o
 game
-game.make
+editor
+libengine.a
+*.make
 Makefile
