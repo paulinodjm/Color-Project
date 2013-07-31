@@ -1,6 +1,5 @@
 -- this premake file is quite bad, because I just start with premake and lua.
 -- This file is written to build on archlinux and windows8 (with codeblocks).
--- I use static linking on windows.
 
 solution "Color-Project"
   configurations {"Release"}
@@ -13,27 +12,18 @@ solution "Color-Project"
 
     configuration "Release"
       flags { "Optimize" }
-      buildoptions "-std=c++11"
-      if os.get() == "windows" then
-        defines { "SFML_STATIC" }
-      end
+      buildoptions "-std=gnu++11"
 
   -- game --
   project "game"
-    kind "WindowedApp"
+	kind "WindowedApp"
     language "c++"
-    files {"src/Game/**.hpp", "src/Game/**.cpp"}
+	files {"src/Game/**.hpp", "src/Game/**.cpp"}
 
     configuration "Release"
       flags { "Optimize" }
-      buildoptions "-std=c++11"
-      links { "engine", "jsoncpp" }
-      if os.get() == "windows" then
-        defines { "SFML_STATIC" }
-        links { "sfml-graphics-s", "sfml-window-s", "sfml-system-s", "sfml-audio-s" }
-      else
-        links { "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio" }
-      end
+      buildoptions "-std=gnu++11"
+      links { "engine", "jsoncpp", "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio" }
       
   -- editor --
   project "editor"
@@ -43,4 +33,19 @@ solution "Color-Project"
     
     configuration "Release"
       flags { "Optimize" }
-      buildoptions "-std=c++11"
+      buildoptions "-std=gnu++11"
+      links { "engine", "jsoncpp", "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio" }
+      
+      -- wx windows flags --
+      if os.get() == "windows" then
+        files { "src/Editor/resources.rc" }
+        buildoptions { "`wx-config.exe --cxxflags --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/msw`" }
+        linkoptions { "`wx-config.exe --libs --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/msw`" }
+        resincludedirs { "c:/wxWidgets-2.8.12/include" }
+      
+      -- wx linux flags --
+      elseif os.get() == "linux" then
+        buildoptions { "`wx-config --cxxflags`" }
+        linkoptions { "`wx-config --libs`" }
+      end
+	
