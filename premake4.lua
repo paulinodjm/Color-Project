@@ -46,6 +46,23 @@ solution "Color-Project"
       -- wx linux flags --
       elseif os.get() == "linux" then
         buildoptions { "`wx-config --cxxflags`" }
-        linkoptions { "`wx-config --libs`" }
+        includedirs 
+        { 
+          "/usr/include/gtk-2.0/", 
+          "/usr/include/glib-2.0",
+          "/usr/lib/glib-2.0/include",
+          "/usr/include/cairo",
+          "/usr/include/pango-1.0",
+          "/usr/lib/gtk-2.0/include", 
+          "/usr/include/gdk-pixbuf-2.0", 
+          "/usr/include/atk-1.0"
+        }
+        linkoptions { 
+          "`wx-config --libs`",
+          "/usr/lib/libgdk-x11-2.0.so.0", 
+          "/usr/lib/libgtk-x11-2.0.so.0", 
+          "/usr/lib/libgobject-2.0.so.0", 
+          "/usr/lib/libX11.so.6" 
+        }
       end
 	
