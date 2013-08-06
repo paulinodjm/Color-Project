@@ -24,7 +24,7 @@ wxSFMLCanvas::wxSFMLCanvas(
     sf::RenderWindow::create(GDK_WINDOW_XWINDOW(Win));
 
   #else
-    sf::RenderWindow::create(GetHandle());
+    sf::RenderWindow::create( static_cast<sf::WindowHandle>(GetHandle()) );
   #endif
 }
 
@@ -38,5 +38,6 @@ void wxSFMLCanvas::onPaint(wxPaintEvent&)
 {
     wxPaintDC Dc(this);
     update();
+    clear(sf::Color::Red);
     display();
 }
