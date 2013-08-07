@@ -12,48 +12,52 @@
 #include "Object.hpp"
 #include "Resources.hpp"
 
-class Tilemap : public Drawable, public Object
+namespace e
 {
-public:
+  class Tilemap : public Drawable, public Object
+  {
+  public:
 
-  Tilemap(Resources& resources);
+    Tilemap(Resources& resources);
 
-  virtual bool isTileSolid(int x, int y) const;
+    virtual bool isTileSolid(int x, int y) const;
 
 
-  void setTile(int x, int y, unsigned int tile);
-  
-  unsigned int getTile(int x, int y) const;
-  
-  
-  unsigned int getWidth() const;
-  
-  unsigned int getHeight() const;
-  
-  void setWidth(unsigned int width);
-  
-  void setHeight(unsigned int height);
-  
-  
-  const Tileset* getTileset() const;
-  
-  void setTileset(const Tileset& tileset);
-  
-  
-  bool placeFree(const sf::FloatRect& rect) const ;
-  
-  
-  int getTileSize() const;
-  
-protected:
+    void setTile(int x, int y, unsigned int tile);
+    
+    unsigned int getTile(int x, int y) const;
+    
+    
+    unsigned int getWidth() const;
+    
+    unsigned int getHeight() const;
+    
+    void setWidth(unsigned int width);
+    
+    void setHeight(unsigned int height);
+    
+    
+    const Tileset* getTileset() const;
+    
+    void setTileset(const Tileset& tileset);
+    
+    
+    bool placeFree(const sf::FloatRect& rect) const ;
+    
+    
+    int getTileSize() const;
+    
+  protected:
 
-  void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-  
-private:
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    
+  private:
 
-  unsigned int m_width, m_height;
+    unsigned int m_width, m_height;
 
-  const Tileset* m_tileset;
-  
-  std::vector<std::vector<unsigned int>> m_tiles;
-};
+    const Tileset* m_tileset;
+    
+    std::vector<std::vector<unsigned int>> m_tiles;
+  };
+}
+

@@ -10,22 +10,26 @@
 #include <string>
 #include "Loader.hpp"
 
-class SoundLoader: public Loader<sf::SoundBuffer>
+namespace e
 {
-public:
-
-  sf::SoundBuffer* load(const std::string& name)
+  class SoundLoader: public Loader<sf::SoundBuffer>
   {
-    std::cout << "Loading '" << name << "'..." << std::endl;
-    sf::SoundBuffer* soundBuffer = new sf::SoundBuffer();
-    if (soundBuffer->loadFromFile(name))
+  public:
+
+    sf::SoundBuffer* load(const std::string& name)
     {
-      return soundBuffer;
+      std::cout << "Loading '" << name << "'..." << std::endl;
+      sf::SoundBuffer* soundBuffer = new sf::SoundBuffer();
+      if (soundBuffer->loadFromFile(name))
+      {
+        return soundBuffer;
+      }
+      else
+      {
+        delete soundBuffer;
+        return nullptr;
+      }
     }
-    else
-    {
-      delete soundBuffer;
-      return nullptr;
-    }
-  }
-};
+  };
+}
+

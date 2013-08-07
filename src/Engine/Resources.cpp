@@ -5,6 +5,8 @@
 #include "Resources.hpp"
 #include <iostream>
 
+using namespace e;
+
 sf::Texture* Resources::getTexture(const std::string& name)
 {
   auto it = m_textures.find(name);

@@ -6,6 +6,8 @@
 #include "Solid.hpp"
 #include <iostream>
 
+using namespace e;
+
 Solid::Solid() : Solid(sf::FloatRect()) {}
 
 Solid::Solid(const sf::FloatRect& bounds, const sf::Vector2f& position) 

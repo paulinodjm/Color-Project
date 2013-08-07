@@ -10,53 +10,57 @@
 #include "BaseTypes.hpp"
 #include "Resources.hpp"
 
-/**
-* Base class for each object in the game.
-*/
-class Object
+namespace e
 {
-public:
-  
-  Object();
-  
-  Object(Resources& resources);
+  /**
+  * Base class for each object in the game.
+  */
+  class Object
+  {
+  public:
+    
+    Object();
+    
+    Object(Resources& resources);
 
-  Resources* getResources();
-  
-  void setResources(Resources& resources);
-  
-  const std::string& getName() const;
-  
-  void setName(const std::string& name);
+    Resources* getResources();
+    
+    void setResources(Resources& resources);
+    
+    const std::string& getName() const;
+    
+    void setName(const std::string& name);
 
-protected:
+  protected:
 
-  virtual void init(Level& level) {}
+    virtual void init(Level& level) {}
 
-  virtual void update(float deltaTime) {}
+    virtual void update(float deltaTime) {}
 
-private:
+  private:
 
-  Resources* m_resources;
-  
-  std::string m_name;
-  
-friend class Game;
-friend class Level;
-};
+    Resources* m_resources;
+    
+    std::string m_name;
+    
+  friend class Game;
+  friend class Level;
+  };
 
-/**
-* Object factory
-*/
-class ObjectFactory
-{
-public:
+  /**
+  * Object factory
+  */
+  class ObjectFactory
+  {
+  public:
 
-  virtual Object* create() = 0;
-  
-  Resources&  getResources();
-  
-private:
+    virtual Object* create() = 0;
+    
+    Resources&  getResources();
+    
+  private:
 
-  Resources m_resources;
-};//*/
+    Resources m_resources;
+  };//*/
+}
+

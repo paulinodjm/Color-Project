@@ -5,6 +5,8 @@
 #include "Tileset.hpp"
 #include <iostream>
 
+using namespace e;
+
 Tileset::Tileset() : m_tileSize(32), m_tileCount(0), m_vTileCount(0), m_hTileCount(0) {}
 
 sf::Sprite Tileset::getTileSprite(unsigned int iTile) const

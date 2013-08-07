@@ -7,44 +7,48 @@
 #include <map>
 #include <string>
 
-template <typename T>
-class Loader
+namespace e
 {
-public:
-
-  virtual T* load(const std::string& name) = 0;
-
-  T* get(const std::string& name)
+  template <typename T>
+  class Loader
   {
-    auto it = m_resources.find(name);
-    if (it == m_resources.end())
+  public:
+
+    virtual T* load(const std::string& name) = 0;
+
+    T* get(const std::string& name)
     {
-      T* newItem = load(name);
-      if (newItem)
+      auto it = m_resources.find(name);
+      if (it == m_resources.end())
       {
-        m_resources[name] = newItem;
-        return newItem;
+        T* newItem = load(name);
+        if (newItem)
+        {
+          m_resources[name] = newItem;
+          return newItem;
+        }
+        else
+        {
+          return nullptr;
+        }
       }
       else
       {
-        return nullptr;
+        return it->second;
       }
     }
-    else
+
+    virtual ~Loader()
     {
-      return it->second;
+      for (auto it = m_resources.begin(); it != m_resources.end(); it++)
+      {
+        delete it->second;
+      }
     }
-  }
 
-  virtual ~Loader()
-  {
-    for (auto it = m_resources.begin(); it != m_resources.end(); it++)
-    {
-      delete it->second;
-    }
-  }
+  private:
 
-private:
+    std::map<std::string, T*> m_resources;
+  };
+}
 
-  std::map<std::string, T*> m_resources;
-};

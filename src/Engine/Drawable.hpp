@@ -8,28 +8,31 @@
 #include <SFML/Graphics.hpp>
 #include "Object.hpp"
 
-/**
-* Base class for each visible object.
-*/
-class Drawable : public sf::Drawable
-{
-public:
+namespace e
+  {
+  /**
+  * Base class for each visible object.
+  */
+  class Drawable : public sf::Drawable
+  {
+  public:
 
-  Drawable();
+    Drawable();
 
-  void setVisible(bool visible);
+    void setVisible(bool visible);
 
-  bool isVisible() const;
-  
-  int getDepth() const;
-  
-  // changing the depth after the object was added to the drawable list has no effect
-  void setDepth(int depht);
+    bool isVisible() const;
+    
+    int getDepth() const;
+    
+    // changing the depth after the object was added to the drawable list has no effect
+    void setDepth(int depht);
 
-private:
+  private:
 
-  bool m_visible;
-  
-  int m_depth;
-};
+    bool m_visible;
+    
+    int m_depth;
+  };
+}
 

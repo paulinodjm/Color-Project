@@ -6,6 +6,8 @@
 #include "Object.hpp"
 #include <iostream>
 
+using namespace e;
+
 Object::Object() : m_resources(nullptr) {}
 
 Object::Object(Resources& resources) : m_resources(&resources) {}

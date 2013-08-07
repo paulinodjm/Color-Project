@@ -5,6 +5,8 @@
 #include "Tilemap.hpp"
 #include <iostream>
 
+using namespace e;
+
 Tilemap::Tilemap(Resources& resources) : Object(resources), Drawable(),
   m_width(0),
   m_height(0),

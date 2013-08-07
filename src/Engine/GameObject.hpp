@@ -10,23 +10,27 @@
 #include "Solid.hpp"
 #include "Drawable.hpp"
 
-class GameObject : public Object, public Drawable, public Solid
+namespace e
 {
-public:
+  class GameObject : public Object, public Drawable, public Solid
+  {
+  public:
 
-  GameObject(Resources& resources);
-  
-  const sf::Sprite& getSprite() const;
-  
-  void setSprite(const sf::Sprite& sprite);
-  
-protected:
+    GameObject(Resources& resources);
+    
+    const sf::Sprite& getSprite() const;
+    
+    void setSprite(const sf::Sprite& sprite);
+    
+  protected:
 
-  void moved();
+    void moved();
 
-  void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-  
-private:
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    
+  private:
 
-  sf::Sprite m_sprite;
-};
+    sf::Sprite m_sprite;
+  };
+}
+

@@ -5,7 +5,8 @@
 #pragma once
 
 #include <wx/wx.h>
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #ifdef __WXGTK__
     #include <gdk/gdkx.h>
@@ -30,7 +31,7 @@ public:
   
 protected:
 
-  virtual void update() {}
+  virtual void update() = 0;
   
 private:
 

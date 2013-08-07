@@ -23,6 +23,8 @@
 
 #include "Animation.hpp"
 
+using namespace e;
+
 Animation::Animation() : m_texture(NULL)
 {
 

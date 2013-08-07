@@ -17,11 +17,11 @@
 #include "../Engine/AnimatedSprite.hpp"
 #include "../Engine/Camera.hpp"
 
-class MyObject : public Object, public Solid, public Drawable, public Camera
+class MyObject : public e::Object, public e::Solid, public e::Drawable, public e::Camera
 {
 public:
 
-  MyObject(Resources& resources) : Object(resources), Solid(), Drawable(),
+  MyObject(e::Resources& resources) : e::Object(resources), e::Solid(), e::Drawable(),
     m_tilemap(nullptr), m_move(false)
   {
     m_sprite.setAnimation(*getResources()->getAnimation("idle"));
@@ -37,9 +37,9 @@ public:
 
 protected:
 
-  void init(Level& level)
+  void init(e::Level& level)
   {
-    m_tilemap = dynamic_cast<Tilemap*>( level.getObject("tilemap") );
+    m_tilemap = dynamic_cast<e::Tilemap*>( level.getObject("tilemap") );
     level.setCamera(this);
   }
 
@@ -108,16 +108,16 @@ protected:
 private:
 
   bool m_move;
-  AnimatedSprite m_sprite;
+  e::AnimatedSprite m_sprite;
 	sf::Clock m_clock;
-	Tilemap *m_tilemap;
+	e::Tilemap *m_tilemap;
 };
 
-class StaticObject : public GameObject
+class StaticObject : public e::GameObject
 {
 public:
 
-  StaticObject(Resources& resources) : GameObject(resources)
+  StaticObject(e::Resources& resources) : e::GameObject(resources)
   {
     setSprite(*resources.getSprite("white"));
     setBounds(sf::FloatRect(0,0,32,32));
@@ -146,11 +146,11 @@ private:
 sf::Sound StaticObject::m_sound;
 
 template <typename T>
-class AutoFactory : public ObjectFactory
+class AutoFactory : public e::ObjectFactory
 {
 public:
   
-  Object* create()
+  e::Object* create()
   {
     return new T(getResources());
   }
@@ -161,12 +161,12 @@ public:
 ************************************/
 int main(int argc, char** argv)
 {			
-  Game game;
+  e::Game game;
 
   // object factories declaration
   AutoFactory<MyObject>     moFactory;
   AutoFactory<StaticObject> soFactory;
-  AutoFactory<Tilemap>      tmFactory;
+  AutoFactory<e::Tilemap>   tmFactory;
 
   game.addObjectFactory("MyObject", moFactory);
   game.addObjectFactory("StaticObject", soFactory);

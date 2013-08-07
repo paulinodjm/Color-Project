@@ -11,43 +11,47 @@
 #include "Tileset.hpp"
 #include "Animation.hpp"
 
-class Resources
+namespace e
 {
-public:
+  class Resources
+  {
+  public:
 
-  sf::Texture* getTexture(const std::string& name);
-  
-  sf::Sprite* getSprite(const std::string& name);
-  
-  Tileset* getTileset(const std::string& name);
-  
-  Animation* getAnimation(const std::string& name);
-  
-  sf::SoundBuffer* getSoundBuffer(const std::string& name);
-  
-//protected:
-  
-  bool addTexture(const std::string& name, sf::Texture* texture);
-  
-  bool addSprite(const std::string& name, const sf::Sprite& sprite);
-  
-  bool addTileset(const std::string& name, Tileset* tileset);
-  
-  bool addAnimation(const std::string& name, Animation* animation);
-  
-  bool addSoundBuffer(const std::string& name, sf::SoundBuffer* soundBuffer);
-  
-private:
+    sf::Texture* getTexture(const std::string& name);
+    
+    sf::Sprite* getSprite(const std::string& name);
+    
+    Tileset* getTileset(const std::string& name);
+    
+    Animation* getAnimation(const std::string& name);
+    
+    sf::SoundBuffer* getSoundBuffer(const std::string& name);
+    
+  //protected:
+    
+    bool addTexture(const std::string& name, sf::Texture* texture);
+    
+    bool addSprite(const std::string& name, const sf::Sprite& sprite);
+    
+    bool addTileset(const std::string& name, Tileset* tileset);
+    
+    bool addAnimation(const std::string& name, Animation* animation);
+    
+    bool addSoundBuffer(const std::string& name, sf::SoundBuffer* soundBuffer);
+    
+  private:
 
-  std::map<std::string, sf::Texture*>     m_textures;
-  
-  std::map<std::string, sf::Sprite>       m_sprites;
-  
-  std::map<std::string, Tileset*>         m_tileset;
-  
-  std::map<std::string, Animation*>       m_animations;
-  
-  std::map<std::string, sf::SoundBuffer*> m_soundBuffers;
-  
-friend class Game; /* Allows game to use addTexture and addSprite; */
-};
+    std::map<std::string, sf::Texture*>     m_textures;
+    
+    std::map<std::string, sf::Sprite>       m_sprites;
+    
+    std::map<std::string, Tileset*>         m_tileset;
+    
+    std::map<std::string, Animation*>       m_animations;
+    
+    std::map<std::string, sf::SoundBuffer*> m_soundBuffers;
+    
+  friend class Game; /* Allows game to use addTexture and addSprite; */
+  };
+}
+

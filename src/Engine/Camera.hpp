@@ -6,11 +6,15 @@
 
 #include <SFML/Graphics.hpp>
 
-class Camera
+namespace e
 {
-public:
+  class Camera
+  {
+  public:
 
-  /** Called each time to set the game view */
-  virtual void calcView(sf::View& view) const = 0;
-  
-};
+    /** Called each time to set the game view */
+    virtual void calcView(sf::View& view) const = 0;
+    
+  };
+}
+

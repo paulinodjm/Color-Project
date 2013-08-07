@@ -5,6 +5,8 @@
 #include "GameObject.hpp"
 #include <iostream>
 
+using namespace e;
+
 GameObject::GameObject(Resources& resources) 
 : Object(resources), Drawable(), Solid() {}
 

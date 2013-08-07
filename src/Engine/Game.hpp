@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include "BaseTypes.hpp"
+#include "BaseGame.hpp"
 #include "Tileset.hpp"
 #include "TextureLoader.hpp"
 #include "SoundLoader.hpp"
@@ -18,60 +19,19 @@
 #include "Drawable.hpp"
 #include "Level.hpp"
 
-
-class Game
+namespace e
 {
-public:
+  class Game : public BaseGame
+  {
+  public:
 
-  Game();
-  
-
-  int mainLoop();
-  
-  
-  void addObjectFactory(const std::string& name, ObjectFactory& factory);
-  
-  Object* createObject(const std::string& name);
-  
-  Tileset& getTileset();
+    Game();
     
-  TextureLoader& getTextureLoader();
-  
-  SoundLoader& getSoundLoader();
-  
-  
-  bool loadTilemap(const std::string& filename, Tilemap& tilemap);
-  
-  bool loadObjects(const std::string& filename);
-  
-  
-  Level* getLevel();
+    int mainLoop();
+    
+  private:
 
-protected:
-
-  virtual void init() {}
-
-  virtual bool update(float deltaTime) {return true;}
-
-  virtual void finalize() {}
-  
-  
-  bool loadResources();
-
-private:
-
-  sf::RenderWindow                      m_rendow;
-  
-  std::map<std::string, ObjectFactory*> m_objectFactory;
-  
-  Tileset                               m_tileset;
-  
-  TextureLoader                         m_textureLoader;
-  
-  SoundLoader                           m_soundLoader;
-  
-  Level*                                m_level;
-  
-  Camera*                               m_camera;
-};
+    sf::RenderWindow                      m_rendow;
+  };
+}
 

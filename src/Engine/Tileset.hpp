@@ -7,34 +7,37 @@
 #include "BaseTypes.hpp"
 #include <SFML/Graphics.hpp>
 
-class Tileset
+namespace e
 {
-public:
+  class Tileset
+  {
+  public:
 
-  Tileset();
+    Tileset();
 
-  sf::Sprite getTileSprite(unsigned int iTile) const;
-  
-  
-  const sf::Sprite& getSprite() const;
-  
-  void setTexture(const sf::Texture& texture, bool construct=false);
-  
-  const sf::Texture* getTexture() const;
-  
-  void setTileSize(int tileSize, bool construct=true);
-  
-  int getTileSize() const;
-  
-  unsigned int getTileCount() const;
-  
-  void constructTileset(); 
+    sf::Sprite getTileSprite(unsigned int iTile) const;
+    
+    
+    const sf::Sprite& getSprite() const;
+    
+    void setTexture(const sf::Texture& texture, bool construct=false);
+    
+    const sf::Texture* getTexture() const;
+    
+    void setTileSize(int tileSize, bool construct=true);
+    
+    int getTileSize() const;
+    
+    unsigned int getTileCount() const;
+    
+    void constructTileset(); 
 
-private:  
+  private:  
 
-  unsigned int m_tileSize;
-  
-  unsigned int m_tileCount, m_vTileCount, m_hTileCount;
+    unsigned int m_tileSize;
+    
+    unsigned int m_tileCount, m_vTileCount, m_hTileCount;
 
-  sf::Sprite m_sprite;
-};
+    sf::Sprite m_sprite;
+  };
+}

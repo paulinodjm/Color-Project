@@ -38,6 +38,5 @@ void wxSFMLCanvas::onPaint(wxPaintEvent&)
 {
     wxPaintDC Dc(this);
     update();
-    clear(sf::Color::Red);
     display();
 }

@@ -10,23 +10,26 @@
 #include <string>
 #include <iostream>
 
-class TextureLoader : public Loader<sf::Texture>
+namespace e
 {
-public:
-
-  sf::Texture* load(const std::string& name)
+  class TextureLoader : public Loader<sf::Texture>
   {
-    std::cout << "Loading '" << name << "'..." << std::endl;
-    sf::Texture* texture = new sf::Texture();
-    if (texture->loadFromFile(name))
+  public:
+
+    sf::Texture* load(const std::string& name)
     {
-      return texture;
+      std::cout << "Loading '" << name << "'..." << std::endl;
+      sf::Texture* texture = new sf::Texture();
+      if (texture->loadFromFile(name))
+      {
+        return texture;
+      }
+      else
+      {
+        delete texture;
+        return nullptr;
+      }
     }
-    else
-    {
-      delete texture;
-      return nullptr;
-    }
-  }
-};
+  };
+}
 

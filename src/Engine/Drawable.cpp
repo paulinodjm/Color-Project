@@ -4,6 +4,8 @@
 //////////////////////////////////////////////////////////
 #include "Drawable.hpp"
 
+using namespace e;
+
 Drawable::Drawable() : sf::Drawable(), m_visible(true), m_depth(0) {}
 
 void Drawable::setVisible(bool visible)

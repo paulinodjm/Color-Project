@@ -4,6 +4,8 @@
 //////////////////////////////////////////////////////////
 #include "Level.hpp"
 
+using namespace e;
+
 Level::Level() : Drawable(),
   m_paused(false),
   m_camera(nullptr)
