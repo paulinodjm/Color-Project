@@ -29,6 +29,7 @@ public:
     wxSFMLCanvas(parent, id, pos, size, style, validator, name)
   {
     open(wxT("data/tileset.png"));
+    m_size = GetSize();
   }
 
   void open(const wxString& filename)
@@ -53,6 +54,21 @@ protected:
 
   void update()
   {
+    if (m_size != GetSize())
+    {
+      #ifdef __WXGTK__
+        gtk_widget_realize(m_wxwindow);
+        gtk_widget_set_double_buffered(m_wxwindow, false);
+        GdkWindow* Win = GTK_PIZZA(m_wxwindow)->bin_window;
+        XFlush(GDK_WINDOW_XDISPLAY(Win));
+        sf::RenderWindow::create(GDK_WINDOW_XWINDOW(Win));
+
+      #else
+        sf::RenderWindow::create( static_cast<sf::WindowHandle>(GetHandle()) );
+      #endif
+      
+      m_size = GetSize();
+    }
     setView( sf::View(sf::FloatRect(0,0, (float)GetSize().GetWidth(), (float)GetSize().GetHeight())));
     clear(m_background);
     draw( m_sprite );
@@ -63,6 +79,7 @@ private:
   sf::Texture m_texture;
   sf::Sprite m_sprite;
   sf::Color m_background;
+  wxSize m_size;
 };
 
 class Editor : public wxApp
