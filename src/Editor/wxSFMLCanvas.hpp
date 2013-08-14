@@ -14,7 +14,10 @@
     #include <wx-2.8/wx/gtk/win_gtk.h>
 #endif
 
-class wxSFMLCanvas : public sf::RenderWindow, public wxControl
+#include "GameManager.hpp"
+#include "GameLogic.hpp"
+
+class wxSFMLCanvas : public sf::RenderWindow, public wxControl, public GameManager
 {
 public:
 
@@ -29,9 +32,8 @@ public:
     
   virtual ~wxSFMLCanvas() {}
   
-protected:
-
-  virtual void update() = 0;
+  
+  void setLogic(GameLogic* logic);
   
 private:
 

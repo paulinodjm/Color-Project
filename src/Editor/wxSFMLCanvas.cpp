@@ -29,6 +29,12 @@ wxSFMLCanvas::wxSFMLCanvas(
 }
 
 
+void wxSFMLCanvas::setLogic(GameLogic* logic)
+{
+  GameManager::setLogic( logic );
+  logic->setRendow(this);
+}
+
 void wxSFMLCanvas::onIdle(wxIdleEvent&)
 {
   Refresh(false);
@@ -36,7 +42,10 @@ void wxSFMLCanvas::onIdle(wxIdleEvent&)
 
 void wxSFMLCanvas::onPaint(wxPaintEvent&)
 {
-    wxPaintDC Dc(this);
-    update();
-    display();
+  wxPaintDC Dc(this);
+  
+  GameManager::update();
+  GameManager::draw();
+  
+  display();
 }

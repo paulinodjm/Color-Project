@@ -23,7 +23,7 @@ namespace e
     
   private:
   
-    TextureData() : m_refCount(0) {}
+    TextureData();
   
     unsigned int m_refCount;
   };
@@ -35,43 +35,17 @@ namespace e
   {
   public:
   
-    Texture(const std::string& id) : m_data(nullptr)
-    {
-      auto it = m_allData.find(id);
-      if (it == m_allData.end())
-      {
-        m_data = new TextureData;
-        m_allData[id] = m_data;
-        std::cout << "[création de '" << id << "'";
-      }
-      else
-      {
-        m_data = it->second;
-        std::cout << "[récupération de '" << id << "'";
-      }
+    Texture(const std::string& id);
     
-      std::cout << "]" << std::endl;
-      assert(m_data);
-      m_data->m_refCount++;
-    }
+    bool operator!() const;
     
-    virtual ~Texture()
-    {
-      m_data->m_refCount--;
-      if (m_data->m_refCount == 0)
-      {
-        auto it = m_allData.find(m_id);
-        m_allData.erase(it);
-        delete m_data;
-        std::cout << "[destruction de '" << m_id << "']" << std::endl;
-      }
-    }
+    virtual ~Texture();
     
   private:
   
-    TextureData* m_data;
-  
-    std::string m_id;
+    bool m_loaded;
+    
+    std::map<std::string, TextureData*>::iterator m_data;
     
     static std::map<std::string, TextureData*> m_allData;
   };
