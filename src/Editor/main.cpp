@@ -12,6 +12,10 @@
 #include "../Engine/BaseGame.hpp"
 #include <iostream>
 #include <wx/colordlg.h>
+#include <wx/wfstream.h>
+#include <wx/zipstrm.h>
+#include <wx/txtstrm.h>
+#include "../Engine/Texture.hpp"
 
 class GameView : public wxSFMLCanvas
 {
@@ -128,20 +132,16 @@ class Editor : public wxApp
     // menu bar
     wxMenuBar* menuBar = new wxMenuBar();
     wxMenu* menu = new wxMenu();
-    menu->Append(wxID_OPEN, wxT("Ouvrir une image"), wxT("Choisir l'image en arrière plan"));
-    menu->Append(1, wxT("Couleur de fond"), wxT("Choisir la couleur de fond"));
     menu->AppendSeparator();
     menu->Append(wxID_EXIT, wxT("Quitter"), wxT("Quitter l'éditeur"));
     menuBar->Append( menu, wxT("Fichier") );
     m_frame->SetMenuBar(menuBar);
     
-    // content
     wxPanel* panel = new wxPanel(m_frame);
     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
     panel->SetSizer(sizer);
-    m_gameView = new GameView(panel, wxID_ANY, wxDefaultPosition, wxSize(800, 600) );
-    sizer->Add( m_gameView, 1, wxEXPAND );
     m_frame->Show();
+    
     return true;
   }
   
@@ -149,11 +149,9 @@ class Editor : public wxApp
   GameView* m_gameView;
 };
 BEGIN_EVENT_TABLE(Editor, wxApp)
-  EVT_MENU(wxID_OPEN, Editor::onOpen)
-  EVT_MENU(1, Editor::onChooseBackgroundColor)
   EVT_MENU(wxID_EXIT, Editor::onExit)
 END_EVENT_TABLE()
 
 IMPLEMENT_APP(Editor)
 
-
+//*/
