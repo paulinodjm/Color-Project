@@ -2,29 +2,30 @@
 /// Copyright 2013 Marié Paulino (paulinodjm@hotmail.com)
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
-#include "Texture.hpp"
+#include "SoundBuffer.hpp"
 
 using namespace e;
 
-TextureData::TextureData() : m_refCount(0) {}
+
+SoundBufferData::SoundBufferData() : m_refCount(0) {}
 
 
-std::map<std::string, TextureData*> Texture::m_allData;
+std::map<std::string, SoundBufferData*> SoundBuffer::m_allData;
 
-Texture::Texture(const std::string& id) : m_loaded(false)
+SoundBuffer::SoundBuffer(const std::string& id) : m_loaded(false)
 {
   auto it = m_allData.find(id);
   if (it == m_allData.end())
   {
     std::cout << "Loading '" << id << "'... ";
-    TextureData *data = new TextureData;
+    SoundBufferData *data = new SoundBufferData;
     
     if (data->loadFromFile(id))
     {
       std::cout << "Complete." << std::endl;
       m_loaded = true;
     }        
-    m_data = m_allData.insert( std::pair<std::string, TextureData*>(id, data) ).first;
+    m_data = m_allData.insert( std::pair<std::string, SoundBufferData*>(id, data) ).first;
   }
   else
   {
@@ -33,17 +34,17 @@ Texture::Texture(const std::string& id) : m_loaded(false)
   m_data->second->m_refCount++;
 }
 
-bool Texture::operator!() const
+bool SoundBuffer::operator!() const
 {
   return !m_loaded;
 }
 
-TextureData& Texture::operator*() const
+SoundBufferData& SoundBuffer::operator*() const
 {
   return *(m_data->second);
 }
 
-Texture::~Texture()
+SoundBuffer::~SoundBuffer()
 {
   m_data->second->m_refCount--;
   if (m_data->second->m_refCount == 0)

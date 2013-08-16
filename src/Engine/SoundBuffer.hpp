@@ -4,50 +4,50 @@
 //////////////////////////////////////////////////////////
 #pragma once
 
-#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include <map>
 #include <string>
 #include <iostream>
 
 namespace e
 {
-  class Texture;
+  class SoundBuffer;
 
   ///////////////////////////////////////////////////
-  /// Hold a sf::Texture and keep a reference counter
+  /// Hold a sf::SoundBuffer and keep a reference counter
   ///////////////////////////////////////////////////
-  class TextureData : public sf::Texture
+  class SoundBufferData : public sf::SoundBuffer
   {
-    friend class e::Texture;
+    friend class e::SoundBuffer;
     
   private:
   
-    TextureData();
+    SoundBufferData();
   
     unsigned int m_refCount;
   };
 
   //////////////////////////////////
-  // pointer to a TextureData object
+  // pointer to a SoundBufferData object
   //////////////////////////////////
-  class Texture
+  class SoundBuffer
   {
   public:
   
-    Texture(const std::string& id);
+    SoundBuffer(const std::string& id);
     
     bool operator!() const;
     
-    TextureData& operator*() const;
+    SoundBufferData& operator*() const;
     
-    virtual ~Texture();
+    virtual ~SoundBuffer();
     
   private:
   
     bool m_loaded;
     
-    std::map<std::string, TextureData*>::iterator m_data;
+    std::map<std::string, SoundBufferData*>::iterator m_data;
     
-    static std::map<std::string, TextureData*> m_allData;
+    static std::map<std::string, SoundBufferData*> m_allData;
   };
 }

@@ -11,10 +11,10 @@ public:
   
   void update()
   {
-    std::cout << "update" << std::endl;
+
   }
   
-  void draw()
+  virtual void draw()
   {
     if (!m_rendow) return;
     
