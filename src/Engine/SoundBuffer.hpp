@@ -25,6 +25,8 @@ namespace e
     SoundBufferData();
   
     unsigned int m_refCount;
+    
+    bool m_loaded;
   };
 
   //////////////////////////////////
@@ -36,6 +38,10 @@ namespace e
   
     SoundBuffer(const std::string& id);
     
+    SoundBuffer(const e::SoundBuffer& copy);
+    
+    void operator=(const e::SoundBuffer& other);
+    
     bool operator!() const;
     
     SoundBufferData& operator*() const;
@@ -43,8 +49,6 @@ namespace e
     virtual ~SoundBuffer();
     
   private:
-  
-    bool m_loaded;
     
     std::map<std::string, SoundBufferData*>::iterator m_data;
     

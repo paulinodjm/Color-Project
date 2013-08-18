@@ -17,14 +17,17 @@
 #include <wx/txtstrm.h>
 #include "../Engine/Texture.hpp"
 #include "../Engine/SoundBuffer.hpp"
+#include "../Engine/SoundPlayer.hpp"
 
 class Logic : public GameLogic
 {
 public:
 
-  Logic() : m_tex("data/tileset.png") 
+  Logic() : m_tex("data/tileset.png")
   {
-    m_sprite.setTexture(*m_tex, true);
+    e::Texture tex("data/strip.png");
+    tex = m_tex;
+    m_sprite.setTexture(*tex, true);
   }
   
   void draw()
@@ -45,28 +48,44 @@ class Editor : public wxApp
 
 public:
 
-  Editor() : wxApp(), m_sb("data/sound.oog") {}
+  Editor() : wxApp() {}
 
 private:
 
   bool OnInit()
   {
+    wxApp::OnInit();
+  
     m_frame = new wxFrame(NULL, wxID_ANY, wxT("Color Project Editor"));
     m_frame->Show();
    
-    e::SoundBuffer("data/sound.wav");
-    m_sound.setBuffer(*m_sb);    
+    e::SoundPlayer player1;
+    e::SoundPlayer player2(e::SoundBuffer("data/sound.oog"));
+    player2 = player1;
+    player2.setBuffer(e::SoundBuffer("data/sound.wav"));
+    player1.setBuffer(e::SoundBuffer("data/sound.wav"));
+    player1 = player2;
+    m_sound = player1;
+    
     m_sound.play();
    
+    /*
     wxSFMLCanvas *canvas = new wxSFMLCanvas(m_frame, wxID_ANY, wxDefaultPosition, wxSize(800,600));
-    GameLogic *logic = new Logic;
-    canvas->setLogic( logic );
+    m_logic = new Logic;
+    canvas->setLogic( m_logic );
+    */
     
     return true;
   }
   
-  sf::Sound m_sound;
-  e::SoundBuffer m_sb;
+  int OnExit()
+  {
+    delete m_logic;
+    return wxApp::OnExit();
+  }
+  
+  Logic* m_logic;
+  e::SoundPlayer m_sound;
   wxFrame* m_frame;
 };
 BEGIN_EVENT_TABLE(Editor, wxApp)

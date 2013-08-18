@@ -25,6 +25,8 @@ namespace e
     TextureData();
   
     unsigned int m_refCount;
+    
+    bool m_loaded;
   };
 
   //////////////////////////////////
@@ -36,15 +38,20 @@ namespace e
   
     Texture(const std::string& id);
     
+    Texture(const Texture& copy);
+    
+    void operator=(const Texture& other);
+    
     bool operator!() const;
     
     TextureData& operator*() const;
     
     virtual ~Texture();
     
+    static void printInfo();
+    
   private:
   
-    bool m_loaded;
     
     std::map<std::string, TextureData*>::iterator m_data;
     
