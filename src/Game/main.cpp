@@ -12,10 +12,12 @@
 #include "../Engine/Tilemap.hpp"
 #include <string>
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include "../Engine/Animation.hpp"
 #include "../Engine/AnimatedSprite.hpp"
 #include "../Engine/Camera.hpp"
+#include "../Engine/SoundPlayer.hpp"
+
+using namespace e;
 
 class MyObject : public e::Object, public e::Solid, public e::Drawable, public e::Camera
 {
@@ -117,11 +119,12 @@ class StaticObject : public e::GameObject
 {
 public:
 
-  StaticObject(e::Resources& resources) : e::GameObject(resources)
+  StaticObject(e::Resources& resources) : e::GameObject(resources),
+    m_soundBuffer("data/sound.wav")
   {
     setSprite(*resources.getSprite("white"));
     setBounds(sf::FloatRect(0,0,32,32));
-    m_sound.setBuffer(*getResources()->getSoundBuffer("sound"));
+    m_sound.setBuffer(e::SoundBuffer("data/sound.wav"));
   }
   
   void update(float deltaTime)
@@ -141,9 +144,10 @@ public:
   
 private:
 
-  static sf::Sound m_sound;
+  e::SoundBuffer m_soundBuffer; // FIXME segfault if the soundBuffer isn't keep here
+  static SoundPlayer m_sound;
 };
-sf::Sound StaticObject::m_sound;
+SoundPlayer StaticObject::m_sound;
 
 template <typename T>
 class AutoFactory : public e::ObjectFactory
