@@ -7,6 +7,7 @@
 #include <wx/wx.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "../Engine/BaseGame.hpp"
 
 #ifdef __WXGTK__
     #include <gdk/gdkx.h>
@@ -14,10 +15,7 @@
     #include <wx-2.8/wx/gtk/win_gtk.h>
 #endif
 
-#include "GameManager.hpp"
-#include "GameLogic.hpp"
-
-class wxSFMLCanvas : public sf::RenderWindow, public wxControl, public GameManager
+class wxSFMLCanvas : public sf::RenderWindow, public wxControl, public e::BaseGame
 {
 public:
 
@@ -31,9 +29,6 @@ public:
     const wxString& name = wxPanelNameStr);
     
   virtual ~wxSFMLCanvas() {}
-  
-  
-  void setLogic(GameLogic* logic);
   
 private:
 

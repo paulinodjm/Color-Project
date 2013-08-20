@@ -14,7 +14,8 @@ wxSFMLCanvas::wxSFMLCanvas(
     const wxValidator& validator,
     const wxString& name) 
 :
-  wxControl(parent, id, pos, size, style, validator, name)
+  wxControl(parent, id, pos, size, style, validator, name),
+  e::BaseGame(static_cast<sf::RenderWindow&>(*this))
 {
   #ifdef __WXGTK__
     gtk_widget_realize(m_wxwindow);
@@ -28,13 +29,6 @@ wxSFMLCanvas::wxSFMLCanvas(
   #endif
 }
 
-
-void wxSFMLCanvas::setLogic(GameLogic* logic)
-{
-  GameManager::setLogic( logic );
-  logic->setRendow(this);
-}
-
 void wxSFMLCanvas::onIdle(wxIdleEvent&)
 {
   Refresh(false);
@@ -43,9 +37,6 @@ void wxSFMLCanvas::onIdle(wxIdleEvent&)
 void wxSFMLCanvas::onPaint(wxPaintEvent&)
 {
   wxPaintDC Dc(this);
-  
-  GameManager::update();
-  GameManager::draw();
-  
+  clear();
   display();
 }
