@@ -10,7 +10,7 @@ Game::Game() : BaseGame(m_rendow)
 
 int Game::mainLoop()
 {
-  m_rendow.create(sf::VideoMode(640,480), "Color Project");
+  m_rendow.create(sf::VideoMode(640,480), "Color Project", sf::Style::Titlebar);
   m_rendow.setFramerateLimit(4000);
   m_rendow.setKeyRepeatEnabled(false);
   
