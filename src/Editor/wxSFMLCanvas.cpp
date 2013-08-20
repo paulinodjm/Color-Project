@@ -27,6 +27,21 @@ wxSFMLCanvas::wxSFMLCanvas(
   #else
     sf::RenderWindow::create( static_cast<sf::WindowHandle>(GetHandle()) );
   #endif
+  
+  
+  if (!loadResources())
+  {
+    std::cout << "Resources loading failed. Exiting..." << std::endl;
+  }
+  else
+  {
+    /// for tests only
+    m_level = new e::Level();
+    loadObjects("data/objects.json");
+    ///
+  }
+  
+  getLevel()->init();
 }
 
 void wxSFMLCanvas::onIdle(wxIdleEvent&)
@@ -37,6 +52,6 @@ void wxSFMLCanvas::onIdle(wxIdleEvent&)
 void wxSFMLCanvas::onPaint(wxPaintEvent&)
 {
   wxPaintDC Dc(this);
-  clear();
+  update();
   display();
 }

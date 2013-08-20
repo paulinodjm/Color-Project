@@ -11,7 +11,7 @@ Game::Game() : BaseGame(m_rendow)
 int Game::mainLoop()
 {
   m_rendow.create(sf::VideoMode(640,480), "Color Project", sf::Style::Titlebar);
-  m_rendow.setFramerateLimit(4000);
+  m_rendow.setFramerateLimit(60);
   m_rendow.setKeyRepeatEnabled(false);
   
   if (!loadResources())
@@ -43,15 +43,7 @@ int Game::mainLoop()
       }
     }
 
-    // update objects
-    getLevel()->update();
-    
-    // collisions
-    getLevel()->performCollisions();
-    
-    // display
-    m_rendow.clear(sf::Color::White);
-    m_rendow.draw(*getLevel());
+    update();
     m_rendow.display();
   }
 

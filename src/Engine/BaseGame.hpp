@@ -48,12 +48,9 @@ namespace e
 
   protected:
 
-    virtual void init() {}
-
-    virtual bool update(float deltaTime) {return true;}
-
-    virtual void finalize() {}
-    
+    /** process the game logic */
+    bool update();
+        
     
     bool loadResources();
 

@@ -245,6 +245,26 @@ bool BaseGame::loadObjects(const std::string& filename)
   return true;
 }
 
+bool BaseGame::update()
+{
+  if (m_level)
+  {
+    // update objects
+    m_level->update();
+
+    // collisions
+    m_level->performCollisions();
+
+    // display
+    m_rendow.clear(sf::Color::White);
+    m_rendow.draw(*m_level);
+    
+    return true;
+  }
+  else
+    return false;
+}
+
 TextureLoader& BaseGame::getTextureLoader()
 {
   return m_textureLoader;
