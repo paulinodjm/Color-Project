@@ -30,6 +30,8 @@ public:
     
   virtual ~wxSFMLCanvas() {}
   
+  void init();
+  
 private:
 
   DECLARE_EVENT_TABLE()

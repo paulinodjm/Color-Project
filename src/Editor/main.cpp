@@ -5,6 +5,7 @@
 
 #include <wx/wx.h>
 #include "wxSFMLCanvas.hpp"
+#include "../Game/GameTypes.hpp"
 
 class Editor : public wxApp
 {
@@ -24,6 +25,12 @@ private:
     m_frame->Show();
    
     wxSFMLCanvas *canvas = new wxSFMLCanvas(m_frame, wxID_ANY, wxDefaultPosition, wxSize(800,600));
+    
+    canvas->addObjectFactory("MyObject", moFactory);
+    canvas->addObjectFactory("StaticObject", soFactory);
+    canvas->addObjectFactory("Tilemap", tmFactory);
+    
+    canvas->init();
     
     return true;
   }

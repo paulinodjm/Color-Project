@@ -242,6 +242,7 @@ bool BaseGame::loadObjects(const std::string& filename)
   }
   
   file.close();
+  std::cout << "Level '" << filename << "' loaded." << std::endl; 
   return true;
 }
 

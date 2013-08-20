@@ -27,8 +27,10 @@ wxSFMLCanvas::wxSFMLCanvas(
   #else
     sf::RenderWindow::create( static_cast<sf::WindowHandle>(GetHandle()) );
   #endif
-  
-  
+}
+
+void wxSFMLCanvas::init()
+{
   if (!loadResources())
   {
     std::cout << "Resources loading failed. Exiting..." << std::endl;
