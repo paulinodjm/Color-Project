@@ -82,7 +82,7 @@ void Level::init()
   }
 }
 
-void Level::update()
+bool Level::update()
 {
   for (auto it : m_objects)
   {

@@ -2,16 +2,8 @@
 /// Copyright 2013 Marié Paulino (paulinodjm@hotmail.com)
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
-
-#include <cstdlib>
-#include <jsoncpp/json/json.h>
 #include "Game.hpp"
-#include "GameObject.hpp"
-#include "Solid.hpp"
 #include <iostream>
-#include <fstream>
-
-using namespace e;
 
 Game::Game() : BaseGame(m_rendow)
 {}
@@ -30,7 +22,7 @@ int Game::mainLoop()
   else
   {
     /// for tests only
-    m_level = new Level();
+    m_level = new e::Level();
     loadObjects("data/objects.json");
     ///
   }

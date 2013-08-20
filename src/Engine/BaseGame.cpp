@@ -5,7 +5,7 @@
 
 #include <cstdlib>
 #include <jsoncpp/json/json.h>
-#include "Game.hpp"
+#include "BaseGame.hpp"
 #include "GameObject.hpp"
 #include "Solid.hpp"
 #include <iostream>
@@ -253,11 +253,6 @@ TextureLoader& BaseGame::getTextureLoader()
 SoundLoader& BaseGame::getSoundLoader()
 {
   return m_soundLoader;
-}
-
-Tileset& BaseGame::getTileset()
-{
-  return m_tileset;
 }
 
 Level* BaseGame::getLevel()

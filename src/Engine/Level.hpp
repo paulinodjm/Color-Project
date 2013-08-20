@@ -38,7 +38,7 @@ namespace e
     
     void init();
     
-    void update();
+    bool update();
     
     void performCollisions();
     

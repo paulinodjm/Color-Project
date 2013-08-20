@@ -20,22 +20,20 @@
 
 namespace e
 {
+  /**
+  * Base class foreach game
+  */
   class BaseGame
   {
   public:
 
     BaseGame(sf::RenderWindow& rendow);
-    
-
-    virtual int mainLoop() = 0;
-    
-    
+        
+        
     void addObjectFactory(const std::string& name, ObjectFactory& factory);
     
     Object* createObject(const std::string& name);
     
-    Tileset& getTileset();
-      
     TextureLoader& getTextureLoader();
     
     SoundLoader& getSoundLoader();
@@ -64,8 +62,6 @@ namespace e
     sf::RenderWindow&                     m_rendow;
     
     std::map<std::string, ObjectFactory*> m_objectFactory;
-    
-    Tileset                               m_tileset;
     
     TextureLoader                         m_textureLoader;
     

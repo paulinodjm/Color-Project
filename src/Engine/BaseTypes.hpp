@@ -6,14 +6,14 @@
 
 namespace e
 {
-  class Drawable;
-  class AbstractGame;
-  class Game;
-  class GameObject;
   class Object;
+  class Drawable;
+  class Solid;
+  
+  class AbstractGame;
+  class GameObject;
   class ObjectFactory;
   class Resources;
-  class Solid;
   template <typename T> class Loader;
   class ImageLoader;
   class SoundLoader;

@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include "../Engine/BaseTypes.hpp"
-#include "../Engine/Game.hpp"
+#include "Game.hpp"
 #include "../Engine/GameObject.hpp"
 #include "../Engine/TextureLoader.hpp"
 #include "../Engine/Tileset.hpp"
@@ -165,7 +165,7 @@ public:
 ************************************/
 int main(int argc, char** argv)
 {			
-  e::Game game;
+  Game game;
 
   // object factories declaration
   AutoFactory<MyObject>     moFactory;
