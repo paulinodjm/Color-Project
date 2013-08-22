@@ -35,7 +35,10 @@ Object* BaseGame::createObject(const std::string& name)
 bool BaseGame::loadResources()
 {
   std::shared_ptr<TEXTURE> tex;
-  return contentManager.Load<TEXTURE>(tex, "data/tileset.png");
+  contentManager.Load<TEXTURE>(tex, "data/tileset.png");
+  
+  std::shared_ptr<SOUNDBUFFER> snd;
+  return contentManager.Load<SOUNDBUFFER>(snd, "data/sound.oog");
 
   /*
   Json::Value root;

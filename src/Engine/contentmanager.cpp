@@ -17,7 +17,20 @@ CONTENTMANAGER::CACHE<TEXTURE>& CONTENTMANAGER::GetCache()
   return textureCache;
 }
 
+template<>
+LOADER<SOUNDBUFFER>& CONTENTMANAGER::GetLoader()
+{
+  return soundBufferLoader;
+}
+
+template<>
+CONTENTMANAGER::CACHE<SOUNDBUFFER>& CONTENTMANAGER::GetCache()
+{
+  return soundBufferCache;
+}
+
 void CONTENTMANAGER::Weep()
 {
   GetCache<TEXTURE>().Weep();
+  GetCache<SOUNDBUFFER>().Weep();
 }

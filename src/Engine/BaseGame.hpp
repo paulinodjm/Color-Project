@@ -12,7 +12,6 @@
 #include <string>
 #include "BaseTypes.hpp"
 #include "Tileset.hpp"
-#include "SoundLoader.hpp"
 #include "Tilemap.hpp"
 #include "Drawable.hpp"
 #include "Level.hpp"

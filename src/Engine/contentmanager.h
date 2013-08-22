@@ -9,6 +9,7 @@
 #include <map>
 #include "loader.h"
 #include "textureloader.h"
+#include "soundbufferloader.h"
 
 class CONTENTMANAGER
 {
@@ -55,8 +56,10 @@ private:
 
 private:
 
-  CACHE<TEXTURE> textureCache;
-  LOADER<TEXTURE> textureLoader;
+  CACHE<TEXTURE>      textureCache;
+  LOADER<TEXTURE>     textureLoader;
+  CACHE<SOUNDBUFFER>  soundBufferCache;
+  LOADER<SOUNDBUFFER> soundBufferLoader;
 
 protected:
 
