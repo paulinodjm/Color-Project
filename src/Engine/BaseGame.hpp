@@ -34,9 +34,11 @@ namespace e
     
     Object* createObject(const std::string& name);
     
+    /*
     TextureLoader& getTextureLoader();
     
     SoundLoader& getSoundLoader();
+    //*/
     
     
     bool loadTilemap(const std::string& filename, Tilemap& tilemap);
@@ -60,9 +62,9 @@ namespace e
     
     std::map<std::string, ObjectFactory*> m_objectFactory;
     
-    TextureLoader                         m_textureLoader;
+    //TextureLoader                         m_textureLoader;
     
-    SoundLoader                           m_soundLoader;
+    //SoundLoader                           m_soundLoader;
     
   protected:
 

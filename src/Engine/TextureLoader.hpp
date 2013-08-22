@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////
 #pragma once
 
+/*
 #include "BaseTypes.hpp"
 #include "Loader.hpp"
 #include <SFML/Graphics.hpp>
@@ -32,4 +33,4 @@ namespace e
     }
   };
 }
-
+//*/

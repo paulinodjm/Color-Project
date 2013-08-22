@@ -34,6 +34,7 @@ Object* BaseGame::createObject(const std::string& name)
 /** load resources desribed in 'data/resources.json' */
 bool BaseGame::loadResources()
 {
+  /*
   Json::Value root;
   Json::Reader reader;
   std::ifstream resources("data/resources.json");
@@ -141,6 +142,7 @@ bool BaseGame::loadResources()
   }
 
   resources.close();
+  //*/
   return true; 
 }
 
@@ -266,6 +268,7 @@ bool BaseGame::update()
     return false;
 }
 
+/*
 TextureLoader& BaseGame::getTextureLoader()
 {
   return m_textureLoader;
@@ -275,7 +278,7 @@ SoundLoader& BaseGame::getSoundLoader()
 {
   return m_soundLoader;
 }
-
+//*/
 Level* BaseGame::getLevel()
 {
   return m_level;
