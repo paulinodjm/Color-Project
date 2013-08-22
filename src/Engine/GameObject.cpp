@@ -5,6 +5,8 @@
 #include "GameObject.hpp"
 #include <iostream>
 
+
+/*
 using namespace e;
 
 GameObject::GameObject(Resources& resources) 
@@ -30,3 +32,4 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   target.draw(m_sprite);
 }
+//*/

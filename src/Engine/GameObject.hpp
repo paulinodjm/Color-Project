@@ -10,6 +10,7 @@
 #include "Solid.hpp"
 #include "Drawable.hpp"
 
+/*
 namespace e
 {
   class GameObject : public Object, public Drawable, public Solid
@@ -33,4 +34,4 @@ namespace e
     sf::Sprite m_sprite;
   };
 }
-
+//*/
