@@ -4,27 +4,25 @@
 //////////////////////////////////////////////////////////
 #include "drawable.h"
 
-using namespace e;
+DRAWABLE::DRAWABLE() : sf::Drawable(), visible(true), depth(0) {}
 
-Drawable::Drawable() : sf::Drawable(), m_visible(true), m_depth(0) {}
-
-void Drawable::setVisible(bool visible)
+void DRAWABLE::SetVisible(bool enable)
 {
-  m_visible = visible;
+  visible = enable;
 }
 
-bool Drawable::isVisible() const
+bool DRAWABLE::Visible() const
 {
-  return m_visible;
+  return visible;
 }
 
-void Drawable::setDepth(int depth)
+void DRAWABLE::SetDepth(int d)
 {
-  m_depth = depth;
+  depth = d;
 }
 
-int Drawable::getDepth() const
+int DRAWABLE::Depth() const
 {
-  return m_depth;
+  return depth;
 }
 

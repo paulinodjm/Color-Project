@@ -21,13 +21,13 @@ int Game::mainLoop()
   }
   else
   {
-    /// for tests only
+    /* for tests only
     m_level = new e::Level();
     loadObjects("data/objects.json");
-    ///
+    //*/
   }
 
-  m_level->init();
+  //m_level->init();
 
   sf::Event event;
   while (m_rendow.isOpen())

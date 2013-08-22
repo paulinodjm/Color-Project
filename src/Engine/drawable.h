@@ -5,34 +5,27 @@
 #pragma once
 
 #include "BaseTypes.hpp"
-#include <SFML/Graphics.hpp>
-#include "Object.hpp"
+#include <SFML/Graphics/Drawable.hpp>
 
-namespace e
-  {
-  /**
-  * Base class for each visible object.
-  */
-  class Drawable : public sf::Drawable
-  {
-  public:
+class DRAWABLE : public sf::Drawable
+{
+public:
 
-    Drawable();
+  DRAWABLE();
 
-    void setVisible(bool visible);
+  void SetVisible(bool visible);
 
-    bool isVisible() const;
-    
-    int getDepth() const;
-    
-    // changing the depth after the object was added to the drawable list has no effect
-    void setDepth(int depht);
+  bool Visible() const;
+  
+  int Depth() const;
+  
+  // changing the depth after the object was added to the drawable list has no effect
+  void SetDepth(int depht);
 
-  private:
+private:
 
-    bool m_visible;
-    
-    int m_depth;
-  };
-}
+  bool visible;
+  
+  int depth;
+};
 

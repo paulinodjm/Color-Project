@@ -13,7 +13,6 @@
 #include "BaseTypes.hpp"
 #include "Tileset.hpp"
 #include "Tilemap.hpp"
-#include "Level.hpp"
 
 #include "contentmanager.h"
 
@@ -45,7 +44,7 @@ namespace e
     bool loadObjects(const std::string& filename);
     
     
-    Level* getLevel();
+    //Level* getLevel();
 
   protected:
 
@@ -69,7 +68,7 @@ namespace e
     
   protected:
 
-    Level*                                m_level;
+    //Level*                                m_level;
   };
 }
 

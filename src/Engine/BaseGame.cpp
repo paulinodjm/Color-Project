@@ -13,7 +13,7 @@
 
 using namespace e;
 
-BaseGame::BaseGame(sf::RenderWindow& rendow) : m_rendow(rendow), m_level(nullptr)
+BaseGame::BaseGame(sf::RenderWindow& rendow) : m_rendow(rendow)//, m_level(nullptr)
 {}
 
 void BaseGame::addObjectFactory(const std::string& name, ObjectFactory& factory)
@@ -154,6 +154,7 @@ bool BaseGame::loadResources()
 
 bool BaseGame::loadTilemap(const std::string& filename, Tilemap& tilemap)
 {
+  /*
   Json::Value root;
   Json::Reader reader;
   std::ifstream file(filename);
@@ -183,11 +184,13 @@ bool BaseGame::loadTilemap(const std::string& filename, Tilemap& tilemap)
   
   file.close();
   std::cout << "Tilemap '" << filename << "' loaded" << std::endl;
+  //*/
   return true;
 }
 
 bool BaseGame::loadObjects(const std::string& filename)
 {
+  /*
   if (!m_level)
   {
     std::cout << "Object loading failed : no level exists" << std::endl;
@@ -251,11 +254,13 @@ bool BaseGame::loadObjects(const std::string& filename)
   
   file.close();
   std::cout << "Level '" << filename << "' loaded." << std::endl; 
+  //*/
   return true;
 }
 
 bool BaseGame::update()
 {
+  /*
   if (m_level)
   {
     // update objects
@@ -272,6 +277,8 @@ bool BaseGame::update()
   }
   else
     return false;
+    //*/
+   return true;
 }
 
 /*
@@ -284,8 +291,9 @@ SoundLoader& BaseGame::getSoundLoader()
 {
   return m_soundLoader;
 }
-//*/
+
 Level* BaseGame::getLevel()
 {
   return m_level;
 }
+//*/

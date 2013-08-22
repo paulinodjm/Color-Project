@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////
 #include "Level.hpp"
 
+/*
 using namespace e;
 
 Level::Level() : Drawable(),
@@ -152,4 +153,4 @@ Camera* Level::getCamera() const
 void Level::setCamera(Camera* camera)
 {
   m_camera = camera;
-}
+}//*/

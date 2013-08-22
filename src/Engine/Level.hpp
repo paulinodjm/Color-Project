@@ -4,20 +4,21 @@
 //////////////////////////////////////////////////////////
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include "BaseTypes.hpp"
-#include <map>
-#include <vector>
-#include <string>
-#include "Solid.hpp"
 #include "drawable.h"
-#include "Object.hpp"
-#include "Camera.hpp"
+#include <SFML/Graphics/Drawable.hpp>
 
+class LEVEL : public sf::Drawable
+{
+  LEVEL();
+  ~LEVEL();
+};
+
+/*
 namespace e
 {
-  class Level : public Drawable
+  class Level// : public Drawable
   {
+  /*
   public:
 
     Level();
@@ -27,10 +28,8 @@ namespace e
     
     void addObject(Object* object);
     
-    /** return the first Object identified by this name */
     Object* getObject(const std::string& name);
     
-    /** return all the objects identified by this name */
     std::vector<Object*> getObjects(const std::string& name);
     
     void deleteObjects();
@@ -67,4 +66,4 @@ namespace e
 
     Camera*                               m_camera;
   };
-}
+}//*/

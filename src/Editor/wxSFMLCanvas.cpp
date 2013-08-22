@@ -38,12 +38,12 @@ void wxSFMLCanvas::init()
   else
   {
     /// for tests only
-    m_level = new e::Level();
+    //m_level = new e::Level();
     loadObjects("data/objects.json");
     ///
   }
   
-  getLevel()->init();
+  //getLevel()->init();
 }
 
 void wxSFMLCanvas::onIdle(wxIdleEvent&)
