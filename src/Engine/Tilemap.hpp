@@ -8,13 +8,13 @@
 #include "Tileset.hpp"
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "Drawable.hpp"
+//#include "Drawable.hpp"
 #include "Object.hpp"
 //#include "Resources.hpp"
 
 namespace e
 {
-  class Tilemap : public Drawable, public Object
+  class Tilemap //: public Drawable, public Object
   {
   public:
 
@@ -49,7 +49,7 @@ namespace e
     
   protected:
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    //void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     
   private:
 

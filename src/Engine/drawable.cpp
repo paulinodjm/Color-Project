@@ -2,7 +2,7 @@
 /// Copyright 2013 Marié Paulino (paulinodjm@hotmail.com)
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
-#include "Drawable.hpp"
+#include "drawable.h"
 
 using namespace e;
 

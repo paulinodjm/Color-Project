@@ -13,7 +13,6 @@
 #include "BaseTypes.hpp"
 #include "Tileset.hpp"
 #include "Tilemap.hpp"
-#include "Drawable.hpp"
 #include "Level.hpp"
 
 #include "contentmanager.h"

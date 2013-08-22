@@ -83,6 +83,7 @@ void Tilemap::setTileset(const Tileset& tileset)
   m_tileset = &tileset;
 }
 
+/*
 void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   if (!m_tileset) return;
@@ -102,6 +103,7 @@ void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
     }
   }
 }
+//*/
 
 bool Tilemap::placeFree(const sf::FloatRect& rect) const
 {

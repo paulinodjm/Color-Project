@@ -10,7 +10,7 @@
 #include <vector>
 #include <string>
 #include "Solid.hpp"
-#include "Drawable.hpp"
+#include "drawable.h"
 #include "Object.hpp"
 #include "Camera.hpp"
 
