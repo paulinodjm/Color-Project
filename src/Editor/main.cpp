@@ -26,9 +26,11 @@ private:
    
     wxSFMLCanvas *canvas = new wxSFMLCanvas(m_frame, wxID_ANY, wxDefaultPosition, wxSize(800,600));
     
+    /*
     canvas->addObjectFactory("MyObject", moFactory);
     canvas->addObjectFactory("StaticObject", soFactory);
     canvas->addObjectFactory("Tilemap", tmFactory);
+    //*/
     
     canvas->init();
     

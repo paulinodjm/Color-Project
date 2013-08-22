@@ -5,6 +5,8 @@
 #include "GameTypes.hpp"
 #include "../Engine/Level.hpp"
 
+/*
+
 using namespace e;
 
 ///
@@ -126,4 +128,5 @@ e::SoundPlayer StaticObject::m_sound;
 AutoFactory<MyObject>     moFactory;
 AutoFactory<StaticObject> soFactory;
 AutoFactory<e::Tilemap>   tmFactory;
+//*/
 

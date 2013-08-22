@@ -13,6 +13,7 @@
 #include "../Engine/Camera.hpp"
 #include "../Engine/SoundPlayer.hpp"
 
+/*
 ///
 /// MyObject
 /// 
@@ -85,4 +86,5 @@ public:
 extern AutoFactory<MyObject>     moFactory;
 extern AutoFactory<StaticObject> soFactory;
 extern AutoFactory<e::Tilemap>   tmFactory;
+//*/
 

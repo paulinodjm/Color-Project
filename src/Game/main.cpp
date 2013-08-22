@@ -13,9 +13,11 @@ int main(int argc, char** argv)
 {			
   Game game;
 
+  /*
   game.addObjectFactory("MyObject", moFactory);
   game.addObjectFactory("StaticObject", soFactory);
   game.addObjectFactory("Tilemap", tmFactory);
+  //*/
   
   // main loop
   return game.mainLoop();
