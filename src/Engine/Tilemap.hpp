@@ -10,7 +10,7 @@
 #include <vector>
 #include "Drawable.hpp"
 #include "Object.hpp"
-#include "Resources.hpp"
+//#include "Resources.hpp"
 
 namespace e
 {
@@ -18,7 +18,7 @@ namespace e
   {
   public:
 
-    Tilemap(Resources& resources);
+    //Tilemap(Resources& resources);
 
     virtual bool isTileSolid(int x, int y) const;
 

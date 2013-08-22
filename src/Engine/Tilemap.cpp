@@ -7,6 +7,7 @@
 
 using namespace e;
 
+/*
 Tilemap::Tilemap(Resources& resources) : Object(resources), Drawable(),
   m_width(0),
   m_height(0),
@@ -16,7 +17,7 @@ Tilemap::Tilemap(Resources& resources) : Object(resources), Drawable(),
   {
     m_tileset = getResources()->getTileset("tileset");
   }
-}
+}//*/
 
 bool Tilemap::isTileSolid(int x, int y) const
 {

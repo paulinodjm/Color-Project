@@ -8,10 +8,11 @@
 
 using namespace e;
 
-Object::Object() : m_resources(nullptr) {}
+Object::Object() /*: m_resources(nullptr)*/ {}
 
-Object::Object(Resources& resources) : m_resources(&resources) {}
+//Object::Object(Resources& resources) : m_resources(&resources) {}
 
+/*
 Resources* Object::getResources()
 {
   return m_resources;
@@ -20,7 +21,7 @@ Resources* Object::getResources()
 void Object::setResources(Resources& resources)
 {
   m_resources = &resources;
-}
+}//*/
 
 const std::string& Object::getName() const
 {
@@ -32,8 +33,9 @@ void Object::setName(const std::string& name)
   m_name = name;
 }
 
+/*
 ///////////////////////////////////////////
 Resources& ObjectFactory::getResources()
 {
   return m_resources;
-}
+}//*/

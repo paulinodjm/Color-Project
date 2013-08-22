@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "BaseTypes.hpp"
-#include "Resources.hpp"
+//#include "Resources.hpp"
 
 namespace e
 {
@@ -21,7 +21,7 @@ namespace e
     
     Object();
     
-    Object(Resources& resources);
+    //Object(Resources& resources);
 
     Resources* getResources();
     
@@ -39,7 +39,7 @@ namespace e
 
   private:
 
-    Resources* m_resources;
+    //Resources* m_resources;
     
     std::string m_name;
     
@@ -56,11 +56,11 @@ namespace e
 
     virtual Object* create() = 0;
     
-    Resources&  getResources();
+    //Resources&  getResources();
     
   private:
 
-    Resources m_resources;
+    //Resources m_resources;
   };//*/
 }
 
