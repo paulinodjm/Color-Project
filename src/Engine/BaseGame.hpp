@@ -12,11 +12,12 @@
 #include <string>
 #include "BaseTypes.hpp"
 #include "Tileset.hpp"
-#include "TextureLoader.hpp"
 #include "SoundLoader.hpp"
 #include "Tilemap.hpp"
 #include "Drawable.hpp"
 #include "Level.hpp"
+
+#include "contentmanager.h"
 
 namespace e
 {
@@ -65,6 +66,8 @@ namespace e
     //TextureLoader                         m_textureLoader;
     
     //SoundLoader                           m_soundLoader;
+    
+    CONTENTMANAGER  contentManager;
     
   protected:
 

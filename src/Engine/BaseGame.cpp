@@ -34,6 +34,9 @@ Object* BaseGame::createObject(const std::string& name)
 /** load resources desribed in 'data/resources.json' */
 bool BaseGame::loadResources()
 {
+  std::shared_ptr<TEXTURE> tex;
+  return contentManager.Load<TEXTURE>(tex, "data/tileset.png");
+
   /*
   Json::Value root;
   Json::Reader reader;
