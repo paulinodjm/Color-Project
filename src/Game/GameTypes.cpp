@@ -3,8 +3,6 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "GameTypes.hpp"
-#include "../Engine/Level.hpp"
-
 /*
 
 using namespace e;

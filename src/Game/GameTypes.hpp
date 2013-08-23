@@ -4,15 +4,6 @@
 //////////////////////////////////////////////////////////
 #pragma once
 
-#include "../Engine/BaseTypes.hpp"
-#include "../Engine/GameObject.hpp"
-#include "../Engine/Tilemap.hpp"
-#include <string>
-#include "../Engine/Animation.hpp"
-#include "../Engine/AnimatedSprite.hpp"
-#include "../Engine/Camera.hpp"
-#include "../Engine/SoundPlayer.hpp"
-
 /*
 ///
 /// MyObject

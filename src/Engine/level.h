@@ -9,6 +9,8 @@
 
 class LEVEL : public sf::Drawable
 {
+public:
+
   LEVEL();
   ~LEVEL();
 };

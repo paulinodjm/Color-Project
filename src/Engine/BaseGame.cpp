@@ -10,6 +10,7 @@
 #include "Solid.hpp"
 #include <iostream>
 #include <fstream>
+#include "staticsprite.h"
 
 using namespace e;
 
@@ -35,10 +36,15 @@ Object* BaseGame::createObject(const std::string& name)
 bool BaseGame::loadResources()
 {
   std::shared_ptr<TEXTURE> tex;
-  contentManager.Load<TEXTURE>(tex, "data/tileset.png");
+  if (!contentManager.Load<TEXTURE>(tex, "data/textures/tileset.png"))
+    return false;
   
   std::shared_ptr<SOUNDBUFFER> snd;
-  return contentManager.Load<SOUNDBUFFER>(snd, "data/sound.oog");
+  if (!contentManager.Load<SOUNDBUFFER>(snd, "data/audio/sound.oog"))
+    return false;
+    
+  if (!staticsprite.Load("data/sprites/StaticSprite.json", contentManager))
+    return false;
 
   /*
   Json::Value root;
@@ -278,20 +284,12 @@ bool BaseGame::update()
   else
     return false;
     //*/
-   return true;
+  m_rendow.clear(sf::Color::Cyan);
+  m_rendow.draw(staticsprite);
+  return true;
 }
 
 /*
-TextureLoader& BaseGame::getTextureLoader()
-{
-  return m_textureLoader;
-}
-
-SoundLoader& BaseGame::getSoundLoader()
-{
-  return m_soundLoader;
-}
-
 Level* BaseGame::getLevel()
 {
   return m_level;

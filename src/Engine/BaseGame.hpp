@@ -14,6 +14,7 @@
 #include "Tileset.hpp"
 #include "Tilemap.hpp"
 
+#include "staticsprite.h"
 #include "contentmanager.h"
 
 namespace e
@@ -32,13 +33,6 @@ namespace e
     
     Object* createObject(const std::string& name);
     
-    /*
-    TextureLoader& getTextureLoader();
-    
-    SoundLoader& getSoundLoader();
-    //*/
-    
-    
     bool loadTilemap(const std::string& filename, Tilemap& tilemap);
     
     bool loadObjects(const std::string& filename);
@@ -56,16 +50,14 @@ namespace e
 
   private:
 
+    STATICSPRITE staticsprite;
+
     sf::RenderWindow&                     m_rendow;
     
     std::map<std::string, ObjectFactory*> m_objectFactory;
     
-    //TextureLoader                         m_textureLoader;
-    
-    //SoundLoader                           m_soundLoader;
-    
     CONTENTMANAGER  contentManager;
-    
+      
   protected:
 
     //Level*                                m_level;

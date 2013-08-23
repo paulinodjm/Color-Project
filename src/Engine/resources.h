@@ -14,3 +14,5 @@ typedef sf::SoundBuffer SOUNDBUFFER;
 typedef sf::Sound       SOUND;
 typedef sf::Music       MUSIC;
 
+#include "staticsprite.h"
+

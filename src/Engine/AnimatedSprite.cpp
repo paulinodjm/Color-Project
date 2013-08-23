@@ -120,7 +120,7 @@ void AnimatedSprite::setFrame(std::size_t newFrame, bool resetTime)
         m_vertices[2].position = sf::Vector2f(rect.width, rect.height);
         m_vertices[3].position = sf::Vector2f(rect.width, 0);
 
-        float left = static_cast<float>(rect.left) + 0.0001;
+        float left = static_cast<float>(rect.left);
         float right = left + rect.width;
         float top = static_cast<float>(rect.top);
         float bottom = top + rect.height;

@@ -2,7 +2,7 @@
 /// Copyright 2013 Marié Paulino (paulinodjm@hotmail.com)
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
-#include "Level.hpp"
+#include "level.h"
 
 /*
 using namespace e;
