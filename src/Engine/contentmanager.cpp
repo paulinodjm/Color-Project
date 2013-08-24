@@ -29,6 +29,19 @@ CONTENTMANAGER::CACHE<SOUNDBUFFER>& CONTENTMANAGER::GetCache()
   return soundBufferCache;
 }
 
+template<>
+LOADER<ANIMATIONS>& CONTENTMANAGER::GetLoader()
+{
+  return animationsLoader;
+}
+
+template<>
+CONTENTMANAGER::CACHE<ANIMATIONS>& CONTENTMANAGER::GetCache()
+{
+  return animationsCache;
+}
+
+
 void CONTENTMANAGER::Weep()
 {
   GetCache<TEXTURE>().Weep();

@@ -10,6 +10,7 @@
 #include "loader.h"
 #include "textureloader.h"
 #include "soundbufferloader.h"
+#include "animationsloader.h"
 
 class CONTENTMANAGER
 {
@@ -60,6 +61,8 @@ private:
   LOADER<TEXTURE>     textureLoader;
   CACHE<SOUNDBUFFER>  soundBufferCache;
   LOADER<SOUNDBUFFER> soundBufferLoader;
+  CACHE<ANIMATIONS>   animationsCache;
+  LOADER<ANIMATIONS>  animationsLoader;
 
 protected:
 

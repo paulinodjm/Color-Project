@@ -4,16 +4,17 @@
 //////////////////////////////////////////////////////////
 #pragma once
 
-#include <map>
-#include <string>
+#include "loader.h"
+#include "animation.h"
 #include <memory>
 
-class CONTENTMANAGER;
+#include <fstream>
+#include <jsoncpp/json/json.h>
 
-template <typename T>
-class LOADER
+template <>
+class LOADER<ANIMATIONS>
 {
 public:
 
-  bool Load(std::shared_ptr<T>& res, const std::string& name);
+  bool Load(std::shared_ptr<ANIMATIONS>& res, const std::string& name);
 };

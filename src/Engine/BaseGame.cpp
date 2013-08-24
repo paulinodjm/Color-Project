@@ -10,7 +10,7 @@
 #include "Solid.hpp"
 #include <iostream>
 #include <fstream>
-#include "staticsprite.h"
+#include "animation.h"
 
 using namespace e;
 
@@ -44,6 +44,10 @@ bool BaseGame::loadResources()
     return false;
     
   if (!staticsprite.Load("data/sprites/StaticSprite.json", contentManager))
+    return false;
+    
+  std::shared_ptr<ANIMATIONS> anims;
+  if (!contentManager.Load<ANIMATIONS>(anims, "data/sprites/AnimatedSprite.json"))
     return false;
 
   /*
