@@ -26,6 +26,7 @@ private:
       auto it = cache.find(name);
       if (it != cache.end())
       {
+        res = it->second;
         return true;
       }
       else
