@@ -163,7 +163,7 @@ void ANIMATEDSPRITE::SetRect(const sf::FloatRect rect)
 
 void ANIMATEDSPRITE::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-  if (Visible() && currentAnimation)
+  if (currentAnimation)
   {
     states.transform *= getTransform();
     states.texture = &(*currentAnimation->Texture());
