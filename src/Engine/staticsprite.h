@@ -5,14 +5,14 @@
 #pragma once
 
 #include <SFML/Graphics/Transformable.hpp>
-#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <memory>
+#include "drawable.h"
 #include "resources.h"
 
 class CONTENTMANAGER;
 
-class STATICSPRITE : public sf::Drawable, public sf::Transformable
+class STATICSPRITE : public DRAWABLE, public sf::Transformable
 {
 public:
 
