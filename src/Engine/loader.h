@@ -15,5 +15,5 @@ class LOADER
 {
 public:
 
-  bool Load(std::shared_ptr<T>& res, const std::string& name);
+  bool Load(std::shared_ptr<T>& res, const std::string& name, CONTENTMANAGER& contentManager);
 };

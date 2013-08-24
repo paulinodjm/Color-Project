@@ -13,5 +13,5 @@ class LOADER<TEXTURE>
 {
 public:
 
-  bool Load(std::shared_ptr<TEXTURE>& res, const std::string& name);
+  bool Load(std::shared_ptr<TEXTURE>& res, const std::string& name, CONTENTMANAGER& contentManager);
 };

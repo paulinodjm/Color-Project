@@ -6,7 +6,7 @@
 
 ANIMATION::ANIMATION() : frameCount(0) {}
 
-std::shared_ptr<TEXTURE> ANIMATION::Texture() const
+std::shared_ptr<TEXTURE>& ANIMATION::Texture()
 {
   return texture;
 }
@@ -46,6 +46,16 @@ void ANIMATION::SetFrameCount(int value)
   {
     frameCount = 0;
   }
+}
+
+const sf::Vector2f& ANIMATION::Origin() const
+{
+  return origin;
+}
+
+void ANIMATION::SetOrigin(const sf::Vector2f& value)
+{
+  origin = value;
 }
 
 sf::FloatRect ANIMATION::Frame(int i) const

@@ -7,8 +7,6 @@
 #include "loader.h"
 #include "animation.h"
 #include <memory>
-
-#include <fstream>
 #include <jsoncpp/json/json.h>
 
 template <>
@@ -16,5 +14,7 @@ class LOADER<ANIMATIONS>
 {
 public:
 
-  bool Load(std::shared_ptr<ANIMATIONS>& res, const std::string& name);
+  bool Load(std::shared_ptr<ANIMATIONS>& res, const std::string& name, CONTENTMANAGER& contentManager);
+  
 };
+

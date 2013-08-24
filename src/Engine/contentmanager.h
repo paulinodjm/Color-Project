@@ -84,7 +84,7 @@ public:
     {
       return true;
     }
-    else if (loader.Load(res, name))
+    else if (loader.Load(res, name, *this))
     {
       cache.Add(res, name);
       return true;

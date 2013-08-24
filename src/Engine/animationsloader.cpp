@@ -4,9 +4,9 @@
 //////////////////////////////////////////////////////////
 #include "animationsloader.h"
 #include <fstream>
-#include <jsoncpp/json/json.h>
+#include "contentmanager.h"
 
-bool LOADER<ANIMATIONS>::Load(std::shared_ptr<ANIMATIONS>& res, const std::string& name)
+bool LOADER<ANIMATIONS>::Load(std::shared_ptr<ANIMATIONS>& res, const std::string& name, CONTENTMANAGER& contentManager)
 {
   std::ifstream file(name);
   Json::Value root;
@@ -29,11 +29,35 @@ bool LOADER<ANIMATIONS>::Load(std::shared_ptr<ANIMATIONS>& res, const std::strin
     Json::Value anim = root[i];
     if ( res->find( anim["name"].asString() ) != res->end() )
     {
-      std::cout << "Warning : '" << name << "->" << anim["name"].asString() << "' already exists." << std::endl;
+      std::cout << "Warning : animation '" << name << "->" << anim["name"].asString() << "' already exists." << std::endl;
       continue;
     }
     
+    // texture loading
     ANIMATION& newAnim = (*res)[ anim["name"].asString() ];
+    if (!contentManager.Load(newAnim.Texture(), anim["texture"].asString()))
+    {
+      std::cout << "Failed to create animation '" << name << "->" << anim["name"].asString() << "' : texture not found." << std::endl;
+      res->erase( res->find( anim["name"].asString() ) );
+      continue;
+    }
+    
+    newAnim.SetFirstFrame(
+      sf::FloatRect(
+        anim["rect"].get("left", 0).asDouble(),
+        anim["rect"].get("top", 0).asDouble(),
+        anim["rect"].get("width", 0).asDouble(),
+        anim["rect"].get("height", 0).asDouble()
+      )
+    );
+    newAnim.SetFrameCount( anim["frameCount"].asInt() );
+    newAnim.SetOrigin(
+      sf::Vector2f(
+        anim["origin"].get("x", 0).asDouble(),
+        anim["origin"].get("y", 0).asDouble()
+      )
+    );
+    newAnim.SetFrameTime( sf::seconds( anim["frameTime"].asDouble() ) );
   }
   
   if (res->size() > 0)
@@ -48,3 +72,4 @@ bool LOADER<ANIMATIONS>::Load(std::shared_ptr<ANIMATIONS>& res, const std::strin
     return false;
   }
 }
+

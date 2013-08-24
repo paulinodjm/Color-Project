@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////
 #include "soundbufferloader.h"
 
-bool LOADER<SOUNDBUFFER>::Load(std::shared_ptr<SOUNDBUFFER>& res, const std::string& name)
+bool LOADER<SOUNDBUFFER>::Load(std::shared_ptr<SOUNDBUFFER>& res, const std::string& name, CONTENTMANAGER& contentManager)
 {
   res = std::make_shared<SOUNDBUFFER>();
   if (res->loadFromFile(name))

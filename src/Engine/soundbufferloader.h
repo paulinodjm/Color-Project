@@ -13,5 +13,5 @@ class LOADER<SOUNDBUFFER>
 {
 public:
 
-  bool Load(std::shared_ptr<SOUNDBUFFER>& res, const std::string& name);
+  bool Load(std::shared_ptr<SOUNDBUFFER>& res, const std::string& name, CONTENTMANAGER& contentManager);
 };

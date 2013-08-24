@@ -49,6 +49,14 @@ bool BaseGame::loadResources()
   std::shared_ptr<ANIMATIONS> anims;
   if (!contentManager.Load<ANIMATIONS>(anims, "data/sprites/AnimatedSprite.json"))
     return false;
+    
+  ANIMATION& anim = anims->begin()->second;
+  std::cout << "FrameCount : " << anim.FrameCount() << std::endl;
+  for (int i=0; i<anim.FrameCount(); i++)
+  {
+    sf::FloatRect rect = anim.Frame(i);
+    std::cout << i << " : " <<  rect.left << "; " << rect.top << "; " << rect.width << "; " << rect.height << std::endl;
+  }
 
   /*
   Json::Value root;

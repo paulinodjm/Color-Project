@@ -1,12 +1,12 @@
 [
   {
     "name":"white_idle",
-    "texture":"data/textures/player/white_idle.png",
+    "texture":"data/textures/strip.png",
     "rect":
     {
       "left":0,
       "top":0,
-      "widht":32,
+      "width":32,
       "height":32
     },
     "frameCount":5,
@@ -16,8 +16,5 @@
       "y":0
     },
     "frameTime":0.2
-  },
-  {
-    "name":"white_idle"
   }
 ]

@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////
 #include "textureloader.h"
 
-bool LOADER<TEXTURE>::Load(std::shared_ptr<TEXTURE>& res, const std::string& name)
+bool LOADER<TEXTURE>::Load(std::shared_ptr<TEXTURE>& res, const std::string& name, CONTENTMANAGER& contentManager)
 {
   res = std::make_shared<TEXTURE>();
   if (res->loadFromFile(name))

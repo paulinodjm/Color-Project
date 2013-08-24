@@ -47,3 +47,4 @@ void CONTENTMANAGER::Weep()
   GetCache<TEXTURE>().Weep();
   GetCache<SOUNDBUFFER>().Weep();
 }
+
