@@ -16,16 +16,9 @@ public:
   void SetVisible(bool visible);
 
   bool Visible() const;
-  
-  int Depth() const;
-  
-  // changing the depth after the object was added to the drawable list has no effect
-  void SetDepth(int depht);
 
 private:
 
   bool visible;
-  
-  int depth;
 };
 

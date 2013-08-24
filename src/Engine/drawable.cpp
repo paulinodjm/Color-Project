@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////
 #include "drawable.h"
 
-DRAWABLE::DRAWABLE() : sf::Drawable(), visible(true), depth(0) {}
+DRAWABLE::DRAWABLE() : sf::Drawable(), visible(true) {}
 
 void DRAWABLE::SetVisible(bool enable)
 {
@@ -14,15 +14,5 @@ void DRAWABLE::SetVisible(bool enable)
 bool DRAWABLE::Visible() const
 {
   return visible;
-}
-
-void DRAWABLE::SetDepth(int d)
-{
-  depth = d;
-}
-
-int DRAWABLE::Depth() const
-{
-  return depth;
 }
 
