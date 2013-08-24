@@ -16,6 +16,7 @@
 
 #include "staticsprite.h"
 #include "contentmanager.h"
+#include "animatedsprite.h"
 
 namespace e
 {
@@ -51,6 +52,7 @@ namespace e
   private:
 
     STATICSPRITE staticsprite;
+    ANIMATEDSPRITE animatedsprite;
 
     sf::RenderWindow&                     m_rendow;
     

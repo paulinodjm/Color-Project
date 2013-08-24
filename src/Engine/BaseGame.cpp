@@ -45,18 +45,11 @@ bool BaseGame::loadResources()
     
   if (!staticsprite.Load("data/sprites/StaticSprite.json", contentManager))
     return false;
+  staticsprite.setPosition(100,100);
     
-  std::shared_ptr<ANIMATIONS> anims;
-  if (!contentManager.Load<ANIMATIONS>(anims, "data/sprites/AnimatedSprite.json"))
+  if (!animatedsprite.Load("data/sprites/AnimatedSprite.json", contentManager))
     return false;
-    
-  ANIMATION& anim = anims->begin()->second;
-  std::cout << "FrameCount : " << anim.FrameCount() << std::endl;
-  for (int i=0; i<anim.FrameCount(); i++)
-  {
-    sf::FloatRect rect = anim.Frame(i);
-    std::cout << i << " : " <<  rect.left << "; " << rect.top << "; " << rect.width << "; " << rect.height << std::endl;
-  }
+  animatedsprite.Play();
 
   /*
   Json::Value root;
@@ -296,7 +289,9 @@ bool BaseGame::update()
   else
     return false;
     //*/
+  animatedsprite.Update();
   m_rendow.clear(sf::Color::Cyan);
+  m_rendow.draw(animatedsprite);
   m_rendow.draw(staticsprite);
   return true;
 }
