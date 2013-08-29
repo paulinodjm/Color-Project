@@ -50,6 +50,9 @@ bool BaseGame::loadResources()
   if (!animatedsprite.Load("data/sprites/AnimatedSprite.json", contentManager))
     return false;
   animatedsprite.Play();
+  
+  if (!tilemap.Load("data/tilemaps/tilemap.json", contentManager))
+    return false;
 
   /*
   Json::Value root;

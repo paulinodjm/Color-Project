@@ -55,6 +55,7 @@ namespace e
 
     STATICSPRITE staticsprite;
     ANIMATEDSPRITE animatedsprite;
+    TILEMAP tilemap;
 
     sf::RenderWindow&                     m_rendow;
     

@@ -1,4 +1,6 @@
 {
+  "texture":"data/textures/tileset.png",
+  "tileSize":32,
   "width":11,
   "height":5,
   "tiles":[
