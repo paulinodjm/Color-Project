@@ -32,7 +32,7 @@ public:
   bool IsPlaying() const;
   bool IsLooped();
   
-  void SetFrame(int value);
+  void SetFrame(int value, bool resetTime=false);
   int CurrentFrame() const;
   int FrameCount() const;
   

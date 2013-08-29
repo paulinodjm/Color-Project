@@ -17,6 +17,8 @@
 #include "staticsprite.h"
 #include "contentmanager.h"
 #include "animatedsprite.h"
+#include "tilemap.h"
+
 
 namespace e
 {

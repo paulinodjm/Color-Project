@@ -19,8 +19,6 @@ bool ANIMATEDSPRITE::Load(const std::string& name, CONTENTMANAGER& contentManage
   if (contentManager.Load(animations, name))
   {
     SetAnimation(animations->begin()->first);
-    if (!currentAnimation->Texture())
-      std::cout << "problème" << std::endl;
     return true;
   }
   else
@@ -55,7 +53,11 @@ bool ANIMATEDSPRITE::HasAnimation(const std::string& name) const
 
 void ANIMATEDSPRITE::Play()
 {
-  playing = true;
+  if (!playing)
+  {
+    playing = true;
+    currentFrameTime = sf::Time::Zero;
+  }
 }
 
 void ANIMATEDSPRITE::Pause()
@@ -66,7 +68,7 @@ void ANIMATEDSPRITE::Pause()
 void ANIMATEDSPRITE::Stop()
 {
   playing = false;
-  currentFrameTime = sf::Time::Zero;
+  currentFrame = 0;
 }
 
 void ANIMATEDSPRITE::SetLoop(bool enable)
@@ -84,7 +86,7 @@ bool ANIMATEDSPRITE::IsLooped()
   return looped;
 }
 
-void ANIMATEDSPRITE::SetFrame(int value)
+void ANIMATEDSPRITE::SetFrame(int value, bool resetTime)
 {
   if (!currentAnimation) return;
   
@@ -99,6 +101,8 @@ void ANIMATEDSPRITE::SetFrame(int value)
   
   SetRect(currentAnimation->Frame(value));
   currentFrame = value;
+  if (resetTime)
+    currentFrameTime = sf::Time::Zero;
 }
 
 int ANIMATEDSPRITE::CurrentFrame() const
@@ -120,9 +124,11 @@ int ANIMATEDSPRITE::FrameCount() const
 
 void ANIMATEDSPRITE::Update()
 {
+  sf::Time delta = clock.restart();
+
   if (playing && currentAnimation)
   {
-    currentFrameTime += clock.restart();
+    currentFrameTime += delta;
     if (currentFrameTime >= currentAnimation->FrameTime())
     {
       if (currentFrame < currentAnimation->FrameCount()-1)

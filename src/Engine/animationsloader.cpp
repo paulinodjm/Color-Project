@@ -57,7 +57,7 @@ bool LOADER<ANIMATIONS>::Load(std::shared_ptr<ANIMATIONS>& res, const std::strin
         anim["origin"].get("y", 0).asDouble()
       )
     );
-    newAnim.SetFrameTime( sf::seconds( anim["frameTime"].asDouble() ) );
+    newAnim.SetFrameTime( sf::milliseconds( anim["frameTime"].asInt() ) );
   }
   
   if (res->size() > 0)
