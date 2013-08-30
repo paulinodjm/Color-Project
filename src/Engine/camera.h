@@ -6,13 +6,11 @@
 
 #include <SFML/Graphics/View.hpp>
 
-typedef sf::View VIEW;
-
 class CAMERA
 {
 public:
 
     /** Called each time to set the game view */
-    virtual void calcView(VIEW& view) const = 0;
+    virtual void calcView(sf::View& view) const = 0;
 };
 
