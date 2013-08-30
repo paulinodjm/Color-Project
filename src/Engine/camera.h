@@ -4,17 +4,15 @@
 //////////////////////////////////////////////////////////
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/View.hpp>
 
-namespace e
+typedef sf::View VIEW;
+
+class CAMERA
 {
-  class Camera
-  {
-  public:
+public:
 
     /** Called each time to set the game view */
-    virtual void calcView(sf::View& view) const = 0;
-    
-  };
-}
+    virtual void calcView(VIEW& view) const = 0;
+};
 
