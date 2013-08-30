@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 #include "animation.h"
+#include "objectfactory.h"
 
 using namespace e;
 
