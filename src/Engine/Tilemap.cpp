@@ -147,3 +147,4 @@ int Tilemap::getTileSize() const
   else 
     return m_tileset->getTileSize();
 } 
+

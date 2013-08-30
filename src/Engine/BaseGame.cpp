@@ -45,7 +45,7 @@ bool BaseGame::loadResources()
     
   if (!staticsprite.Load("data/sprites/StaticSprite.json", contentManager))
     return false;
-  staticsprite.setPosition(100,100);
+  staticsprite.setPosition(96,96);
     
   if (!animatedsprite.Load("data/sprites/AnimatedSprite.json", contentManager))
     return false;
@@ -294,6 +294,7 @@ bool BaseGame::update()
     //*/
   animatedsprite.Update();
   m_rendow.clear(sf::Color::Cyan);
+  m_rendow.draw(tilemap);
   m_rendow.draw(animatedsprite);
   m_rendow.draw(staticsprite);
   return true;

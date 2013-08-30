@@ -5,8 +5,9 @@
 #include "tilemap.h"
 #include <fstream>
 #include <jsoncpp/json/json.h>
+#include <SFML/Graphics.hpp>
 
-TILEMAP::TILEMAP() : tileSize(0), width( ), height(0) {}
+TILEMAP::TILEMAP() : tileSize(0), width( ), height(0), tileCount(0), tileCountPerRow(0) {}
 
 bool TILEMAP::Load(const std::string& filename, CONTENTMANAGER& contentManager)
 {
@@ -41,6 +42,8 @@ bool TILEMAP::Load(const std::string& filename, CONTENTMANAGER& contentManager)
       SetTile(x, y, jtiles[(y*width)+x].asUInt());
     }
   }
+  
+  ConstructTileset();
   
   std::cout << "Tilemap '" << filename << "' loaded." << std::endl;
   return true;
@@ -107,6 +110,7 @@ int TILEMAP::Height() const
 void TILEMAP::SetTileSize(unsigned int size)
 {
   tileSize = size;
+  ConstructTileset();
 }
 
 unsigned int TILEMAP::TileSize() const
@@ -122,4 +126,69 @@ void TILEMAP::SetTexture(const std::shared_ptr<TEXTURE>& tex)
 const std::shared_ptr<TEXTURE>& TILEMAP::Texture() const
 {
   return texture;
+}
+
+
+void TILEMAP::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+  if (!texture) return;
+
+  sf::Sprite sprite(*texture);
+  sf::IntRect rect;
+
+  for (unsigned int y=0; y<height; y++)
+  {
+    for (unsigned int x=0; x<width; x++)
+    {
+      if ( TileToRect( (tile[x][y]), rect) )
+      {
+        sprite.setTextureRect(rect);
+        sprite.setPosition(x*tileSize, y*tileSize);
+        target.draw(sprite);
+      }
+    }
+  }
+}
+
+void TILEMAP::ConstructTileset()
+{
+  unsigned int tileCountPerColumn = 0;
+
+  if (!texture)
+  {
+    tileCount = 0;
+    tileCountPerRow = 0;
+  }
+  else
+  {
+    tileCountPerRow = texture->getSize().x / tileSize;
+    tileCountPerColumn = texture->getSize().y / tileSize;
+    tileCount = tileCountPerRow * tileCountPerColumn;
+  }
+}
+
+bool TILEMAP::TileToRect(unsigned int iTile, sf::IntRect& rect) const
+{
+  if (iTile == 0 || iTile > tileCount)
+  {
+    return false;
+  }
+  
+  iTile--;
+  rect.left = (iTile % tileCountPerRow) * tileSize;
+  rect.top = (iTile / tileCountPerRow) * tileSize;
+  rect.width = tileSize;
+  rect.height = tileSize;
+  
+  return true;
+}
+
+unsigned int TILEMAP::TileCount() const
+{
+  return tileCount;
+}
+
+unsigned int TILEMAP::TileCountPerRow() const
+{
+  return tileCountPerRow;
 }

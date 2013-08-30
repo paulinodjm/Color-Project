@@ -9,8 +9,10 @@
 #include <memory>
 #include "contentmanager.h"
 #include "resources.h"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Rect.hpp>
 
-class TILEMAP
+class TILEMAP : public sf::Drawable
 {
 public:
 
@@ -30,8 +32,17 @@ public:
   void SetTileSize(unsigned int size);
   unsigned int TileSize() const;
   
+  unsigned int TileCount() const;
+  unsigned int TileCountPerRow() const;
+  
   void SetTexture(const std::shared_ptr<TEXTURE>& tex);
   const std::shared_ptr<TEXTURE>& Texture() const;
+  
+protected:
+
+  void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+  bool TileToRect(unsigned int iTile, sf::IntRect& rect) const;
+  void ConstructTileset();
   
 private:
 
@@ -40,5 +51,6 @@ private:
   std::shared_ptr<TEXTURE>               texture;
   
   int width, height;
+  unsigned int tileCount, tileCountPerRow;
 };
 
