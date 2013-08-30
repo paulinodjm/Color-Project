@@ -7,7 +7,6 @@
 #include <jsoncpp/json/json.h>
 #include "BaseGame.hpp"
 #include "GameObject.hpp"
-#include "Solid.hpp"
 #include <iostream>
 #include <fstream>
 #include "animation.h"
