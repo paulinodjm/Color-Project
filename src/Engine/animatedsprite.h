@@ -10,8 +10,9 @@
 #include "animation.h"
 #include "contentmanager.h"
 #include <memory>
+#include "actor.h"
 
-class ANIMATEDSPRITE : public DRAWABLE, public sf::Transformable
+class ANIMATEDSPRITE : public DRAWABLE, public sf::Transformable, public ACTOR
 {
 public:
 
@@ -37,6 +38,7 @@ public:
   int FrameCount() const;
   
   void Update();    
+  void Init();
 
 protected:
 

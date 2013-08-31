@@ -177,3 +177,9 @@ void ANIMATEDSPRITE::draw(sf::RenderTarget& target, sf::RenderStates states) con
   }
 }
 
+void ANIMATEDSPRITE::Init()
+{
+  clock.restart();
+}
+
+
