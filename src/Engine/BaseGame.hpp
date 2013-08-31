@@ -18,6 +18,7 @@
 #include "contentmanager.h"
 #include "animatedsprite.h"
 #include "tilemap.h"
+#include "level.h"
 
 
 namespace e
@@ -53,19 +54,12 @@ namespace e
 
   private:
 
-    STATICSPRITE staticsprite;
-    ANIMATEDSPRITE animatedsprite;
-    TILEMAP tilemap;
-
     sf::RenderWindow&                     m_rendow;
     
     std::map<std::string, ObjectFactory*> m_objectFactory;
     
     CONTENTMANAGER  contentManager;
-      
-  protected:
-
-    //Level*                                m_level;
+    LEVEL           level;
   };
 }
 

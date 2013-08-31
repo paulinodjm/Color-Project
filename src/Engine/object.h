@@ -6,9 +6,12 @@
 
 #include "contentmanager.h"
 
+class LEVEL;
+
 class OBJECT
 {
 public:
 
   virtual bool Load(CONTENTMANAGER& contentManager) = 0;
+  virtual void Init(LEVEL& level) = 0;
 };

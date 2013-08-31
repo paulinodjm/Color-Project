@@ -84,7 +84,7 @@ void SOLID::SetSolid(bool solid_)
   isSolid = solid_;
 }
 
-bool SOLID::IsSolid() const
+bool SOLID::Solid() const
 {
   return isSolid;
 }

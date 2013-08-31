@@ -29,14 +29,16 @@ public:
   int Width() const;
   int Height() const;
   
-  void SetTileSize(unsigned int size);
-  unsigned int TileSize() const;
+  void SetTileSize(int size);
+  int TileSize() const;
   
   unsigned int TileCount() const;
   unsigned int TileCountPerRow() const;
   
   void SetTexture(const std::shared_ptr<TEXTURE>& tex);
   const std::shared_ptr<TEXTURE>& Texture() const;
+  
+  bool PlaceFree(const sf::FloatRect& rect) const ;
   
 protected:
 
@@ -47,7 +49,7 @@ protected:
 private:
 
   std::vector<std::vector<unsigned int>> tile;
-  unsigned int                           tileSize;
+  int                                    tileSize;
   std::shared_ptr<TEXTURE>               texture;
   
   int width, height;

@@ -29,7 +29,7 @@ solution "Color-Project"
   project "editor"
     kind "WindowedApp"
     language "c++"
-    files {"src/Editor/**.hpp", "src/Editor/**.cpp", "src/Game/GameTypes.cpp"}
+    files {"src/Editor/**.hpp", "src/Editor/**.cpp", "src/Game/gametypes.cpp"}
     
     configuration "Release"
       flags { "Optimize" }

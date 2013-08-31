@@ -3,45 +3,123 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "level.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <jsoncpp/json/json.h>
+#include <fstream>
 
-/*
-using namespace e;
-
-Level::Level() : Drawable(),
-  m_paused(false),
-  m_camera(nullptr)
+LEVEL::LEVEL() : sf::Drawable(),
+  paused(false),
+  camera(nullptr)
 {}
 
-Level::~Level()
+LEVEL::~LEVEL()
 {
-  deleteObjects();
+  DeleteObjects();
 }
 
+bool LEVEL::Load(
+    const std::string& filename, 
+    std::map<std::string, OBJECTFACTORY*>& factories, 
+    CONTENTMANAGER& contentManager
+){
+  DeleteObjects();
+  
+  std::cout << "==== Level '" << filename << "' loading ====" << std::endl;
+  
+  std::ifstream file(filename);
+  Json::Value root;
+  Json::Reader reader;
+  
+  if (!file.is_open())
+  {
+    std::cout << "Failed to load level '" << filename << "' : file not found." << std::endl;
+    return false;
+  }
+  if (!reader.parse(file, root))
+  {
+    std::cout << "Failed to load level '" << filename << "' : " << reader.getFormatedErrorMessages();
+    return false;
+  }
+  
+  if (root["tilemap"].isNull())
+  {
+    std::cout << "Failed to load level '" << filename << "' : no tilemap." << std::endl;
+    return false;
+  }
+  else
+  {
+    if (!tilemap.Load(root["tilemap"].asString(), contentManager))
+    {
+      std::cout << "Failed to load level '" << filename << "' : tilemap loading failed." << std::endl;
+      return false;
+    }
+  }
+  
+  std::cout << "Level '" << filename << "' loaded." << std::endl;
+  return true;
+}
 
-void Level::addObject(Object* object)
+bool LEVEL::AddSprite(STATICSPRITE& sprite, int depth)
 {
-  if (object == nullptr) return;
+  for (auto it : drawables)
+  {
+    if (it.second == &sprite)
+    {
+      return false;
+    }
+  }
+  drawables.insert( std::pair<int, DRAWABLE*>(depth, &sprite) );
+  return true;
+}
+
+bool LEVEL::AddSprite(ANIMATEDSPRITE& sprite, int depth)
+{
+  for (auto it : drawables)
+  {
+    if (it.second == &sprite)
+    {
+      return false;
+    }
+  }
+  drawables.insert( std::pair<int, DRAWABLE*>(depth, &sprite) );
+  actors.push_back(&sprite);
+
+  sprite.Init();
+  return true;
+}
+
+bool LEVEL::AddObject(OBJECT* obj, const std::string& name, int depth)
+{
+  if (obj == nullptr) return false;
   
-  m_objects.insert( std::pair<std::string, Object*>(object->getName(), object) );
+  objects.insert( std::pair<std::string, OBJECT*>(name, obj) );
   
-  Drawable* drawable = dynamic_cast<Drawable*>(object);
+  ACTOR* actor = dynamic_cast<ACTOR*>(obj);
+  if (actor)
+  {
+    actors.push_back(actor);
+  }
+  
+  DRAWABLE* drawable = dynamic_cast<DRAWABLE*>(obj);
   if (drawable)
   {
-    m_drawables.insert(std::pair<int, Drawable*>(drawable->getDepth(), drawable) );
+    drawables.insert(std::pair<int, DRAWABLE*>(depth, drawable) );
   }
   
-  Solid* solid = dynamic_cast<Solid*>(object);
+  SOLID* solid = dynamic_cast<SOLID*>(obj);
   if (solid)
   {
-    m_solids.push_back(solid);
+    solids.push_back(solid);
   }
+  
+  return true;
 }
 
-Object* Level::getObject(const std::string& name)
+OBJECT* LEVEL::Object(const std::string& name) const
 {
-  auto it = m_objects.find(name);
+  auto it = objects.find(name);
   
-  if (it == m_objects.end())
+  if (it == objects.end())
   {
     return nullptr;
   }
@@ -51,106 +129,185 @@ Object* Level::getObject(const std::string& name)
   }
 }
 
-std::vector<Object*> Level::getObjects(const std::string& name)
+std::vector<OBJECT*> LEVEL::Objects(const std::string& name) const
 {
-  std::vector<Object*> objects;
-  auto range = m_objects.equal_range(name);
+  std::vector<OBJECT*> objs;
+  auto range = objects.equal_range(name);
   
   for (auto it = range.first; it != range.second; it++)
   {
-    objects.push_back(it->second);
+    objs.push_back(it->second);
   }
   
-  return objects;
+  return objs;
 }
 
-void Level::deleteObjects()
+void LEVEL::DeleteObjects()
 {
-  for (auto it : m_objects)
+  for (auto it : objects)
   {
     delete it.second;
   }
-  m_objects.clear();
-  m_drawables.clear();
-  m_solids.clear();
+  objects.clear();
+  actors.clear();
+  drawables.clear();
+  solids.clear();
+  camera = nullptr;
 }
 
-void Level::init()
+void LEVEL::Init()
 {
-  for (auto it : m_objects)
+  for (auto it : objects)
   {
-    it.second->init(*this);
+    it.second->Init(*this);
   }
 }
 
-bool Level::update()
+bool LEVEL::Update()
 {
-  for (auto it : m_objects)
+  for (auto it : actors)
   {
-    it.second->update(1.f);
+    it->Update();
   }
 }
 
-void Level::performCollisions()
+void LEVEL::PerformMove()
+{
+  for (SOLID* solid : solids)
+  {
+    if (solid->Speed() != sf::Vector2f(0,0))
+    {
+      sf::Vector2f speed = solid->speed * solid->clock.restart().asSeconds();
+      sf::FloatRect bBox;
+      int tileSize = tilemap.TileSize();
+    
+      if (solid->Solid())
+      {
+        // horizontal move
+        if (speed.x != 0.f)
+        {
+          solid->position.x += speed.x;
+          bBox = solid->Bbox();
+          if ( !tilemap.PlaceFree(bBox) )
+          {
+            if (speed.x < 0)
+            {
+              bBox.left = (int)(bBox.left)/tileSize*tileSize + tileSize;
+            }
+            else
+            {
+              float right = (int)(bBox.left + bBox.width)/tileSize*tileSize;
+              bBox.left = right - bBox.width;
+            }
+            solid->position.x = bBox.left - solid->bounds.left;
+            solid->HitWall();
+          }
+        }
+        
+        // vertical move
+        if (speed.y != 0.f)
+        {
+          solid->position.y += speed.y;
+          bBox = solid->Bbox();
+          if ( !tilemap.PlaceFree(bBox) )
+          {
+            if (speed.y < 0)
+            {
+              bBox.top = (int)(bBox.top)/tileSize*tileSize + tileSize;
+              solid->position.y = bBox.top - solid->bounds.top;
+              solid->HitCeiling();
+            }
+            else
+            {
+              float bottom = (int)(bBox.top + bBox.height)/tileSize*tileSize;
+              bBox.top = bottom - bBox.height;
+              solid->position.y = bBox.top - solid->bounds.top;
+              solid->Landed();
+            }
+          }
+        }     
+        solid->Moved();
+      }
+      else
+      {
+        solid->SetPosition(solid->position + speed);
+      }
+    }
+    else
+    {
+      solid->clock.restart().asSeconds();
+    }
+  }
+}
+
+void LEVEL::PerformCollisions()
 {
   // security while using indexes.
-  if (m_solids.size() == 0)
+  if (solids.size() == 0)
     return;
   
-  for (int i=0; i<m_solids.size()-1; i++)
+  for (int i=0; i<solids.size()-1; i++)
   {
-    if (m_solids[i]->isSolid())
+    if (solids[i]->Solid())
     {
-      for (int j=i+1; j<m_solids.size(); j++)
+      for (int j=i+1; j<solids.size(); j++)
       {
-        if (m_solids[j]->isSolid() 
-        && m_solids[i]->getBbox().intersects(m_solids[j]->getBbox()))
+        if (solids[j]->Solid() 
+        && solids[i]->Bbox().intersects(solids[j]->Bbox()))
         {
-          m_solids[i]->collideWith(*m_solids[j]);
-          m_solids[j]->collideWith(*m_solids[i]);
+          solids[i]->CollideWith(*solids[j]);
+          solids[j]->CollideWith(*solids[i]);
         }
       }
     }    
-    m_solids[i]->endCollision();
+    solids[i]->EndCollision();
   }
-  m_solids[m_solids.size()-1]->endCollision();
+  solids[solids.size()-1]->EndCollision();
 }
 
-void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void LEVEL::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-  if (m_camera)
+  if (camera)
   {
     sf::View view = target.getView();
-    m_camera->calcView(view);
+    camera->CalcView(view);
     target.setView(view);
   }
-    
-  for (auto it : m_drawables)
+  
+  target.clear(sf::Color::Cyan);
+  
+  for (auto it : drawables)
   { 
-    Drawable* drawable = it.second;
-    if (drawable->isVisible())
+    DRAWABLE* drawable = it.second;
+    if (drawable->Visible())
       target.draw(*drawable);
   }
+  target.draw(tilemap);
 }
 
 
-void Level::setPaused(bool paused)
+void LEVEL::SetPaused(bool paused_)
 {
-  m_paused = paused;
-}
-  
-bool Level::isPaused() const
-{
-  return m_paused;
-}
-
-
-Camera* Level::getCamera() const
-{
-  return m_camera;
+  paused = paused_;
 }
   
-void Level::setCamera(Camera* camera)
+bool LEVEL::Paused() const
 {
-  m_camera = camera;
-}//*/
+  return paused;
+}
+
+
+CAMERA* LEVEL::Camera() const
+{
+  return camera;
+}
+  
+void LEVEL::SetCamera(CAMERA* camera_)
+{
+  camera = camera_;
+}
+
+TILEMAP& LEVEL::Tilemap()
+{
+  return tilemap;
+}

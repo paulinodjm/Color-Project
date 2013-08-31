@@ -107,13 +107,15 @@ int TILEMAP::Height() const
   return height;
 }
 
-void TILEMAP::SetTileSize(unsigned int size)
+void TILEMAP::SetTileSize(int size)
 {
+  if (size < 0)
+    size = 0;
   tileSize = size;
   ConstructTileset();
 }
 
-unsigned int TILEMAP::TileSize() const
+int TILEMAP::TileSize() const
 {
   return tileSize;
 }
@@ -192,3 +194,37 @@ unsigned int TILEMAP::TileCountPerRow() const
 {
   return tileCountPerRow;
 }
+
+bool TILEMAP::PlaceFree(const sf::FloatRect& rect) const
+{
+  if ( (rect.left+rect.width <= 0.f) || (rect.top+rect.height <= 0.f) )
+    return true;
+ 
+  int left = static_cast<int>(rect.left);
+  int top = static_cast<int>(rect.top);
+  int right = static_cast<int>(rect.left + rect.width);
+  int bottom = static_cast<int>(rect.top + rect.height);
+  
+  if (right < (rect.left + rect.width))
+    right++;
+  if (bottom < (rect.top + rect.height))
+    bottom++;
+  
+  int xstart = left / tileSize;
+  int xend = (right-1) / tileSize; 
+  int ystart = top / tileSize;
+  int yend = (bottom-1) / tileSize;
+  
+  for (int x=xstart; x<=xend; x++)
+  {
+    for (int y=ystart; y<=yend; y++)
+    {
+      if (Tile(x,y) > 0)
+      {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+

@@ -72,3 +72,8 @@ void STATICSPRITE::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(vertex, 4, sf::Quads, states);
   }
 }
+
+const std::shared_ptr<TEXTURE>& STATICSPRITE::Texture() const
+{
+  return texture;
+}

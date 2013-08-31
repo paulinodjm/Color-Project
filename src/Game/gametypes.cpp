@@ -2,11 +2,98 @@
 /// Copyright 2013 Marié Paulino (paulinodjm@hotmail.com)
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
-#include "GameTypes.hpp"
+#include "gametypes.h"
+#include <iostream>
+#include <SFML/Window/Keyboard.hpp>
+
+PLAYER::PLAYER() : move(false) 
+{
+  SetBounds(sf::FloatRect(2,0,28,32));
+}
+
+bool PLAYER::Load(CONTENTMANAGER& contentManager)
+{
+  return sprite.Load("data/sprites/AnimatedSprite.json", contentManager);
+}
+
+void PLAYER::Init(LEVEL& level)
+{
+  level.AddSprite(sprite);
+  level.SetCamera(this);
+  
+  sprite.Play();
+}
+
+void PLAYER::Update()
+{
+  bool up = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z);
+  bool down = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S);
+  bool left = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q);
+  bool right = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D);
+  
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::C) && !Solid())
+  {
+    SetSolid(true);
+  }
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::V) && Solid())
+  {
+    SetSolid(false);
+  }
+  
+  SetSpeed( (right-left)*150, (down-up)*150 );
+}
+
+void PLAYER::Moved()
+{
+  sprite.setPosition(Position());
+}
+
+void PLAYER::Touch(const SOLID& other)
+{
+}
+
+void PLAYER::Untouch(const SOLID& other)
+{
+}
+
+void PLAYER::CalcView(sf::View& view) const
+{
+  view.setCenter(Position());
+}
+
+////////////////////////////////////////////////////////////////
+STATICOBJECT::STATICOBJECT() 
+{
+  SetBounds(sf::FloatRect(0,0,32,32));
+}
+
+bool STATICOBJECT::Load(CONTENTMANAGER& contentManager)
+{
+  if (!contentManager.Load<SOUNDBUFFER>(soundbuffer, "data/audio/sound.wav"))
+    return false;
+  sound.setBuffer(*soundbuffer);
+  return sprite.Load("data/sprites/StaticSprite.json", contentManager);
+}
+
+void STATICOBJECT::Init(LEVEL& level)
+{
+  level.AddSprite(sprite);
+}
+
+void STATICOBJECT::Moved()
+{
+  sprite.setPosition(Position());
+}
+
+void STATICOBJECT::Touch(const SOLID& other)
+{
+  sound.play();
+}
+
+void STATICOBJECT::Untouch(const SOLID& other)
+{}
+
 /*
-
-using namespace e;
-
 ///
 /// MyObject
 /// 

@@ -3,6 +3,7 @@
 BEGIN_EVENT_TABLE(wxSFMLCanvas, wxControl)
   EVT_IDLE(wxSFMLCanvas::onIdle)
   EVT_PAINT(wxSFMLCanvas::onPaint)
+  EVT_SIZE(wxSFMLCanvas::OnResize)
 END_EVENT_TABLE()
 
 wxSFMLCanvas::wxSFMLCanvas(
@@ -15,7 +16,7 @@ wxSFMLCanvas::wxSFMLCanvas(
     const wxString& name) 
 :
   wxControl(parent, id, pos, size, style, validator, name),
-  e::BaseGame(static_cast<sf::RenderWindow&>(*this))
+  mLevel(nullptr)
 {
   #ifdef __WXGTK__
     gtk_widget_realize(m_wxwindow);
@@ -29,23 +30,6 @@ wxSFMLCanvas::wxSFMLCanvas(
   #endif
 }
 
-void wxSFMLCanvas::init()
-{
-  if (!loadResources())
-  {
-    std::cout << "Resources loading failed. Exiting..." << std::endl;
-  }
-  else
-  {
-    /// for tests only
-    //m_level = new e::Level();
-    loadObjects("data/objects.json");
-    ///
-  }
-  
-  //getLevel()->init();
-}
-
 void wxSFMLCanvas::onIdle(wxIdleEvent&)
 {
   Refresh(false);
@@ -54,6 +38,36 @@ void wxSFMLCanvas::onIdle(wxIdleEvent&)
 void wxSFMLCanvas::onPaint(wxPaintEvent&)
 {
   wxPaintDC Dc(this);
-  update();
+  if (mLevel)
+  {
+    draw(*mLevel);
+  }
+  else
+  {
+    clear(sf::Color::White);
+  }
   display();
 }
+
+void wxSFMLCanvas::OnResize(wxSizeEvent& event)
+{
+  #ifdef __WXGTK__
+    gtk_widget_realize(m_wxwindow);
+    GdkWindow* Win = GTK_PIZZA(m_wxwindow)->bin_window;
+    XFlush(GDK_WINDOW_XDISPLAY(Win));
+    sf::RenderWindow::create(GDK_WINDOW_XWINDOW(Win));
+  #else
+    sf::RenderWindow::create( static_cast<sf::WindowHandle>(GetHandle()) );
+  #endif
+}
+
+LEVEL* wxSFMLCanvas::Level() const
+{
+  return mLevel;
+}
+
+void wxSFMLCanvas::SetLevel(LEVEL* level)
+{
+  mLevel = level;
+}
+

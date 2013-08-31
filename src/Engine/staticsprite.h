@@ -21,6 +21,8 @@ public:
   bool Load(const std::string& filename, CONTENTMANAGER& contentManager);
   bool Save(const std::string& filename);
 
+  const std::shared_ptr<TEXTURE>& Texture() const;
+
 protected:
 
   void draw(sf::RenderTarget& target, sf::RenderStates states) const;

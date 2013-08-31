@@ -9,6 +9,8 @@
 #include <SFML/System/Clock.hpp>
 #include <set>
 
+class LEVEL;
+
 class SOLID
 {
 public:
@@ -35,13 +37,12 @@ public:
   void SetSpeed(float x, float y);
   void SetSpeed(const sf::Vector2f& speed);
   
-  bool IsSolid() const;
+  bool Solid() const;
   void SetSolid(bool enable);
   
   const std::set<SOLID*>& TouchingSolids() const;
   
-  //void Move(const TILEMAP& tilemap);
-  
+protected:
   /// EVENTS ///
   virtual void Moved() {}
   virtual void Touch(const SOLID& other) {}
@@ -65,4 +66,6 @@ private:
   std::set<SOLID*>* touching;
   std::set<SOLID*>* lastTouching;
   sf::Clock					clock;
+  
+friend class LEVEL;
 };

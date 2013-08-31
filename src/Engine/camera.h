@@ -11,6 +11,6 @@ class CAMERA
 public:
 
     /** Called each time to set the game view */
-    virtual void calcView(sf::View& view) const = 0;
+    virtual void CalcView(sf::View& view) const = 0;
 };
 

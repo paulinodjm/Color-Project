@@ -7,7 +7,7 @@
 #include <wx/wx.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "../Engine/BaseGame.hpp"
+#include "../Engine/level.h"
 
 #ifdef __WXGTK__
     #include <gdk/gdkx.h>
@@ -15,7 +15,7 @@
     #include <wx-2.8/wx/gtk/win_gtk.h>
 #endif
 
-class wxSFMLCanvas : public sf::RenderWindow, public wxControl, public e::BaseGame
+class wxSFMLCanvas : public sf::RenderWindow, public wxControl
 {
 public:
 
@@ -30,13 +30,16 @@ public:
     
   virtual ~wxSFMLCanvas() {}
   
-  void init();
+  LEVEL* Level() const;
+  void SetLevel(LEVEL* level);
   
 private:
 
   DECLARE_EVENT_TABLE()
 
   void onIdle(wxIdleEvent& event);
-
   void onPaint(wxPaintEvent& event);
+  void OnResize(wxSizeEvent& event);
+  
+  LEVEL* mLevel;
 };
