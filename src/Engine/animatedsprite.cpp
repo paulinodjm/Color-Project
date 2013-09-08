@@ -42,8 +42,12 @@ bool ANIMATEDSPRITE::SetAnimation(const std::string& name)
     return false;
   }
   
-  currentAnimation = &(it->second);
-  SetFrame(0);
+  if (&(it->second) != currentAnimation)
+  {
+    currentAnimation = &(it->second);
+    SetFrame(0, true);
+  }
+  return true;
 }
 
 bool ANIMATEDSPRITE::HasAnimation(const std::string& name) const
