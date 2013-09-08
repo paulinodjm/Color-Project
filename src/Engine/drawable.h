@@ -4,7 +4,6 @@
 //////////////////////////////////////////////////////////
 #pragma once
 
-#include "BaseTypes.hpp"
 #include <SFML/Graphics/Drawable.hpp>
 
 class DRAWABLE : public sf::Drawable
