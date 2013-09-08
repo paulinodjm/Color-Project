@@ -37,7 +37,7 @@ private:
 
   bool OnInit()
   {
-    InitGameTypes(mObjectFactories);
+    InitGameTypes(mGameTypes);
   
     mFrame = new wxFrame(NULL, wxID_ANY, wxT("Color Project Editor"),
       wxDefaultPosition, wxSize(950,600));
@@ -49,7 +49,7 @@ private:
     hBoxSizer->Add(mCanvas, 1, wxEXPAND);
     
     mCanvas->SetLevel(new LEVEL);
-    if (!mCanvas->Level()->Load("data/levels/objects.json", mObjectFactories, mContentManager))
+    if (!mCanvas->Level()->Load("data/levels/objects.json", mContentManager, mGameTypes))
     {
       wxMessageBox(wxT("Le chargement du niveau à échoué"), wxT("Erreur"), wxICON_ERROR);
       return false;
@@ -109,7 +109,7 @@ private:
       << wxT("\n  left=") << static_cast<int>(bBox.left+bBox.width)
       << wxT("\n  bottom=") << static_cast<int>(bBox.top+bBox.height);
       
-      if (!mCanvas->Level()->Tilemap().PlaceFree(bBox))
+      if (!mCanvas->Level()->Tilemap()->PlaceFree(bBox))
       {
         label << wxT("\nCollision!");
       }
@@ -119,7 +119,7 @@ private:
   }
   
   wxFrame* mFrame;
-  map<string, OBJECTFACTORY*> mObjectFactories;
+  map<string, OBJECTFACTORY*> mGameTypes;
   CONTENTMANAGER mContentManager;
   wxSpinCtrl *mSpinX, *mSpinY;
   wxStaticText *mResult;

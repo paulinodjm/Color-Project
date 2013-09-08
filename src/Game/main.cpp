@@ -44,7 +44,7 @@ int main(int argc, char** argv)
   rendow.setFramerateLimit(60);
   sf::Event event;
   
-  if (!level.Load("data/levels/objects.json", gameTypes, contentManager))
+  if (!level.Load("data/levels/objects.json", contentManager, gameTypes))
     return EXIT_FAILURE;
     
   PLAYER *player = new PLAYER;

@@ -18,10 +18,10 @@ LEVEL::~LEVEL()
 }
 
 bool LEVEL::Load(
-    const std::string& filename, 
-    std::map<std::string, OBJECTFACTORY*>& factories, 
-    CONTENTMANAGER& contentManager
-){
+    const std::string& filename,
+    CONTENTMANAGER& contentManager,
+    const std::map<std::string, OBJECTFACTORY*>& factories
+){ 
   DeleteObjects();
   
   std::cout << "==== Level '" << filename << "' loading ====" << std::endl;
@@ -41,6 +41,7 @@ bool LEVEL::Load(
     return false;
   }
   
+  // tilemap loading
   if (root["tilemap"].isNull())
   {
     std::cout << "Failed to load level '" << filename << "' : no tilemap." << std::endl;
@@ -48,14 +49,21 @@ bool LEVEL::Load(
   }
   else
   {
-    if (!tilemap.Load(root["tilemap"].asString(), contentManager))
+    tilemap = std::make_shared<TILEMAP>();
+    if (!tilemap->Load(root["tilemap"].asString(), contentManager))
     {
       std::cout << "Failed to load level '" << filename << "' : tilemap loading failed." << std::endl;
+      tilemap.reset();
       return false;
     }
   }
   
   std::cout << "Level '" << filename << "' loaded." << std::endl;
+  return true;
+}
+
+bool LEVEL::PerformLoading(CONTENTMANAGER& contentManager)
+{
   return true;
 }
 
@@ -179,16 +187,17 @@ void LEVEL::PerformMove()
     {
       sf::Vector2f speed = solid->speed * solid->clock.restart().asSeconds();
       sf::FloatRect bBox;
-      int tileSize = tilemap.TileSize();
     
-      if (solid->Solid())
+      if (solid->Solid() && tilemap)
       {
+        int tileSize = tilemap->TileSize();
+      
         // horizontal move
         if (speed.x != 0.f)
         {
           solid->position.x += speed.x;
           bBox = solid->Bbox();
-          if ( !tilemap.PlaceFree(bBox) )
+          if ( !tilemap->PlaceFree(bBox) )
           {
             if (speed.x < 0)
             {
@@ -209,7 +218,7 @@ void LEVEL::PerformMove()
         {
           solid->position.y += speed.y;
           bBox = solid->Bbox();
-          if ( !tilemap.PlaceFree(bBox) )
+          if ( !tilemap->PlaceFree(bBox) )
           {
             if (speed.y < 0)
             {
@@ -237,8 +246,8 @@ void LEVEL::PerformMove()
     {
       solid->clock.restart().asSeconds();
     }
-  }
-}
+  }// foreach
+}//perform move
 
 void LEVEL::PerformCollisions()
 {
@@ -282,7 +291,8 @@ void LEVEL::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if (drawable->Visible())
       target.draw(*drawable);
   }
-  target.draw(tilemap);
+  if (tilemap)
+    target.draw(*tilemap);
 }
 
 
@@ -307,7 +317,12 @@ void LEVEL::SetCamera(CAMERA* camera_)
   camera = camera_;
 }
 
-TILEMAP& LEVEL::Tilemap()
+const std::shared_ptr<TILEMAP>& LEVEL::Tilemap() const
 {
   return tilemap;
+}
+
+void LEVEL::SetTilemap(const std::shared_ptr<TILEMAP>& value)
+{
+  tilemap = value;
 }
