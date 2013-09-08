@@ -49,18 +49,21 @@ private:
     hBoxSizer->Add(mCanvas, 1, wxEXPAND);
     
     mCanvas->SetLevel(new LEVEL);
-    if (!mCanvas->Level()->Load("data/levels/objects.json", mContentManager, mGameTypes))
-    {
+    if (
+      !mCanvas->Level()->Load("data/levels/objects.json", mContentManager, mGameTypes)
+      || !mCanvas->Level()->PerformLoading(mContentManager)
+    ){
       wxMessageBox(wxT("Le chargement du niveau à échoué"), wxT("Erreur"), wxICON_ERROR);
       return false;
     }
-    PLAYER *player = new PLAYER;
-    STATICOBJECT *staticobj = new STATICOBJECT;
-    if (!player->Load(mContentManager) || !staticobj->Load(mContentManager))
-      return EXIT_FAILURE;
-    mCanvas->Level()->AddObject(player, "player");
-    mCanvas->Level()->AddObject(staticobj, "static");
     mCanvas->Level()->Init();
+    
+    PLAYER* player = dynamic_cast<PLAYER*>( mCanvas->Level()->Object("player") );
+    if (!player)
+    {
+      wxMessageBox(wxT("Pas de 'player' dans le niveau!"), wxT("Erreur"), wxICON_ERROR);
+      return false;
+    }
     
     wxPanel *panel = new wxPanel(mFrame, wxID_ANY);
     panel->SetMinSize(wxSize(150, 50));
@@ -73,13 +76,13 @@ private:
     mSpinY = new wxSpinCtrl(panel, 1);
     mSpinX->SetRange(numeric_limits<int>::min(), numeric_limits<int>::max());
     mSpinY->SetRange(numeric_limits<int>::min(), numeric_limits<int>::max());
+    mSpinX->SetValue(static_cast<int>(player->Position().x));
+    mSpinY->SetValue(static_cast<int>(player->Position().y));
     mResult = new wxStaticText(panel, wxID_ANY, wxT("Résultat..."));
     
     vBoxSizer->Add(mSpinX , 0, wxEXPAND);
     vBoxSizer->Add(mSpinY , 0, wxEXPAND);
     vBoxSizer->Add(mResult, 0, wxEXPAND);
-    
-    mSpinX->SetValue(0);
     
     mFrame->Center();
     mFrame->Show();

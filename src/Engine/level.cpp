@@ -58,12 +58,56 @@ bool LEVEL::Load(
     }
   }
   
+  // objects loading
+  Json::Value jobjects = root["objects"];
+  for (int i=0; i<jobjects.size(); i++)
+  {
+    Json::Value jobj = jobjects[i];
+    auto itFactory = factories.find(jobj["type"].asString());
+    if (itFactory == factories.end())
+    {
+      std::cout << "Warning : type '" << jobj["type"] << "' unknow!" << std::endl;
+      continue;
+    }
+    OBJECT* obj = itFactory->second->Create();
+    if (!obj)
+    {
+      std::cout << "Warning : an instance of '" << jobj["type"] << "' hasn't been created!" << std::endl;
+      continue;
+    }
+    SOLID* solid = dynamic_cast<SOLID*>(obj);
+    if (solid)
+    {
+      solid->SetPosition(
+        jobj.get("x", 0).asDouble(),
+        jobj.get("y", 0).asDouble()
+      );
+    }
+    if (
+      !AddObject(
+        obj,
+        jobj.get("name", "").asString(),
+        jobj.get("depht", 0).asInt()
+      )
+    ){
+      std::cout << "Warning : an instance of '" << jobj["type"] << "' hasn't been added to the level!" << std::endl;
+    }
+  }
+  
   std::cout << "Level '" << filename << "' loaded." << std::endl;
   return true;
 }
 
 bool LEVEL::PerformLoading(CONTENTMANAGER& contentManager)
 {
+  for (auto it : objects)
+  {
+    if (!it.second->Load(contentManager))
+    {
+      std::cout << "An object has returned an error while loading." << std::endl;
+      return false;
+    }
+  }
   return true;
 }
 

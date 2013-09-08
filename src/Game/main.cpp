@@ -44,15 +44,11 @@ int main(int argc, char** argv)
   rendow.setFramerateLimit(60);
   sf::Event event;
   
-  if (!level.Load("data/levels/objects.json", contentManager, gameTypes))
+  if (
+    !level.Load("data/levels/objects.json", contentManager, gameTypes)
+    || !level.PerformLoading(contentManager)
+  )
     return EXIT_FAILURE;
-    
-  PLAYER *player = new PLAYER;
-  STATICOBJECT *staticobj = new STATICOBJECT;
-  if (!player->Load(contentManager) || !staticobj->Load(contentManager))
-    return EXIT_FAILURE;
-  level.AddObject(player, "player");
-  level.AddObject(staticobj, "static");
     
   level.Init();
   while (rendow.isOpen())
