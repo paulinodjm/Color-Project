@@ -1,5 +1,11 @@
 *.d
 *.o
+*.exe
+*.dll
+*.cbp
+*.workspace
+*.layout
+*.depend
 game
 editor
 libengine.a
