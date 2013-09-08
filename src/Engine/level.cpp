@@ -87,7 +87,7 @@ bool LEVEL::Load(
       !AddObject(
         obj,
         jobj.get("name", "").asString(),
-        jobj.get("depht", 0).asInt()
+        jobj.get("depth", 0).asInt()
       )
     ){
       std::cout << "Warning : an instance of '" << jobj["type"] << "' hasn't been added to the level!" << std::endl;
@@ -329,14 +329,15 @@ void LEVEL::draw(sf::RenderTarget& target, sf::RenderStates states) const
   
   target.clear(sf::Color::Cyan);
   
+  if (tilemap)
+    target.draw(*tilemap);
+  
   for (auto it : drawables)
   { 
     DRAWABLE* drawable = it.second;
     if (drawable->Visible())
       target.draw(*drawable);
   }
-  if (tilemap)
-    target.draw(*tilemap);
 }
 
 

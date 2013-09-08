@@ -35,6 +35,9 @@ bool ANIMATEDSPRITE::Save(const std::string& name)
 
 bool ANIMATEDSPRITE::SetAnimation(const std::string& name)
 {
+  if (!animations)
+    return false;
+
   auto it = animations->find(name);
   if (it == animations->end())
   {

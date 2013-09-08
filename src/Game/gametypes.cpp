@@ -6,21 +6,22 @@
 #include <iostream>
 #include <SFML/Window/Keyboard.hpp>
 
-PLAYER::PLAYER() : move(false) 
+PLAYER::PLAYER()
 {
   SetBounds(sf::FloatRect(2,0,28,32));
 }
 
 bool PLAYER::Load(CONTENTMANAGER& contentManager)
 {
-  return sprite.Load("data/sprites/AnimatedSprite.json", contentManager);
+  return sprite.Load("data/sprites/player.json", contentManager);
 }
 
 void PLAYER::Init(LEVEL& level)
 {
-  level.AddSprite(sprite);
+  level.AddSprite(sprite, 1);
   level.SetCamera(this);
   
+  sprite.SetAnimation("white_idle");
   sprite.Play();
 }
 
@@ -40,6 +41,14 @@ void PLAYER::Update()
     SetSolid(false);
   }
   
+  if (up || down || left || right)
+  {
+    sprite.SetAnimation("white_run");
+  }
+  else
+  {
+    sprite.SetAnimation("white_idle");
+  }
   SetSpeed( (right-left)*150, (down-up)*150 );
 }
 
@@ -62,6 +71,9 @@ void PLAYER::CalcView(sf::View& view) const
 }
 
 ////////////////////////////////////////////////////////////////
+std::shared_ptr<SOUNDBUFFER> STATICOBJECT::soundbuffer;
+SOUND                        STATICOBJECT::sound;
+
 STATICOBJECT::STATICOBJECT() 
 {
   SetBounds(sf::FloatRect(0,0,32,32));
@@ -69,10 +81,13 @@ STATICOBJECT::STATICOBJECT()
 
 bool STATICOBJECT::Load(CONTENTMANAGER& contentManager)
 {
-  if (!contentManager.Load<SOUNDBUFFER>(soundbuffer, "data/audio/sound.wav"))
-    return false;
-  sound.setBuffer(*soundbuffer);
-  return sprite.Load("data/sprites/StaticSprite.json", contentManager);
+  if (!soundbuffer)
+  {
+    if (!contentManager.Load<SOUNDBUFFER>(soundbuffer, "data/audio/sound.wav"))
+      return false;
+    sound.setBuffer(*soundbuffer);
+  }
+  return sprite.Load("data/sprites/staticobject.json", contentManager);
 }
 
 void STATICOBJECT::Init(LEVEL& level)
@@ -88,10 +103,13 @@ void STATICOBJECT::Moved()
 void STATICOBJECT::Touch(const SOLID& other)
 {
   sound.play();
+  sprite.SetAnimation("red");
 }
 
 void STATICOBJECT::Untouch(const SOLID& other)
-{}
+{
+  sprite.SetAnimation("green");
+}
 
 /*
 ///

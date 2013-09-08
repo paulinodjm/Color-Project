@@ -37,7 +37,6 @@ public:
   
 private:
 
-  bool move;
   ANIMATEDSPRITE sprite;
 };
 
@@ -59,8 +58,8 @@ public:
   
 private:
 
-  STATICSPRITE                 sprite;
-  std::shared_ptr<SOUNDBUFFER> soundbuffer;
-  SOUND                        sound;
+  ANIMATEDSPRITE                      sprite;
+  static std::shared_ptr<SOUNDBUFFER> soundbuffer;
+  static SOUND                        sound;
 };
 
