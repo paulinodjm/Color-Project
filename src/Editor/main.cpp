@@ -9,6 +9,7 @@
 #include "../Engine/level.h"
 #include "../Engine/objectfactory.h"
 #include "../Engine/contentmanager.h"
+#include "../Engine/filesystem.h"
 #include <map>
 #include <string>
 #include <limits>
@@ -37,6 +38,11 @@ private:
 
   bool OnInit()
   {
+    if (!FS::Init( wxString(argv[0]).mb_str() ) || !FS::Mount("data", "data"))
+    {
+      return false;
+    }
+  
     InitGameTypes(mGameTypes);
   
     mFrame = new wxFrame(NULL, wxID_ANY, wxT("Color Project Editor"),

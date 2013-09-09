@@ -3,11 +3,13 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "soundbufferloader.h"
+#include "zipstream.h"
 
 bool LOADER<SOUNDBUFFER>::Load(std::shared_ptr<SOUNDBUFFER>& res, const std::string& name, CONTENTMANAGER& contentManager)
 {
+  ZIPSTREAM zip;
   res = std::make_shared<SOUNDBUFFER>();
-  if (res->loadFromFile(name))
+  if (zip.Open(name) && res->loadFromStream(zip))
   {
     std::cout << "SoundBuffer '" << name << "' loaded." << std::endl;
     return true;

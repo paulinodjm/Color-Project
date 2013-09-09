@@ -4,26 +4,33 @@
 //////////////////////////////////////////////////////////
 #include "staticsprite.h"
 #include "contentmanager.h"
-#include "jsoncpp/json/json.h"
-#include <fstream>
+#include <jsoncpp/json/json.h>
+#include "zipstream.h"
+#include "zipstring.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 
 STATICSPRITE::STATICSPRITE() {}
 
 bool STATICSPRITE::Load(const std::string& name, CONTENTMANAGER& contentManager)
 {
-  std::ifstream file(name);
+  ZIPSTREAM zipstream;
+  ZIPSTRING zipstring;
   Json::Reader reader;
   Json::Value root;
   
   texture.reset();
   
-  if (!file.is_open())
+  if (!zipstream.Open(name))
   {
-    std::cout << "Failed to load sprite '" << name << "' : unable to open file." << std::endl;
+    std::cout << "Failed to load sprite '" << name << "'." << std::endl;
     return false;
   }
-  if (!reader.parse(file, root))
+  if (!zipstring.Read(zipstream))
+  {
+    std::cout << "Failed to load sprite '" << name << "' : stream error." << std::endl;
+    return false;
+  }
+  if (!reader.parse(zipstring.Str(), root))
   {
     std::cout << "Failed to load sprite '" << name << "' : " << reader.getFormatedErrorMessages();
     return false;

@@ -23,7 +23,7 @@ solution "Color-Project"
     configuration "Release"
       flags { "Optimize" }
       buildoptions "-std=gnu++11"
-      links { "engine", "jsoncpp", "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio" }
+      links { "engine", "jsoncpp", "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio", "physfs" }
       
   -- editor --
   project "editor"
@@ -34,7 +34,7 @@ solution "Color-Project"
     configuration "Release"
       flags { "Optimize" }
       buildoptions "-std=gnu++11"
-      links { "engine", "jsoncpp", "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio" }
+      links { "engine", "jsoncpp", "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio", "physfs" }
       
       -- wx windows flags --
       if os.get() == "windows" then

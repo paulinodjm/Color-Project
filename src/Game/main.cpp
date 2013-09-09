@@ -9,6 +9,7 @@
 #include "../Engine/level.h"
 #include "../Engine/contentmanager.h"
 #include "../Engine/objectfactory.h"
+#include "../Engine/filesystem.h"
 #include "gametypes.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -32,6 +33,9 @@ int main(int argc, char** argv)
   CONTENTMANAGER  contentManager;
   LEVEL           level;
   map<string, OBJECTFACTORY*> gameTypes;
+  
+  if (!FS::Init(argv[0]) || !FS::Mount("data", "data"))
+    return EXIT_FAILURE;
   
   InitGameTypes(gameTypes);
   std::cout << "==== GameTypes ====" << std::endl;

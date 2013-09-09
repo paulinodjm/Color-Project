@@ -3,7 +3,8 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "tilemap.h"
-#include <fstream>
+#include "zipstream.h"
+#include "zipstring.h"
 #include <jsoncpp/json/json.h>
 #include <SFML/Graphics.hpp>
 
@@ -11,16 +12,22 @@ TILEMAP::TILEMAP() : tileSize(0), width( ), height(0), tileCount(0), tileCountPe
 
 bool TILEMAP::Load(const std::string& filename, CONTENTMANAGER& contentManager)
 {
-  std::ifstream file(filename);
+  ZIPSTREAM zipstream;
+  ZIPSTRING zipstring;
   Json::Value root;
   Json::Reader reader;
   
-  if (!file.is_open())
+  if (!zipstream.Open(filename))
   {
-    std::cout << "Failed to load tilemap '" << filename << "' : unable to open file." << std::endl;
+    std::cout << "Failed to load tilemap '" << filename << "'." << std::endl;
     return false;
   }
-  if (!reader.parse(file, root))
+  if (!zipstring.Read(zipstream))
+  {
+    std::cout << "Failed to load tilemap '" << filename << "' : stream error." << std::endl;
+    return false;
+  }
+  if (!reader.parse(zipstring.Str(), root))
   {
     std::cout << "Failed to load tilemap '" << filename << "' : " << reader.getFormatedErrorMessages() << std::endl;
     return false;

@@ -5,7 +5,8 @@
 #include "level.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <jsoncpp/json/json.h>
-#include <fstream>
+#include "zipstream.h"
+#include "zipstring.h"
 
 LEVEL::LEVEL() : sf::Drawable(),
   paused(false),
@@ -26,16 +27,22 @@ bool LEVEL::Load(
   
   std::cout << "==== Level '" << filename << "' loading ====" << std::endl;
   
-  std::ifstream file(filename);
+  ZIPSTREAM zipstream;
+  ZIPSTRING zipstring;
   Json::Value root;
   Json::Reader reader;
   
-  if (!file.is_open())
+  if (!zipstream.Open(filename))
   {
-    std::cout << "Failed to load level '" << filename << "' : file not found." << std::endl;
+    std::cout << "Failed to load level '" << filename << ".";
     return false;
   }
-  if (!reader.parse(file, root))
+  if (!zipstring.Read(zipstream))
+  {
+    std::cout << "Failed to load level '" << filename << "' : stream error." << std::endl;
+    return false;
+  }
+  if (!reader.parse(zipstring.Str(), root))
   {
     std::cout << "Failed to load level '" << filename << "' : " << reader.getFormatedErrorMessages();
     return false;

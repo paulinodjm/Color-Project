@@ -3,21 +3,28 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 #include "animationsloader.h"
-#include <fstream>
 #include "contentmanager.h"
+#include "zipstream.h"
+#include "zipstring.h"
 
 bool LOADER<ANIMATIONS>::Load(std::shared_ptr<ANIMATIONS>& res, const std::string& name, CONTENTMANAGER& contentManager)
 {
-  std::ifstream file(name);
+  ZIPSTREAM zipstream;
+  ZIPSTRING zipstring;
   Json::Value root;
   Json::Reader reader;
   
-  if (!file.is_open())
+  if (!zipstream.Open(name))
   {
-    std::cout << "Failed to load animations '" << name << "' : unable to open file." << std::endl;
+    std::cout << "Failed to load animations '" << name << "'." << std::endl;
     return false;
   }
-  if (!reader.parse(file, root))
+  if (!zipstring.Read(zipstream))
+  {
+    std::cout << "Failed to load animations '" << name << "' : stream error. " << std::endl;
+    return false;
+  }
+  if (!reader.parse(zipstring.Str(), root))
   {
     std::cout << "Failed to load animations '" << name << "' : " << reader.getFormatedErrorMessages() << std::endl;
     return false;
