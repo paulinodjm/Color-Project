@@ -40,7 +40,7 @@ solution "Color-Project"
       if os.get() == "windows" then
         files { "src/Editor/resources.rc" }
         buildoptions { "`wx-config.exe --cxxflags --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/msw`" }
-        linkoptions { "`wx-config.exe --libs --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/msw`" }
+        linkoptions { "`wx-config.exe --libs --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/msw`" } 
         resincludedirs { "c:/wxWidgets-2.8.12/include" }
       
       -- wx linux flags --
