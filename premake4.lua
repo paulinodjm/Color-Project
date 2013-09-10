@@ -39,8 +39,8 @@ solution "Color-Project"
       -- wx windows flags --
       if os.get() == "windows" then
         files { "src/Editor/resources.rc" }
-        buildoptions { "`wx-config.exe --cxxflags --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/msw`" }
-        linkoptions { "`wx-config.exe --libs --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/msw`" } 
+        buildoptions { "`wx-config.exe --cxxflags --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/mswu`" }
+        linkoptions { "`wx-config.exe --libs --prefix=c:/wxWidgets-2.8.12 --wxcfg=gcc_lib/mswu`" } 
         resincludedirs { "c:/wxWidgets-2.8.12/include" }
       
       -- wx linux flags --
