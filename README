@@ -4,8 +4,9 @@ Project of an open-source platformer game, where colours take their importance.
 
 Dependencies:
 
-- SFML (version 2.0)
+- SFML2
 - JsonCpp
+- physfs
 - wxWidgets 2.8.12 (editor only)
 
 This project use premake4 for building.
