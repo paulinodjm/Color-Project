@@ -8,6 +8,7 @@
 *.depend
 game
 editor
+data
 libengine.a
 *.make
 Makefile
