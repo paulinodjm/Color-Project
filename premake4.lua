@@ -8,7 +8,7 @@ solution "Color-Project"
   project "engine"
     kind "StaticLib"
     language "c++"
-    files {"src/Engine/**.hpp", "src/Engine/**.cpp"}
+    files {"src/Engine/**.h", "src/Engine/**.cpp"}
 
     configuration "Release"
       flags { "Optimize" }
@@ -18,7 +18,7 @@ solution "Color-Project"
   project "game"
 	kind "WindowedApp"
     language "c++"
-	files {"src/Game/**.hpp", "src/Game/**.cpp"}
+	files {"src/Game/**.h", "src/Game/**.cpp"}
 
     configuration "Release"
       flags { "Optimize" }
@@ -29,7 +29,7 @@ solution "Color-Project"
   project "editor"
     kind "WindowedApp"
     language "c++"
-    files {"src/Editor/**.hpp", "src/Editor/**.cpp", "src/Game/gametypes.cpp"}
+    files {"src/Editor/**.h", "src/Editor/**.cpp", "src/Game/gametypes.cpp"}
     
     configuration "Release"
       flags { "Optimize" }
