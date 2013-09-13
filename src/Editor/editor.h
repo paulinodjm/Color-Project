@@ -7,6 +7,7 @@
 #include <wx/wx.h>
 #include "settings.h"
 #include "frame.h"
+#include "id.h"
 
 class edEDITOR : public wxApp, public edFRAMELISTENER
 {  

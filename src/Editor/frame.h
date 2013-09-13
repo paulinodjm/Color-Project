@@ -14,6 +14,16 @@ class edFRAMELISTENER
 public:
 
   virtual void OnFrameResized(edFRAME *frame, const wxSize& size) = 0;
+  
+  /*
+  virtual void OnNewLevel() {}
+  virtual void OnOpenLevel(const wxString& name) {}
+  virtual void OnSaveLevel(const wxString& name) {}
+  virtual void OnUndo() {}
+  virtual void OnRedo() {}
+  virtual void OnEditTilemap() {}
+  virtual void OnEditObjects() {}
+  virtual void OnStartPreview() {} //*/
 };
 
 class edFRAME : public wxFrame
@@ -38,6 +48,11 @@ public:
 protected:
 
   void OnResize(wxSizeEvent& event);
+  void OnExit(wxCommandEvent& event);
+  void OnHelp(wxCommandEvent& event);
+  void OnAbout(wxCommandEvent& event);
+  
+  void SetupMenuBar();
   
 private:
 
