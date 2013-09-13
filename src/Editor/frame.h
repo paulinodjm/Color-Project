@@ -1,0 +1,46 @@
+//////////////////////////////////////////////////////////
+/// Copyright 2013 Marié Paulino (paulinodjm@hotmail.com)
+/// Licence : Simplified BSD Licence (see inclued LICENCE)
+//////////////////////////////////////////////////////////
+#pragma once
+
+#include <wx/wx.h>
+#include <set>
+
+class edFRAME;
+
+class edFRAMELISTENER
+{
+public:
+
+  virtual void OnFrameResized(edFRAME *frame, const wxSize& size) = 0;
+};
+
+class edFRAME : public wxFrame
+{
+  DECLARE_EVENT_TABLE()
+
+public:
+  
+  edFRAME(
+    wxWindow* parent,
+    wxWindowID id,
+    const wxString& title,
+    const wxPoint& pos = wxDefaultPosition,
+    const wxSize& size = wxDefaultSize,
+    long style = wxDEFAULT_FRAME_STYLE,
+    const wxString& name = wxT("mainFrame"));
+    
+  bool AddFrameListener(edFRAMELISTENER* listener);
+  bool DeleteFrameListener(edFRAMELISTENER* listener);
+  void ClearFrameListeners();
+  
+protected:
+
+  void OnResize(wxSizeEvent& event);
+  
+private:
+
+  std::set<edFRAMELISTENER*> mListeners;
+};
+

@@ -9,6 +9,7 @@
 game
 editor
 data
+editordata
 libengine.a
 *.make
 Makefile

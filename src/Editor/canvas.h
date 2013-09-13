@@ -15,11 +15,11 @@
     #include <wx-2.8/wx/gtk/win_gtk.h>
 #endif
 
-class wxSFMLCanvas : public sf::RenderWindow, public wxControl
+class edCANVAS : public sf::RenderWindow, public wxControl
 {
 public:
 
-  wxSFMLCanvas(
+  edCANVAS(
     wxWindow* parent, 
     wxWindowID id, 
     const wxPoint& pos = wxDefaultPosition,
@@ -28,18 +28,13 @@ public:
     const wxValidator& validator = wxDefaultValidator,
     const wxString& name = wxPanelNameStr);
     
-  virtual ~wxSFMLCanvas() {}
+  virtual ~edCANVAS() {}
   
-  LEVEL* Level() const;
-  void SetLevel(LEVEL* level);
+  void Create();
   
 private:
 
   DECLARE_EVENT_TABLE()
 
-  void onIdle(wxIdleEvent& event);
-  void onPaint(wxPaintEvent& event);
   void OnResize(wxSizeEvent& event);
-  
-  LEVEL* mLevel;
 };

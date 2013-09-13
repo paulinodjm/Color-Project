@@ -3,6 +3,7 @@
 /// Licence : Simplified BSD Licence (see inclued LICENCE)
 //////////////////////////////////////////////////////////
 
+/*
 #include <wx/wx.h>
 #include "wxSFMLCanvas.hpp"
 #include "../Game/gametypes.h"
@@ -26,6 +27,7 @@ void InitGameTypes(map<string, OBJECTFACTORY*>& gameTypes)
   #undef GAMETYPE
 }
 
+/*
 class Editor : public wxApp
 {
   DECLARE_EVENT_TABLE()
