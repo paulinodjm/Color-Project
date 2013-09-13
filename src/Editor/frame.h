@@ -6,6 +6,7 @@
 
 #include <wx/wx.h>
 #include <set>
+#include "datamodel.h"
 
 class edFRAME;
 
@@ -45,9 +46,16 @@ public:
   bool DeleteFrameListener(edFRAMELISTENER* listener);
   void ClearFrameListeners();
   
+  edDATAMODEL *DataModel() const;
+  void SetDataModel(edDATAMODEL* model);
+  
 protected:
 
   void OnResize(wxSizeEvent& event);
+  void OnNew(wxCommandEvent& event);
+  void OnOpen(wxCommandEvent& event);
+  void OnSave(wxCommandEvent& event);
+  void OnSaveAs(wxCommandEvent& event);
   void OnExit(wxCommandEvent& event);
   void OnHelp(wxCommandEvent& event);
   void OnAbout(wxCommandEvent& event);
@@ -57,5 +65,7 @@ protected:
 private:
 
   std::set<edFRAMELISTENER*> mListeners;
+  edDATAMODEL *mDataModel;
+  wxString    mLevelName;
 };
 

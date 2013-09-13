@@ -32,8 +32,9 @@ bool edEDITOR::OnInit()
 
   mMainFrame = new edFRAME(nullptr, wxID_ANY, wxT("Color Project Editor"), wxDefaultPosition, mSettings.WindowSize());
   mMainFrame->AddFrameListener(this);
-  mMainFrame->Show();
+  mMainFrame->SetDataModel(&mDataModel);
   mMainFrame->Center();
+  mMainFrame->Show();
   return true;
 }
 

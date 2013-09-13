@@ -8,6 +8,7 @@
 #include "settings.h"
 #include "frame.h"
 #include "id.h"
+#include "datamodel.h"
 
 class edEDITOR : public wxApp, public edFRAMELISTENER
 {  
@@ -28,6 +29,7 @@ private:
   
   edFRAME*    mMainFrame;
   edSETTINGS  mSettings;
+  edDATAMODEL mDataModel;
 };
 
 DECLARE_APP(edEDITOR)

@@ -7,9 +7,14 @@
 #include <wx/menuitem.h>
 #include <wx/aboutdlg.h>
 #include "id.h"
+#include "leveldialog.h"
 
 BEGIN_EVENT_TABLE(edFRAME, wxFrame)
   EVT_SIZE(edFRAME::OnResize)
+  EVT_MENU(static_cast<int>(edID::New), edFRAME::OnNew)
+  EVT_MENU(static_cast<int>(edID::Open), edFRAME::OnOpen)
+  EVT_MENU(static_cast<int>(edID::Save), edFRAME::OnSave)
+  EVT_MENU(static_cast<int>(edID::SaveAs), edFRAME::OnSaveAs)
   EVT_MENU(static_cast<int>(edID::Exit), edFRAME::OnExit)
   EVT_MENU(static_cast<int>(edID::Help), edFRAME::OnHelp)
   EVT_MENU(static_cast<int>(edID::About), edFRAME::OnAbout)
@@ -24,7 +29,8 @@ edFRAME::edFRAME(
   long style,
   const wxString& name
 )
-  : wxFrame(parent, id, title, pos, size, style, name)
+  : wxFrame(parent, id, title, pos, size, style, name),
+  mDataModel(nullptr)
 {
   SetupMenuBar();
 }
@@ -81,12 +87,47 @@ void edFRAME::ClearFrameListeners()
   mListeners.clear();
 }
 
+edDATAMODEL *edFRAME::DataModel() const
+{
+  return mDataModel;
+}
+
+void edFRAME::SetDataModel(edDATAMODEL* model)
+{
+  mDataModel = model;
+} 
+
 void edFRAME::OnResize(wxSizeEvent& event)
 {
   for (edFRAMELISTENER* listener : mListeners)
   {
     listener->OnFrameResized(this, event.GetSize());
   }
+}
+
+void edFRAME::OnNew(wxCommandEvent& event)
+{
+  if (mDataModel && wxMessageBox(wxT("Êtes vous sûr de vouloir créer un nouveau niveau?\n"
+    "Les modifications non sauvegardée du niveau actuel seront perdues."), wxT("Nouveau"), wxYES_NO, this) == wxYES)
+  {
+    mDataModel->NewLevel();
+  }
+}
+
+void edFRAME::OnOpen(wxCommandEvent& event)
+{
+  edLEVELDIALOG *dialog = new edLEVELDIALOG(this, wxID_ANY, wxT("Ouvrir un niveau"));
+  dialog->SetLevelName(wxT("Niveau 1"));
+  dialog->ShowModal();
+  dialog->Destroy();
+}
+
+void edFRAME::OnSave(wxCommandEvent& event)
+{
+}
+
+void edFRAME::OnSaveAs(wxCommandEvent& event)
+{
 }
 
 void edFRAME::OnExit(wxCommandEvent& event)
